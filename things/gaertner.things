@@ -1,0 +1,39 @@
+//yahooweather:weather:berlin [ location=638242 ]
+//astro:sun:home   [ geolocation="52.5200066,13.4049540", interval=60 ]
+//astro:moon:home  [ geolocation="52.5200066,13.4049540", interval=60 ]
+//ntp:ntp:demo [ hostname="nl.pool.ntp.org", refreshInterval=60, refreshNtp=30 ]
+
+/* 
+Bridge hue:bridge:1 [ ipAddress="192.168.11.32", userName="b-MWuUtzyAY-YkQYqcMq2yEXq0to9skQgb5QYFbA" ] {
+	0210 HueLivingNW [ lightId="1" ]
+	0210 HueLivingNE [ lightId="2" ]
+	0210 HueLivingN [ lightId="3" ]
+	0210 HueLivingSW [ lightId="4" ]
+	0210 HueLivingSE [ lightId="5" ]
+	0210 HueLivingS [ lightId="6" ]
+//	0210 HueLivingMaster [ lightId="49" ]
+}
+*/
+
+
+Bridge homematic:bridge:ccu2 [gatewayAddress="ccu2.fritz.box"]
+{
+  Thing HM-CC-RT-DN    MEQ0571893	// Heat Living East
+  Thing HM-CC-RT-DN    MEQ0571874	// Heat Living West
+
+  Thing HM-Sec-SCo    LEQ1469830	// Contact Kitchen Atrium
+  Thing HM-Sec-SCo    MEQ0174917	// Contact Kitchen Balcony
+  Thing HM-Sec-SCo    LEQ1470385	// Contact Living Door West
+  Thing HM-Sec-SCo    LEQ1469816	// Contact Living Door East
+  Thing HM-Sec-SCo    LEQ1470280	// Contact Roof Window
+  Thing HM-Sec-SCo    LEQ1470368	// Contact Entrance
+  Thing HM-Sec-SCo    LEQ0924258	// Contact Bath
+  Thing HM-Sec-SCo    MEQ0174904	// Contact Escape
+  Thing HM-Sec-SCo    LEQ1469812	// Contact Guest
+  Thing HM-Sec-SCo    LEQ1470004	// Contact Restroom
+  Thing HM-Sec-SCo    LEQ1469074	// Contact Sleep
+
+}
+
+
+// vim: syntax=Xtend syntax=openhab

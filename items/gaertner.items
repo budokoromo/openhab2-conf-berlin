@@ -1,0 +1,193 @@
+Group gAll		"All"
+
+Group gRooms	"Rooms"				(gAll)
+Group gRoomsLiv	"Living Room"		(gRooms)
+
+
+//Group gLights 	"Lights"			(gAll)
+//Group gHues 	"Hues" 				(gLights) 
+//Group:Switch:OR(ON, OFF) gHuesLiv  "Hues Living Room" 	(gLights, gRoomLiv)
+
+Group gPowerSwitches
+
+Group gTemp
+Group gWeather
+Group gLight
+Group gHue 			(gLight)
+Group gHueLiv 		(gHue)
+
+
+/*
+Group gHuesLivToggle "Hues Living Switch"
+Group gHuesLivDimmer "Hues Living Dimmer"
+Group gHuesLivColor "Hues Living Color"
+*/
+
+
+// Groups for Heaters
+Group:Number:AVG gTempLiv "[%.1f °C]" (gTemp)
+
+ 
+
+Switch TestButton
+
+
+String  Weather_Condition   "Pogoda [%s]" <fog> (gWeather) {weather="locationId=home, type=condition, property=commonId"}
+String  Weather_Formatted_Condition   "[MAP(weather_de.map):%s]" (gWeather) {weather="locationId=home, type=condition, property=commonId"}
+//String  Weather_Formatted_Condition (gWeather) {weather="locationId=home, type=condition, property=commonId"}
+Number  Weather_Temp        "Dzisiaj [%.2f °C]"  (gWeather) {weather="locationId=home, type=temperature, property=feel"}
+
+// Name of the active Panel for HABPanel
+String	activeHABPanel
+
+// virtual Controls for Hues
+Switch	hueLivMainToggle "Wohnzimmer Licht" ["Lighting"]
+Dimmer  hueLivMainDimmer "Wohnzimmer Dimmer" ["Lighting"]
+Color	hueLivMainColor
+Dimmer	hueLivMainColorTemp
+
+Switch	hueKitMainToggle
+Dimmer  hueKitMainDimmer
+Color	hueKitMainColor
+Dimmer	hueKitMainColorTemp
+
+Switch	hueFloorMainToggle
+Dimmer  hueFloorMainDimmer
+Color	hueFloorMainColor
+Dimmer	hueFloorMainColorTemp
+
+Switch	hueSleepMainToggle "Schlafzimmer Licht" ["Lighting"]
+Dimmer  hueSleepMainDimmer "Schlafzimmer Dimmer" ["Lighting"]
+Color	hueSleepMainColor
+Dimmer	hueSleepMainColorTemp
+
+Switch	hueBathMainToggle
+Dimmer  hueBathMainDimmer
+Color	hueBathMainColor
+Dimmer	hueBathMainColorTemp
+
+Switch	hueMainToggle	"Alle Lichter" ["Lighting"]
+
+
+
+
+
+/* 
+// Hues
+Switch	hueLivNToggle	 	(gHuesLiv, gHuesLivToggle)	{ channel="hue:0210:1:HueLivingN:color" }
+Dimmer  hueLivNDimmer		(gHuesLiv, gHuesLivDimmer)	{ channel="hue:0210:1:HueLivingN:color" } 
+Color 	hueLivNColor		(gHuesLiv, gHuesLivColor)	{ channel="hue:0210:1:HueLivingN:color" } 
+Dimmer 	hueLivNColorTemp	(gHuesLiv) 					{ channel="hue:0210:1:HueLivingN:color_temperature" } 
+
+Switch	hueLivNwToggle		(gHuesLiv, gHuesLivToggle)	{ channel="hue:0210:1:HueLivingNW:color" }
+Dimmer  hueLivNwDimmer		(gHuesLiv, gHuesLivDimmer)	{ channel="hue:0210:1:HueLivingNW:color" }
+Color 	hueLivNwColor		(gHuesLiv, gHuesLivColor)	{ channel="hue:0210:1:HueLivingNW:color" }
+Dimmer 	hueLivNwColorTemp	(gHuesLiv)					{ channel="hue:0210:1:HueLivingNW:color_temperature" }
+
+Switch	hueLivNeToggle		(gHuesLiv, gHuesLivToggle)	{ channel="hue:0210:1:HueLivingNE:color" }
+Dimmer  hueLivNeDimmer		(gHuesLiv, gHuesLivDimmer)	{ channel="hue:0210:1:HueLivingNE:color" }
+Color 	hueLivNeColor		(gHuesLiv, gHuesLivColor)	{ channel="hue:0210:1:HueLivingNE:color" }
+Dimmer 	hueLivNeColorTemp	(gHuesLiv)					{ channel="hue:0210:1:HueLivingNE:color_temperature" }
+
+Switch	hueLivSToggle		(gHuesLiv, gHuesLivToggle)	{ channel="hue:0210:1:HueLivingS:color" }
+Dimmer  hueLivSDimmer		(gHuesLiv, gHuesLivDimmer)	{ channel="hue:0210:1:HueLivingS:color" }
+Color 	hueLivSColor		(gHuesLiv, gHuesLivColor)	{ channel="hue:0210:1:HueLivingS:color" }
+Dimmer 	hueLivSColorTemp	(gHuesLiv)					{ channel="hue:0210:1:HueLivingS:color_temperature" }
+
+Switch	hueLivSwToggle		(gHuesLiv, gHuesLivToggle)	{ channel="hue:0210:1:HueLivingSW:color" }
+Dimmer  hueLivSwDimmer		(gHuesLiv, gHuesLivDimmer)	{ channel="hue:0210:1:HueLivingSW:color" }
+Color 	hueLivSwColor		(gHuesLiv, gHuesLivColor)	{ channel="hue:0210:1:HueLivingSW:color" }
+Dimmer 	hueLivSwColorTemp	(gHuesLiv)					{ channel="hue:0210:1:HueLivingSW:color_temperature" }
+
+Switch	hueLivSeToggle		(gHuesLiv, gHuesLivToggle)	{ channel="hue:0210:1:HueLivingSE:color" }
+Dimmer  hueLivSeDimmer		(gHuesLiv, gHuesLivDimmer)	{ channel="hue:0210:1:HueLivingSE:color" }
+Color 	hueLivSeColor		(gHuesLiv, gHuesLivColor)	{ channel="hue:0210:1:HueLivingSE:color" }
+Dimmer 	hueLivSeColorTemp	(gHuesLiv)					{ channel="hue:0210:1:HueLivingSE:color_temperature" }
+*/
+
+
+// LGTV	
+
+// PowerSwitch
+Switch lgtvPower "LGTV Power" (gPowerSwitches) { channel="connectsdk:WebOSTV:192_168_11_72:power"}
+Switch lgtvMute "LGTV Mute" { channel="connectsdk:WebOSTV:192_168_11_72:mute"}
+Number lgtvVolume "LGTV Volume" { channel="connectsdk:WebOSTV:192_168_11_72:volume"}
+String lgtvInput "LGTV Input" { channel="connectsdk:WebOSTV:192_168_11_72:externalInput"}
+String lgtvToast "LGTV Toast" { channel="connectsdk:WebOSTV:192_168_11_72:toast"}
+String lgtvState "LGTV Toast" { channel="connectsdk:WebOSTV:192_168_11_72:mediaState"}
+
+
+// Power on is not Supported, so we need to Wake on LAN with WOL Binding (See rule file)
+Switch lgtvWOL   "Power WOL"  { wol="192.168.11.255#3c:cd:93:7b:bb:9e" }
+
+// Yamaha
+Switch yamahaPower "Yamaha Power" (gPowerSwitches) {channel="yamahareceiver:yamahaAV:9ab0c000_f668_11de_9976_00a0de872741:power"}
+String yamahaInput "Yamaha Input" {channel="yamahareceiver:yamahaAV:9ab0c000_f668_11de_9976_00a0de872741:input"}
+String yamahaSurround "Yamaha Input" {channel="yamahareceiver:yamahaAV:9ab0c000_f668_11de_9976_00a0de872741:surroundProgram"}
+Dimmer yamahaVolume "Yamaha Power" {channel="yamahareceiver:yamahaAV:9ab0c000_f668_11de_9976_00a0de872741:volume"} // Percentual DB
+Number yamahaVolumeDB "Yamaha Power" {channel="yamahareceiver:yamahaAV:9ab0c000_f668_11de_9976_00a0de872741:volumeDB"} // Absolute DB from -80 to 12
+String yamahaMute "Yamaha Power" {channel="yamahareceiver:yamahaAV:9ab0c000_f668_11de_9976_00a0de872741:mute"}
+Number yamahaNetradiotune "Yamaha Power" {channel="yamahareceiver:yamahaAV:9ab0c000_f668_11de_9976_00a0de872741:netradiotune"}
+
+
+Switch TestScene
+
+/* Dune items */
+/* Living */
+Switch Dune_Living      "power"     (gPowerSwitches, Dune, Persistence)		{http=">[ON:GET:http://192.168.11.71/cgi-bin/do?cmd=ir_code&ir_code=A05FBF00] >[OFF:GET:http://192.168.11.71/cgi-bin/do?cmd=ir_code&ir_code=A15EBF00]", autoupdate="false"}
+
+
+String duneRemoteCode	// Pressing a button on dune Remote Panel puts button code in var
+
+// Scene Selector
+String sceneName
+
+ 
+// Homematic Items
+
+// Heating
+Number heatLivEActTemp "heatLivEActTemp" (gTempLiv) { channel = "homematic:HM-CC-RT-DN:ccu2:MEQ0571893:4#ACTUAL_TEMPERATURE" }
+Switch heatLivEAutoMode "heatLivEAutoMode" { channel = "homematic:HM-CC-RT-DN:ccu2:MEQ0571893:4#AUTO_MODE" }
+Switch heatLivEComfMode "heatLivEComfMode" { channel ="homematic:HM-CC-RT-DN:ccu2:MEQ0571893:4#COMFORT_MODE" }
+Switch heatLivELowMode "heatLivELowMode" { channel ="homematic:HM-CC-RT-DN:ccu2:MEQ0571893:4#LOWERING_MODE" }
+Number heatLivEManuMode "heatLivEManuMode" { channel = "homematic:HM-CC-RT-DN:ccu2:MEQ0571893:4#MANU_MODE" }
+Switch heatLivEBoostMode "heatLivEBoostMode" { channel ="homematic:HM-CC-RT-DN:ccu2:MEQ0571893:4#BOOST_MODE" }
+String heatLivECtrlMode "heatLivECtrlMode" { channel ="homematic:HM-CC-RT-DN:ccu2:MEQ0571893:4#CONTROL_MODE" }
+Number heatLivEBoostState "heatLivEBoostState" { channel = "homematic:HM-CC-RT-DN:ccu2:MEQ0571893:4#BOOST_STATE" }
+Number heatLivESetTemp "heatLivESetTemp" { channel = "homematic:HM-CC-RT-DN:ccu2:MEQ0571893:4#SET_TEMPERATURE" }
+Number heatLivEValveState "heatLivEValveState" { channel = "homematic:HM-CC-RT-DN:ccu2:MEQ0571893:4#VALVE_STATE" }
+
+Number heatLivWActTemp "heatLivWActTemp" (gTempLiv) { channel = "homematic:HM-CC-RT-DN:ccu2:MEQ0571874:4#ACTUAL_TEMPERATURE" }
+Switch heatLivWAutoMode "heatLivWAutoMode" { channel = "homematic:HM-CC-RT-DN:ccu2:MEQ0571874:4#AUTO_MODE" }
+Switch heatLivWComfMode "heatLivWComfMode" { channel ="homematic:HM-CC-RT-DN:ccu2:MEQ0571874:4#COMFORT_MODE" }
+Switch heatLivWLowMode "heatLivWLowMode" { channel ="homematic:HM-CC-RT-DN:ccu2:MEQ0571874:4#LOWERING_MODE" }
+Number heatLivWManuMode "heatLivWManuMode" { channel = "homematic:HM-CC-RT-DN:ccu2:MEQ0571874:4#MANU_MODE" }
+Switch heatLivWBoostMode "heatLivWBoostMode" { channel ="homematic:HM-CC-RT-DN:ccu2:MEQ0571874:4#BOOST_MODE" }
+String heatLivWCtrlMode "heatLivWCtrlMode" { channel ="homematic:HM-CC-RT-DN:ccu2:MEQ0571874:4#CONTROL_MODE" }
+Number heatLivWBoostState "heatLivWBoostState" { channel = "homematic:HM-CC-RT-DN:ccu2:MEQ0571874:4#BOOST_STATE" }
+Number heatLivWSetTemp "heatLivWSetTemp" { channel = "homematic:HM-CC-RT-DN:ccu2:MEQ0571874:4#SET_TEMPERATURE" }
+Number heatLivWValveState "heatLivWValveState" { channel = "homematic:HM-CC-RT-DN:ccu2:MEQ0571874:4#VALVE_STATE" } 
+
+
+
+// Window/ Door Contacts
+
+Contact contKitDoorAtrium "contKitDoorAtrium" (gContacts) {channel = "homematic:HM-Sec-SCo:ccu2:LEQ1469830:1#STATE"}
+Contact contKitBalcony "contKitBalcony" (gContacts) {channel = "homematic:HM-Sec-SCo:ccu2:MEQ0174917:1#STATE"}
+
+Contact contLivDoorW "contLivDoorW" (gContacts) {channel = "homematic:HM-Sec-SCo:ccu2:LEQ1470385:1#STATE"}
+Contact contLivDoorE "contLivDoorE" (gContacts) {channel = "homematic:HM-Sec-SCo:ccu2:LEQ1469816:1#STATE"}
+Contact contLivWinRoof "contLivWinRoof" (gContacts) {channel = "homematic:HM-Sec-SCo:ccu2:LEQ1470280:1#STATE"}
+Contact contLivEntrance "contLivEntrance" (gContacts) {channel = "homematic:HM-Sec-SCo:ccu2:LEQ1470368:1#STATE"}
+
+Contact contBath "contBath" (gContacts) {channel = "homematic:HM-Sec-SCo:ccu2:LEQ0924258:1#STATE"}
+Contact contEscape "contEscape" (gContacts) {channel = "homematic:HM-Sec-SCo:ccu2:MEQ0174904:1#STATE"}
+Contact contGuest "contGuest" (gContacts) {channel = "homematic:HM-Sec-SCo:ccu2:LEQ1469812:1#STATE"}
+Contact contRest "contRest" (gContacts) {channel = "homematic:HM-Sec-SCo:ccu2:LEQ1470004:1#STATE"}
+Contact contSleep "contSleep" (gContacts) {channel = "homematic:HM-Sec-SCo:ccu2:LEQ1469074:1#STATE"}
+
+ 
+ 
+
+// vim: syntax=Xtend syntax=openhab
+

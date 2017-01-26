@@ -1,0 +1,627 @@
+import org.openhab.core.library.types.*
+import java.util.ArrayList
+import java.util.Arrays
+import java.util.List
+import java.util.Map
+import java.util.HashMap
+import java.util.Set
+import java.util.List
+
+import org.junit.Assert.*
+
+
+
+var HSBType hsbValue
+var HSBType hsbValue2
+var String  redValue
+var String  greenValue
+var String  blueValue
+
+val HSBType hueColorTV = new HSBType("302,92,20")
+val HSBType hueColorSTANDARD = new HSBType("302,92,20")
+val HSBType hueColorGAME = new HSBType("302,92,20")
+val HSBType hueColorCANDLE = new HSBType("302,92,20")
+val	HSBType hueColorLIGHT = new HSBType("56,18,83")
+
+
+
+// defines for Hue Groups
+val String hueBaseUtilName = 	"hue-utility.fritz.box"
+val String hueBaseUtilUser = 	"3Wm1f-cxUmbAphsrBkkQJAmimL1NEv-3hSYW9-iF"
+val String hueBaseLivName = 	"hue-living.fritz.box"
+val String hueBaseLivUser =	 	"b-MWuUtzyAY-YkQYqcMq2yEXq0to9skQgb5QYFbA"
+
+val String hueKeyName		= "name"
+val String hueKeyBase		= "base"
+val String hueKeyUID		= "uID"
+val String hueKeyGID		= "gID"
+
+val String hueGrpLivID		= "living"
+val String hueGrpLivName 	= "Living Room"
+val String hueGrpLivGrp 	= "1"
+
+val String hueGrpKitID		= "kitchen"
+val String hueGrpKitName 	= "Kitchen"
+val String hueGrpKitGrp 		= "2"
+
+val String hueGrpBathID		= "bath"
+val String hueGrpBathName 	= "Bath"
+val String hueGrpBathGrp 	= "4"
+
+val String hueGrpFloorID	= "floor"
+val String hueGrpFloorName 	= "Floor"
+val String hueGrpFloorGrp 	= "5"
+
+val String hueGrpSleepID	= "sleep"
+val String hueGrpSleepName 	= "Sleeping Room"
+val String hueGrpSleepGrp 	= "1"
+
+
+var Number testNumber = 12
+
+val List<String> yamahaInputType = newArrayList("AV1", "AV2", "AV3", "AV4", "AV5", "AV6", "AV7", "V-AUX", "AUDIO1", "AUDIO2", "AUDIO3", "AUDIO4", "iPod", "Napster", "NET RADIO", "MULTI CH", "PC", "PHONO", "TUNER", "USB")
+val List<String> yamahaSurrType = newArrayList(	"2ch Stereo", "7ch Stereo", "Hall in Munich", "The Bottom Line", "The Roxy Theatre", "Hall in Vienna", "Chamber", "Cellar Club", // MUSIC 
+												"Standard", "Spectacle", "Sci-Fi", "Adventure", "Drama", "Mono Movie", // MOVIE
+												"Sports", "Action Game", "Roleplaying Game", "Music Video",  // Entertainment
+												"Surround Decoder" )
+
+val String yInputDUNE = 	"AV2"
+val String yInputVUPLUS = 	"AV1"
+val String yInputPS4BLACK = "AV3"
+val String yInputPS4PRO = 	"AV6"
+val String yInputPS3 = 		"AV4"
+val String yInputCHROME = 	"AV5"
+val String yInputAMAZON = 	"AV7"
+val String yInputTV =	 	"AUDIO1"
+
+val String ySurrMOVIEADV =	"Adventure"
+val String ySurrENTACTGAME ="Action Game"
+val String ySurr2CH ="2ch Stereo"
+
+
+
+
+
+// lgvt
+val String lgtvInputAMP = "HDMI_1"
+
+
+// DUNE
+val String duneHTTP = "http://192.168.11.71/cgi-bin/do?cmd=ir_code&ir_code="
+
+val String duneCodeON = 		"A05FBF00"
+val String duneCodeOFF = 		"A15EBF00"
+val String duneCodeSELECT = 	"BD42BF00"
+val String duneCodePAGEUP = 	"B44BBF00"
+val String duneCodePAGEDOWN = 	"B34CBF00"
+val String duneCodeUP = 		"EA15BF00"
+val String duneCodeDOWN = 		"E916BF00"
+val String duneCodeLEFT = 		"E817BF00"
+val String duneCodeRIGHT = 		"E718BF00"
+val String duneCodeENTER = 		"EB14BF00"
+val String duneCodeRETURN = 	"FB04BF00"
+val String duneCodeINFO = 		"AF50BF00"
+val String duneCodePOPUPMENU = 	"F807BF00"
+val String duneCodeTOPMENU = 	"AE51BF00"
+val String duneCodePREV =	 	"B649BF00"
+val String duneCodeNEXT = 		"E21DBF00"
+val String duneCodeSTOP = 		"E619BF00"
+val String duneCodeSUBTITLE = 	"AB54BF00"
+val String duneCodeAUDIO = 		"BB44BF00"
+val String duneCodePLAYPAUSE = 	"A956BF00"
+val String duneCodeTOPMENUDUNE ="A857BF00"
+val String duneCodeSETUP =		"B14EBF00"
+
+
+//var ArrayList<String> hueGroupParams = new ArrayList()
+//var HashMap<String, ArrayList<String>> hueGroups = new HashMap()  // Hashmap for alert Texts
+var HashMap<String, ArrayList<String>> hueGroups = new HashMap()  // Hashmap for alert Texts
+var HashMap<String, HashMap<String, String>> hueGroupsMap = new HashMap(10)
+var HashMap<String, String> hueGroupData = new HashMap(6)
+
+
+
+
+
+
+
+val org.eclipse.xtext.xbase.lib.Functions$Function4 toggleHueGroup = [
+		String base,
+		String uID,
+		String gID,
+    	org.eclipse.smarthome.core.library.items.SwitchItem toggle |
+	var String trueFalseState 
+	var String output
+
+	
+	switch(toggle.state) {
+		case ON:
+			trueFalseState = "true"
+		case OFF:
+			trueFalseState = "false"
+	}
+ 
+    logInfo("togglHueGroup", "togglHueGroup: " +
+    										hueKeyBase + ":" + base + ", " +
+    			hueKeyUID + ":" + uID + ", " +
+    			hueKeyGID + ":" + gID + ", "
+    			)
+
+ 
+	val String input1 = "http://" + base + "/api/" + uID + "/groups/" + gID + "/action"
+	val String input2 = '{"on" : ' + trueFalseState +'}' 
+  
+	logInfo("switchHueGroup","switchHueGroup - input: " + input1 + " " + input2)
+	
+	output = sendHttpPutRequest("http://" + base + "/api/" + uID + "/groups/" + gID + "/action", 
+								"application/json", 
+								'{"on" : ' + trueFalseState +'}' )
+    
+	logInfo("Switch Light OFF","Switch Light OFF Command sent - output: " + output)
+		
+	return 0
+]
+
+
+
+rule "toggle Sleep Light"
+    when
+            Item hueSleepMainToggle changed
+    then
+            
+	var key = hueGrpSleepID
+
+    logInfo("switchHueGroup", "hueGroupsMap - key: " + key + ", " + 
+    			hueKeyName + ":" + hueGroupsMap.get(key).get(hueKeyName) + ", " +
+    			hueKeyBase + ":" + hueGroupsMap.get(key).get(hueKeyBase) + ", " +
+    			hueKeyUID + ":" + hueGroupsMap.get(key).get(hueKeyUID) + ", " +
+    			hueKeyGID + ":" + hueGroupsMap.get(key).get(hueKeyGID) + ", "
+    			)
+
+ //   toggleHueGroup.apply(hueGrpSleepID, hueSleepMainToggle.state.toString())	    
+//   	toggleHueGroup.apply(hueGrpSleepID, hueSleepMainToggle)	    
+	var roomID = hueGroupsMap.get(hueGrpSleepID)
+  	toggleHueGroup.apply(roomID.get(hueKeyBase), roomID.get(hueKeyUID), roomID.get(hueKeyGID), hueSleepMainToggle)	    
+		
+end
+
+
+rule "toggle Living Light"
+    when
+            Item hueLivMainToggle changed
+    then
+            
+	var key = hueGrpLivID
+
+    logInfo("switchHueGroup", "hueGroupsMap - key: " + key + ", " + 
+    			hueKeyName + ":" + hueGroupsMap.get(key).get(hueKeyName) + ", " +
+    			hueKeyBase + ":" + hueGroupsMap.get(key).get(hueKeyBase) + ", " +
+    			hueKeyUID + ":" + hueGroupsMap.get(key).get(hueKeyUID) + ", " +
+    			hueKeyGID + ":" + hueGroupsMap.get(key).get(hueKeyGID) + ", "
+    			)
+
+ //   toggleHueGroup.apply(hueGrpSleepID, hueSleepMainToggle.state.toString())	    
+//   	toggleHueGroup.apply(hueGrpSleepID, hueSleepMainToggle)	    
+	var roomID = hueGroupsMap.get(hueGrpLivID)
+  	toggleHueGroup.apply(roomID.get(hueKeyBase), roomID.get(hueKeyUID), roomID.get(hueKeyGID), hueSleepMainToggle)	    
+		
+end
+
+
+
+
+
+
+rule "Initialize all items"
+when
+    System started
+then
+	hueGroups.put("living", newArrayList("hue-living.fritz.box", "b-MWuUtzyAY-YkQYqcMq2yEXq0to9skQgb5QYFbA", "1"))
+	
+	hueGroupData.put(hueKeyName, hueGrpLivName)
+	hueGroupData.put(hueKeyBase, hueBaseLivName)
+	hueGroupData.put(hueKeyUID, hueBaseLivUser)
+	hueGroupData.put(hueKeyGID, hueGrpLivGrp)
+	hueGroupsMap.put(hueGrpLivID, new HashMap(hueGroupData))	
+
+
+	hueGroupData.clear()
+	hueGroupData.put(hueKeyName, hueGrpKitName)
+	hueGroupData.put(hueKeyBase, hueBaseUtilName)
+	hueGroupData.put(hueKeyUID, hueBaseUtilUser)
+	hueGroupData.put(hueKeyGID, hueGrpKitGrp)
+	hueGroupsMap.put(hueGrpKitID, new HashMap(hueGroupData))	
+	
+
+	hueGroupData.clear()
+	hueGroupData.put(hueKeyName, hueGrpBathName)
+	hueGroupData.put(hueKeyBase, hueBaseUtilName)
+	hueGroupData.put(hueKeyUID, hueBaseUtilUser)
+	hueGroupData.put(hueKeyGID, hueGrpBathGrp)
+	hueGroupsMap.put(hueGrpBathID, new HashMap(hueGroupData))	
+	
+
+	hueGroupData.clear()
+	hueGroupData.put(hueKeyName, hueGrpFloorName)
+	hueGroupData.put(hueKeyBase, hueBaseUtilName)
+	hueGroupData.put(hueKeyUID, hueBaseUtilUser)
+	hueGroupData.put(hueKeyGID, hueGrpFloorGrp)
+	hueGroupsMap.put(hueGrpFloorID, new HashMap(hueGroupData))	
+	
+
+	hueGroupData.clear()
+	hueGroupData.put(hueKeyName, hueGrpSleepName)
+	hueGroupData.put(hueKeyBase, hueBaseUtilName)
+	hueGroupData.put(hueKeyUID, hueBaseUtilUser)
+	hueGroupData.put(hueKeyGID, hueGrpSleepGrp)
+	hueGroupsMap.put(hueGrpSleepID, new HashMap(hueGroupData))	
+	
+	var String key	
+	var ArrayList<String> hueSet = new ArrayList(hueGroupsMap.keySet())
+		
+	
+	for (var i = 0; i < hueSet.size(); i++) {
+		key = hueSet.get(i)
+	    logInfo("Initialize All Items", "hueGroupsMap - key: " + key + ", " + 
+	    			hueKeyName + ":" + hueGroupsMap.get(key).get(hueKeyName) + ", " +
+	    			hueKeyBase + ":" + hueGroupsMap.get(key).get(hueKeyBase) + ", " +
+	    			hueKeyUID + ":" + hueGroupsMap.get(key).get(hueKeyUID) + ", " +
+	    			hueKeyGID + ":" + hueGroupsMap.get(key).get(hueKeyGID) + ", "
+	    			)
+	}
+
+
+end
+
+
+
+
+// Dune Remote Control
+rule "Receive Dune Remote Commands"
+when
+	Item duneRemoteCode received command
+then
+	sendHttpGetRequest( duneHTTP + duneRemoteCode.state.toString() )
+end
+
+
+// Switch to Scenes
+rule "Switch to Scene"
+when
+	Item sceneName received command
+then
+	switch (sceneName.state) {
+		case "CHILL": {
+			// set Light
+			
+//	    	gHuesLivColor.send(hueColorLIGHT)
+			hueLivMainColor.send(hueColorLIGHT)
+
+			// Turn Off Dune
+			sendHttpGetRequest( duneHTTP + duneCodeOFF)
+			
+			// Turn off TV
+	    	lgtvPower.sendCommand(OFF)
+
+	    	// Turn Amp OFF
+	    	yamahaPower.sendCommand(OFF)
+
+		}
+		case "Movie Remote":{
+			// switch to Movie Remote Panel
+			activeHABPanel.sendCommand("Movie Remote")
+			// Turn on Dune
+			sendHttpGetRequest( duneHTTP + duneCodeON)
+			
+			// Switch Lights
+//	    	gHuesLivColor.send(hueColorTV)
+			hueLivMainColor.send(hueColorTV)
+			hueLivMainToggle.sendCommand(ON)
+	
+			// Turn on TV
+	    	lgtvPower.sendCommand(ON)
+	    	// Mute TV, Sound comes from AMP
+	    	lgtvMute.sendCommand(ON)
+	    	// Set TV Input to HDMI1
+	    	lgtvInput.sendCommand(lgtvInputAMP)
+	    	// Say Hello
+	    	lgtvToast.sendCommand("Let's see some freaky Movies!")
+	    	
+	    	// Turn Amp On
+	    	yamahaPower.sendCommand(ON)
+	    	// Switch Amp Input to Dune
+	    	yamahaInput.sendCommand(yInputDUNE)
+	    	// Switch Surround Programm to MOVIE ADVENTURE
+	    	yamahaSurround.sendCommand(ySurrMOVIEADV)
+			
+		}
+		case "PS4": {
+			// Turn Off Dune
+			sendHttpGetRequest( duneHTTP + duneCodeOFF)
+			
+			// Turn on TV
+	    	lgtvPower.sendCommand(ON)
+	    	// Mute TV, Sound comes from AMP
+	    	lgtvMute.sendCommand(ON)
+	    	// Set TV Input to HDMI1
+	    	lgtvInput.sendCommand(lgtvInputAMP)
+	    	// Say Hello
+	    	lgtvToast.sendCommand("Let's play some funny Gamez!")
+	    	
+	    	// Turn Amp On
+	    	yamahaPower.sendCommand(ON)
+	    	// Switch Amp Input to Dune
+	    	yamahaInput.sendCommand(yInputPS4BLACK)
+	    	// Switch Surround Programm to MOVIE ADVENTURE
+	    	yamahaSurround.sendCommand(ySurrENTACTGAME)
+
+			// switch to "Easy Remote" Panel
+			activeHABPanel.sendCommand("Easy Remote")
+
+		}
+		case "MUSIC": {
+			// Turn Off Dune
+			sendHttpGetRequest( duneHTTP + duneCodeOFF)
+			
+			// Turn on TV
+	    	lgtvPower.sendCommand(ON)
+	    	// Mute TV, Sound comes from AMP
+	    	lgtvMute.sendCommand(ON)
+	    	// Set TV Input to HDMI1
+	    	lgtvInput.sendCommand(lgtvInputAMP)
+	    	// Say Hello
+	    	lgtvToast.sendCommand("Let's play some funny Gamez!")
+	    	
+	    	// Turn Amp On
+	    	yamahaPower.sendCommand(ON)
+	    	// Switch Amp Input to Dune
+	    	yamahaInput.sendCommand(yInputCHROME)
+	    	// Switch Surround Programm to MOVIE ADVENTURE
+	    	yamahaSurround.sendCommand(ySurr2CH)
+
+			// switch to "Easy Remote" Panel
+			activeHABPanel.sendCommand("Easy Remote")
+
+		}
+		case "NETFLIX": {
+			// Turn Off Dune
+			sendHttpGetRequest( duneHTTP + duneCodeOFF)
+			
+			// Turn on TV
+	    	lgtvPower.sendCommand(ON)
+	    	// Mute TV, Sound comes from AMP
+	    	lgtvMute.sendCommand(ON)
+	    	// Set TV Input to HDMI1
+	    	lgtvInput.sendCommand(lgtvInputAMP)
+	    	// Say Hello
+	    	lgtvToast.sendCommand("Let's play some funny Gamez!")
+	    	
+	    	// Turn Amp On
+	    	yamahaPower.sendCommand(ON)
+	    	// Switch Amp Input to Dune
+	    	yamahaInput.sendCommand(yInputTV)
+	    	// Switch Surround Programm to MOVIE ADVENTURE
+	    	yamahaSurround.sendCommand(ySurrMOVIEADV)
+
+
+			// switch to "Easy Remote" Panel
+			activeHABPanel.sendCommand("Easy Remote")
+		}
+		case "SHUTDOWN": {
+//			gHuesLivColor.send(OFF)
+//			hueLivMainColor.send(OFF)
+
+			hueLivMainToggle.sendCommand(OFF)
+
+//	var output = sendHttpPutRequest("http://hue-living.fritz.box/api/b-MWuUtzyAY-YkQYqcMq2yEXq0to9skQgb5QYFbA/groups/1/action", "application/json", '{"on": false}')
+//    logInfo("HVAC","HVAC Command sent - output: "+output)
+
+
+//			gHuesLivToggle.send(OFF)
+			gPowerSwitches.send(OFF)
+//			ColLivMain.postUpdate(OFF)
+//			gHuesLivToggle.postUpdate(OFF)
+//			gHuesLivDimmer.postUpdate(0)
+//			gHuesLivColor.postUpdate(OFF)
+			
+			
+		}
+	}
+end
+
+
+// Start lgtv through Wake On LAN
+rule lgtvWOL
+when 
+	Item lgtvPower received command ON
+then
+    sendCommand( lgtvWOL, ON) 
+end
+
+
+
+
+
+/* 
+
+rule "Set Sync hueLivMainColor"
+when
+	Item gHuesLivColor changed
+then
+	if(gHuesLivColor.state != UNDEF) {
+		logInfo("HVAC","hueLivMainColor.state =  "+ hueLivMainColor.state  )
+
+		hueLivMainColor.state = gHuesLivColor.state as HSBType		
+
+
+
+		hueLivMainColor.postUpdate(gHuesLivColor.state)		
+
+
+
+//		if(gHuesLivToggle == ON)
+//			hueLivMainToggle.postUpdate(ON)
+//		else
+//			hueLivMainToggle.postUpdate(OFF)
+	
+	
+	
+		logInfo("HVAC","hueLivMainColor.state =  "+ hueLivMainColor.state  )
+		
+		
+	}
+end
+*/
+
+
+
+rule "Set RGB value"
+    when
+            Item hueLivMainColor received update
+    then
+            hsbValue = hueLivMainColor.state as HSBType
+            
+            // Umrechnung der Wertesysteme HSB: hue = [0..360], sat = [0..100], bri = [0..100] / Philips: hue = [0..65535], sat = [0-255], bri = [0..255]
+            
+            var int hue = Math.round(hsbValue.getHue().floatValue() / 360 * 65535)
+            var int sat = Math.round(hsbValue.getSaturation().floatValue()  / 100 * 255)
+            var int bri = Math.round(hsbValue.getBrightness().floatValue()  / 100 * 255)
+            
+		    logInfo("HVAC","hsbValue.getHue() = "+hue  )
+		    logInfo("HVAC","hsbValue.getSaturation() = "+sat)
+		    logInfo("HVAC","hsbValue.getBrightness() = "+bri)
+		    
+            
+	var output = sendHttpPutRequest("http://hue-living.fritz.box/api/b-MWuUtzyAY-YkQYqcMq2yEXq0to9skQgb5QYFbA/groups/1/action", "application/json", '{"hue": ' +  hue + ', "sat" : ' + sat + ', "bri" : ' + bri+ ' }')
+    logInfo("Set RGB Value","Set RGB Value received update - output: "+ '{"hue": ' +  hue + ', "sat" : ' + sat + ', "bri" : ' + bri+ ' }')
+    logInfo("Set RGB Value","Set RGB Value received update - output: "+output)
+
+
+ /*            
+			gHuesLivColor.send(hsbValue)
+ 			if (hsbValue.getBrightness() as Number != 0) 
+				gHuesLivColor.postUpdate(ON)
+			else 
+				gHuesLivColor.postUpdate(OFF)
+*/
+
+				
+			
+ /* 			gHuesLivColor.members.forEach( s |
+				if( s.state == ON ) {
+					s.sendCommand(hsbValue as Number)
+				}
+			)
+*/
+end
+
+
+
+rule "Switch All Lights ON"
+    when
+            Item hueMainToggle changed to ON
+    then
+            
+//	var output = sendHttpPutRequest("http://hue-living.fritz.box/api/b-MWuUtzyAY-YkQYqcMq2yEXq0to9skQgb5QYFbA/groups/1/action", "application/json", '{"on" : true }' )
+
+	var String output 
+	var String key
+	
+	var ArrayList<String> hueSet = new ArrayList(hueGroupsMap.keySet())
+		
+	
+	for (var i = 0; i < hueSet.size(); i++) {
+		key = hueSet.get(i)
+		output = sendHttpPutRequest("http://" + 
+						hueGroupsMap.get(key).get(hueKeyBase) +
+						"/api/" +
+						hueGroupsMap.get(key).get(hueKeyUID) +
+						"/groups/" +
+						hueGroupsMap.get(key).get(hueKeyGID) +
+						"/action", "application/json", '{"on" : true }' )
+	//    logInfo("HVAC","HVAC Command sent - output: "+ '{"hue": ' +  hue + ', "sat" : ' + sat + ', "bri" : ' + bri+ ' }')
+//		hueLivMainColor.postUpdate(hueLivMainColor.state)
+	    logInfo("Switch Light ON","Switch Light ON Command sent - output: "+output)
+	}
+end
+
+
+rule "Switch All Lights OFF"
+    when
+            Item hueMainToggle changed to OFF
+    then
+            
+//	var output = sendHttpPutRequest("http://hue-living.fritz.box/api/b-MWuUtzyAY-YkQYqcMq2yEXq0to9skQgb5QYFbA/groups/1/action", "application/json", '{"on" : true }' )
+
+	var ArrayList<String> hueSet = new ArrayList(hueGroupsMap.keySet())
+	
+	var String output 
+	var String key
+	
+	for (var i = 0; i < hueSet.size(); i++) {
+		key = hueSet.get(i)
+		output = sendHttpPutRequest("http://" + 
+						hueGroupsMap.get(key).get(hueKeyBase) +
+						"/api/" +
+						hueGroupsMap.get(key).get(hueKeyUID) +
+						"/groups/" +
+						hueGroupsMap.get(key).get(hueKeyGID) +
+						"/action", "application/json", '{"on" : false }' )
+	//    logInfo("HVAC","HVAC Command sent - output: "+ '{"hue": ' +  hue + ', "sat" : ' + sat + ', "bri" : ' + bri+ ' }')
+//		hueLivMainColor.postUpdate(hueLivMainColor.state)
+	    logInfo("Switch Light OFF","Switch Light OFF Command sent - output: "+output)
+	}
+end
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+rule "Switch Group Light OFF"
+    when
+            Item hueLivMainToggle changed to OFF
+    then
+            
+	var output = sendHttpPutRequest("http://hue-living.fritz.box/api/b-MWuUtzyAY-YkQYqcMq2yEXq0to9skQgb5QYFbA/groups/1/action", "application/json", '{"on" : false }' )
+//    logInfo("HVAC","HVAC Command sent - output: "+ '{"hue": ' +  hue + ', "sat" : ' + sat + ', "bri" : ' + bri+ ' }')
+
+	hueLivMainColor.postUpdate(hueLivMainColor.state)
+    logInfo("Switch Light OFF","Switch Light OFF Command sent - output: "+output)
+end
+
+
+
+rule "Switch Light ON"
+    when
+            Item hueLivMainToggle changed to ON
+    then
+            
+	var output = sendHttpPutRequest("http://hue-living.fritz.box/api/b-MWuUtzyAY-YkQYqcMq2yEXq0to9skQgb5QYFbA/groups/1/action", "application/json", '{"on" : true }' )
+//    logInfo("HVAC","HVAC Command sent - output: "+ '{"hue": ' +  hue + ', "sat" : ' + sat + ', "bri" : ' + bri+ ' }')
+	hueLivMainColor.postUpdate(hueLivMainColor.state)
+    logInfo("Switch Light ON","Switch Light ON Command sent - output: "+output)
+
+end
+
+
+rule "Hue Change Hue group color"
+when
+	Item TestButton changed
+then
+//	var output = sendHttpPostRequest("http://192.168.1.11:80/tstat", "application/json", '{"tmode":' + receivedCommand + '}')
+	var output = sendHttpPutRequest("http://hue-living.fritz.box/api/b-MWuUtzyAY-YkQYqcMq2yEXq0to9skQgb5QYFbA/groups/1/action", "application/json", '{"on": true, "hue": 2000, "effect": "colorloop"}')
+    logInfo("HVAC","HVAC Command sent - output: "+output)
+end	
+
+
+
+// vim: syntax=Xtend syntax=openhab
