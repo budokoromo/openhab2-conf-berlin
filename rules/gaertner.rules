@@ -22,7 +22,10 @@ val HSBType hueColorSTANDARD = new HSBType("302,92,20")
 val HSBType hueColorGAME = new HSBType("302,92,20")
 val HSBType hueColorCANDLE = new HSBType("302,92,20")
 val	HSBType hueColorLIGHT = new HSBType("56,18,83")
-
+val	HSBType hueColorDAWN = new HSBType("56,18,83")
+val	HSBType hueColorPINK = new HSBType("302,92,20")
+//val HSBType hueColorCANDLELIGHT = new HSBType("5643,77,97")  // h / 65535 * 360, s / 255 * 100, b / 255 * 100
+val HSBType hueColorCANDLELIGHT = new HSBType("31,36,30")  
 
 
 // defines for Hue Groups
@@ -158,11 +161,264 @@ val org.eclipse.xtext.xbase.lib.Functions$Function4 toggleHueGroup = [
 								'{"on" : ' + trueFalseState +'}' )
     
 	logInfo("Switch Light OFF","Switch Light OFF Command sent - output: " + output)
-		
+	
 	return 0
 ]
 
 
+
+// Set Color on a complete hue group
+val org.eclipse.xtext.xbase.lib.Functions$Function4 colorHueGroup = [
+		String base,		// base IP
+		String uID,			// User ID
+		String gID,			// group ID
+    	HSBType color |		// color in HSB Format
+
+	var String output
+	
+    // Umrechnung der Wertesysteme HSB: hue = [0..360], sat = [0..100], bri = [0..100] / Philips: hue = [0..65535], sat = [0-255], bri = [0..255]
+    var int hue = Math.round(color.getHue().floatValue() / 360 * 65535)
+    var int sat = Math.round(color.getSaturation().floatValue()  / 100 * 255)
+    var int bri = Math.round(color.getBrightness().floatValue()  / 100 * 255)
+            
+  	
+	output = sendHttpPutRequest("http://" + base + "/api/" + uID + "/groups/" + gID + "/action", 
+								"application/json", 
+								'{"hue": ' +  hue + ', "sat" : ' + sat + ', "bri" : ' + bri+ ' }' )
+    
+	logInfo("colorHueGroup","Set new color for group - output: " + output)
+	
+	return 0
+]
+
+
+
+// Start Scene on a complete hue group
+val org.eclipse.xtext.xbase.lib.Functions$Function4 sceneHueGroup = [
+		String base,		// base IP
+		String uID,			// User ID
+		String gID,			// group ID
+    	String scene |		// color in HSB Format
+
+	var String output
+	
+  	
+	output = sendHttpPutRequest("http://" + base + "/api/" + uID + "/groups/" + gID + "/action", 
+								"application/json", 
+								'{"scene": "' +  scene + '" }' )
+    
+	logInfo("sceneHueGroup","Set new scene for group - output: " + output)
+	
+	return 0
+]
+
+
+
+
+
+rule "Set RGB value Kitchen"
+when
+	Item hueKitMainColor received update
+then
+    var hsbValue = hueKitMainColor.state as HSBType		// get color from state of Color Item 
+    var roomID = hueGroupsMap.get(hueGrpKitID)			// get Room ID from Hash Map
+	colorHueGroup.apply(roomID.get(hueKeyBase), roomID.get(hueKeyUID), roomID.get(hueKeyGID), hsbValue)	    
+end
+
+
+
+
+rule "Set RGB value Living"
+when
+	Item hueLivMainColor received update
+then
+    var hsbValue = hueLivMainColor.state as HSBType
+    var roomID = hueGroupsMap.get(hueGrpLivID)
+	colorHueGroup.apply(roomID.get(hueKeyBase), roomID.get(hueKeyUID), roomID.get(hueKeyGID), hsbValue)	    
+end
+
+
+
+
+rule "Set RGB value Floor"
+when
+	Item hueFloorMainColor received update
+then
+    var hsbValue = hueFloorMainColor.state as HSBType
+    var roomID = hueGroupsMap.get(hueGrpFloorID)
+	colorHueGroup.apply(roomID.get(hueKeyBase), roomID.get(hueKeyUID), roomID.get(hueKeyGID), hsbValue)	    
+end
+
+
+
+
+rule "Set RGB value Sleep"
+when
+	Item hueSleepMainColor received update
+then
+    var hsbValue = hueSleepMainColor.state as HSBType
+    var roomID = hueGroupsMap.get(hueGrpSleepID)
+	colorHueGroup.apply(roomID.get(hueKeyBase), roomID.get(hueKeyUID), roomID.get(hueKeyGID), hsbValue)	    
+end
+
+
+
+
+rule "Set RGB value Bath"
+when
+	Item hueBathMainColor received update
+then
+    var hsbValue = hueBathMainColor.state as HSBType
+    var roomID = hueGroupsMap.get(hueGrpBathID)
+	colorHueGroup.apply(roomID.get(hueKeyBase), roomID.get(hueKeyUID), roomID.get(hueKeyGID), hsbValue)	    
+end
+
+
+
+// Küche
+rule "Switch Scene Kitchen Light"
+when
+	Item sceneHueKitLight received command ON
+then
+    var roomID = hueGroupsMap.get(hueGrpKitID)
+	var HSBType lightColor = hueColorLIGHT
+
+	colorHueGroup.apply(roomID.get(hueKeyBase), roomID.get(hueKeyUID), roomID.get(hueKeyGID), lightColor)
+	hueKitMainColor.send(lightColor)
+end
+
+
+rule "Switch Scene Kitchen Candle"
+when
+	Item sceneHueKitCandle received command ON
+then
+    var roomID = hueGroupsMap.get(hueGrpKitID)
+	var HSBType lightColor = hueColorCANDLELIGHT
+
+	colorHueGroup.apply(roomID.get(hueKeyBase), roomID.get(hueKeyUID), roomID.get(hueKeyGID), lightColor)
+	hueKitMainColor.send(lightColor)
+end
+
+
+rule "Switch Scene Kitchen Dawn"
+when
+	Item sceneHueKitDawn received command ON
+then
+    var roomID = hueGroupsMap.get(hueGrpKitID)			// get Room ID from Hash Map
+	sceneHueGroup.apply(roomID.get(hueKeyBase), roomID.get(hueKeyUID), roomID.get(hueKeyGID), "A0X9mTCNbcNGa3Q")	    
+
+//    var roomID = hueGroupsMap.get(hueGrpKitID)
+//	colorHueGroup.apply(roomID.get(hueKeyBase), roomID.get(hueKeyUID), roomID.get(hueKeyGID), hueColorDAWN)
+end
+
+
+	    
+// Bad
+rule "Switch Scene Bath Light"
+when
+	Item sceneHueBathLight received command ON
+then
+    var roomID = hueGroupsMap.get(hueGrpBathID)
+	var HSBType lightColor = hueColorLIGHT
+
+	colorHueGroup.apply(roomID.get(hueKeyBase), roomID.get(hueKeyUID), roomID.get(hueKeyGID), lightColor)
+	hueBathMainColor.send(lightColor)
+end
+
+
+rule "Switch Scene Bath Candle"
+when
+	Item sceneHueBathCandle received command ON
+then
+    var roomID = hueGroupsMap.get(hueGrpBathID)
+	var HSBType lightColor = hueColorCANDLELIGHT
+
+	colorHueGroup.apply(roomID.get(hueKeyBase), roomID.get(hueKeyUID), roomID.get(hueKeyGID), lightColor)
+	hueBathMainColor.send(lightColor)
+end
+
+
+rule "Switch Scene Bath Pink"
+when
+	Item sceneHueBathPink received command ON
+then
+    var roomID = hueGroupsMap.get(hueGrpBathID)
+	var HSBType lightColor = hueColorPINK
+
+	colorHueGroup.apply(roomID.get(hueKeyBase), roomID.get(hueKeyUID), roomID.get(hueKeyGID), lightColor)
+	hueBathMainColor.send(lightColor)
+end
+
+
+
+// Sleepingroom
+rule "Switch Scene Sleep Light"
+when
+	Item sceneHueSleepLight received command ON
+then
+    var roomID = hueGroupsMap.get(hueGrpSleepID)
+	var HSBType lightColor = hueColorLIGHT
+
+	colorHueGroup.apply(roomID.get(hueKeyBase), roomID.get(hueKeyUID), roomID.get(hueKeyGID), lightColor)
+	hueSleepMainColor.send(lightColor)
+end
+
+
+rule "Switch Scene Sleep Candle"
+when
+	Item sceneHueSleepCandle received command ON
+then
+    var roomID = hueGroupsMap.get(hueGrpSleepID)
+	var HSBType lightColor = hueColorCANDLELIGHT
+
+	colorHueGroup.apply(roomID.get(hueKeyBase), roomID.get(hueKeyUID), roomID.get(hueKeyGID), lightColor)
+	hueSleepMainColor.send(lightColor)
+end
+
+
+rule "Switch Scene Sleep Pink"
+when
+	Item sceneHueSleepPink received command ON
+then
+    var roomID = hueGroupsMap.get(hueGrpSleepID)
+	var HSBType lightColor = hueColorPINK
+
+	colorHueGroup.apply(roomID.get(hueKeyBase), roomID.get(hueKeyUID), roomID.get(hueKeyGID), lightColor)
+	hueSleepMainColor.send(lightColor)
+end
+
+
+
+
+/*
+rule "toggle Light"
+    when
+            Item hueSleepMainToggle changed or
+            Item hueLivMainToggle changed or
+            Item hueKitMainToggle changed or
+            Item hueFloorMainToggle changed or
+            Item hueBathMainToggle changed 
+            
+    then
+            
+//	val room = gMainToggles.members.filter[s|s.lastUpdate() != null].sortBy[lastUpdate()].last as SwitchItem
+	val room = gMainToggles.members.filter[s|s.lastUpdate() != null].sortBy[lastUpdate()].last as SwitchItem
+
+	logInfo("toggle Light", "room = " + room.toString())            
+	var key = hueGrpSleepID
+
+    logInfo("switchHueGroup", "hueGroupsMap - key: " + key + ", " + 
+    			hueKeyName + ":" + hueGroupsMap.get(key).get(hueKeyName) + ", " +
+    			hueKeyBase + ":" + hueGroupsMap.get(key).get(hueKeyBase) + ", " +
+    			hueKeyUID + ":" + hueGroupsMap.get(key).get(hueKeyUID) + ", " +
+    			hueKeyGID + ":" + hueGroupsMap.get(key).get(hueKeyGID) + ", "
+    			)
+
+	var roomID = hueGroupsMap.get(hueGrpSleepID)
+  	toggleHueGroup.apply(roomID.get(hueKeyBase), roomID.get(hueKeyUID), roomID.get(hueKeyGID), hueSleepMainToggle)	    
+		
+end
+ */
 
 rule "toggle Sleep Light"
     when
@@ -180,7 +436,7 @@ rule "toggle Sleep Light"
 
  //   toggleHueGroup.apply(hueGrpSleepID, hueSleepMainToggle.state.toString())	    
 //   	toggleHueGroup.apply(hueGrpSleepID, hueSleepMainToggle)	    
-	var roomID = hueGroupsMap.get(hueGrpSleepID)
+	var roomID = hueGroupsMap.get(key)
   	toggleHueGroup.apply(roomID.get(hueKeyBase), roomID.get(hueKeyUID), roomID.get(hueKeyGID), hueSleepMainToggle)	    
 		
 end
@@ -188,7 +444,7 @@ end
 
 rule "toggle Living Light"
     when
-            Item hueLivMainToggle changed
+            Item hueLivMainToggle received command
     then
             
 	var key = hueGrpLivID
@@ -202,10 +458,79 @@ rule "toggle Living Light"
 
  //   toggleHueGroup.apply(hueGrpSleepID, hueSleepMainToggle.state.toString())	    
 //   	toggleHueGroup.apply(hueGrpSleepID, hueSleepMainToggle)	    
-	var roomID = hueGroupsMap.get(hueGrpLivID)
-  	toggleHueGroup.apply(roomID.get(hueKeyBase), roomID.get(hueKeyUID), roomID.get(hueKeyGID), hueSleepMainToggle)	    
+	var roomID = hueGroupsMap.get(key)
+  	toggleHueGroup.apply(roomID.get(hueKeyBase), roomID.get(hueKeyUID), roomID.get(hueKeyGID), hueLivMainToggle)	    
 		
 end
+
+
+rule "toggle kitchen Light"
+    when
+            Item hueKitMainToggle received command
+    then
+            
+	var key = hueGrpKitID
+
+    logInfo("switchHueGroup", "hueGroupsMap - key: " + key + ", " + 
+    			hueKeyName + ":" + hueGroupsMap.get(key).get(hueKeyName) + ", " +
+    			hueKeyBase + ":" + hueGroupsMap.get(key).get(hueKeyBase) + ", " +
+    			hueKeyUID + ":" + hueGroupsMap.get(key).get(hueKeyUID) + ", " +
+    			hueKeyGID + ":" + hueGroupsMap.get(key).get(hueKeyGID) + ", "
+    			)
+
+ //   toggleHueGroup.apply(hueGrpSleepID, hueSleepMainToggle.state.toString())	    
+//   	toggleHueGroup.apply(hueGrpSleepID, hueSleepMainToggle)	    
+	var roomID = hueGroupsMap.get(key)
+  	toggleHueGroup.apply(roomID.get(hueKeyBase), roomID.get(hueKeyUID), roomID.get(hueKeyGID), hueKitMainToggle)	    
+		
+end
+
+
+
+rule "toggle Floor Light"
+    when
+            Item hueFloorMainToggle received command
+    then
+            
+	var key = hueGrpFloorID
+
+    logInfo("switchHueGroup", "hueGroupsMap - key: " + key + ", " + 
+    			hueKeyName + ":" + hueGroupsMap.get(key).get(hueKeyName) + ", " +
+    			hueKeyBase + ":" + hueGroupsMap.get(key).get(hueKeyBase) + ", " +
+    			hueKeyUID + ":" + hueGroupsMap.get(key).get(hueKeyUID) + ", " +
+    			hueKeyGID + ":" + hueGroupsMap.get(key).get(hueKeyGID) + ", "
+    			)
+
+ //   toggleHueGroup.apply(hueGrpSleepID, hueSleepMainToggle.state.toString())	    
+//   	toggleHueGroup.apply(hueGrpSleepID, hueSleepMainToggle)	    
+	var roomID = hueGroupsMap.get(key)
+  	toggleHueGroup.apply(roomID.get(hueKeyBase), roomID.get(hueKeyUID), roomID.get(hueKeyGID), hueFloorMainToggle)	    
+		
+end
+
+
+
+rule "toggle Bath Light"
+    when
+            Item hueBathMainToggle received command
+    then
+            
+	var key = hueGrpBathID
+
+    logInfo("switchHueGroup", "hueGroupsMap - key: " + key + ", " + 
+    			hueKeyName + ":" + hueGroupsMap.get(key).get(hueKeyName) + ", " +
+    			hueKeyBase + ":" + hueGroupsMap.get(key).get(hueKeyBase) + ", " +
+    			hueKeyUID + ":" + hueGroupsMap.get(key).get(hueKeyUID) + ", " +
+    			hueKeyGID + ":" + hueGroupsMap.get(key).get(hueKeyGID) + ", "
+    			)
+
+ //   toggleHueGroup.apply(hueGrpSleepID, hueSleepMainToggle.state.toString())	    
+//   	toggleHueGroup.apply(hueGrpSleepID, hueSleepMainToggle)	    
+	var roomID = hueGroupsMap.get(key)
+  	toggleHueGroup.apply(roomID.get(hueKeyBase), roomID.get(hueKeyUID), roomID.get(hueKeyGID), hueBathMainToggle)	    
+		
+end
+
 
 
 
@@ -275,6 +600,143 @@ end
 
 
 
+rule "Switch Scene Movie"
+when
+	Item sceneMovie received command ON
+then
+	// switch to Movie Remote Panel
+	activeHABPanel.sendCommand("Movie Remote")
+	// Turn on Dune
+	sendHttpGetRequest(duneHTTP + duneCodeON)
+	
+	// Switch Lights
+	hueLivMainColor.send(hueColorTV)
+	hueLivMainToggle.sendCommand(ON)
+//	hueLivMainToggle.postUpdate(ON)
+ 
+	// Turn on TV
+	lgtvPower.sendCommand(ON)
+	// Mute TV, Sound comes from AMP
+	lgtvMute.sendCommand(ON)
+	// Set TV Input to HDMI1
+	lgtvInput.sendCommand(lgtvInputAMP)
+	// Say Hello
+	lgtvToast.sendCommand("Let's see some freaky Movies!")
+	
+	// Turn Amp On
+	yamahaPower.sendCommand(ON)
+	// Switch Amp Input to Dune
+	yamahaInput.sendCommand(yInputDUNE)
+	// Switch Surround Programm to MOVIE ADVENTURE
+	yamahaSurround.sendCommand(ySurrMOVIEADV)
+end
+
+rule "Switch Scene Gaming"
+when
+	Item sceneGaming received command ON
+then
+	// Turn Off Dune
+	sendHttpGetRequest( duneHTTP + duneCodeOFF)
+	
+	// Turn on TV
+	lgtvPower.sendCommand(ON)
+	// Mute TV, Sound comes from AMP
+	lgtvMute.sendCommand(ON)
+	// Set TV Input to HDMI1
+	lgtvInput.sendCommand(lgtvInputAMP)
+	// Say Hello
+	lgtvToast.sendCommand("Let's play some funny Gamez!")
+	
+	// Turn Amp On
+	yamahaPower.sendCommand(ON)
+	// Switch Amp Input to Dune
+	yamahaInput.sendCommand(yInputPS4BLACK)
+	// Switch Surround Programm to MOVIE ADVENTURE
+	yamahaSurround.sendCommand(ySurrENTACTGAME)
+
+	// switch to "Easy Remote" Panel
+	activeHABPanel.sendCommand("Easy Remote")
+end
+
+rule "Switch Scene Chill"
+when
+	Item sceneChill received command ON
+then
+			// set Light
+			hueLivMainColor.send(hueColorLIGHT)
+
+			// Turn Off Dune
+			sendHttpGetRequest( duneHTTP + duneCodeOFF)
+			
+			// Turn off TV
+	    	lgtvPower.sendCommand(OFF)
+
+	    	// Turn Amp OFF
+	    	yamahaPower.sendCommand(OFF)
+end
+
+rule "Switch Scene Music"
+when
+	Item sceneMusic received command ON
+then
+	// Turn Off Dune
+	sendHttpGetRequest( duneHTTP + duneCodeOFF)
+	
+	// Turn on TV
+	lgtvPower.sendCommand(ON)
+	// Mute TV, Sound comes from AMP
+	lgtvMute.sendCommand(ON)
+	// Set TV Input to HDMI1
+	lgtvInput.sendCommand(lgtvInputAMP)
+	// Say Hello
+	lgtvToast.sendCommand("Let's play some funny Gamez!")
+	
+	// Turn Amp On
+	yamahaPower.sendCommand(ON)
+	// Switch Amp Input to Dune
+	yamahaInput.sendCommand(yInputCHROME)
+	// Switch Surround Programm to MOVIE ADVENTURE
+	yamahaSurround.sendCommand(ySurr2CH)
+
+	// switch to "Easy Remote" Panel
+	activeHABPanel.sendCommand("Easy Remote")
+end
+
+rule "Switch Scene Netflix"
+when
+	Item sceneNetflix received command ON
+then
+	// Turn Off Dune
+	sendHttpGetRequest( duneHTTP + duneCodeOFF)
+	
+	// Turn on TV
+	lgtvPower.sendCommand(ON)
+	// Mute TV, Sound comes from AMP
+	lgtvMute.sendCommand(ON)
+	// Set TV Input to HDMI1
+	lgtvInput.sendCommand(lgtvInputAMP)
+	// Say Hello
+	lgtvToast.sendCommand("Let's play some funny Gamez!")
+	
+	// Turn Amp On
+	yamahaPower.sendCommand(ON)
+	// Switch Amp Input to Dune
+	yamahaInput.sendCommand(yInputTV)
+	// Switch Surround Programm to MOVIE ADVENTURE
+	yamahaSurround.sendCommand(ySurrMOVIEADV)
+
+
+	// switch to "Easy Remote" Panel
+	activeHABPanel.sendCommand("Easy Remote")
+end
+
+rule "Switch Scene AllOff"
+when
+	Item sceneAllOff received command OFF
+then
+//			hueLivMainToggle.sendCommand(OFF)
+			gPowerSwitches.send(OFF)
+end 
 
 // Dune Remote Control
 rule "Receive Dune Remote Commands"
@@ -475,47 +937,6 @@ end
 
 
 
-rule "Set RGB value"
-    when
-            Item hueLivMainColor received update
-    then
-            hsbValue = hueLivMainColor.state as HSBType
-            
-            // Umrechnung der Wertesysteme HSB: hue = [0..360], sat = [0..100], bri = [0..100] / Philips: hue = [0..65535], sat = [0-255], bri = [0..255]
-            
-            var int hue = Math.round(hsbValue.getHue().floatValue() / 360 * 65535)
-            var int sat = Math.round(hsbValue.getSaturation().floatValue()  / 100 * 255)
-            var int bri = Math.round(hsbValue.getBrightness().floatValue()  / 100 * 255)
-            
-		    logInfo("HVAC","hsbValue.getHue() = "+hue  )
-		    logInfo("HVAC","hsbValue.getSaturation() = "+sat)
-		    logInfo("HVAC","hsbValue.getBrightness() = "+bri)
-		    
-            
-	var output = sendHttpPutRequest("http://hue-living.fritz.box/api/b-MWuUtzyAY-YkQYqcMq2yEXq0to9skQgb5QYFbA/groups/1/action", "application/json", '{"hue": ' +  hue + ', "sat" : ' + sat + ', "bri" : ' + bri+ ' }')
-    logInfo("Set RGB Value","Set RGB Value received update - output: "+ '{"hue": ' +  hue + ', "sat" : ' + sat + ', "bri" : ' + bri+ ' }')
-    logInfo("Set RGB Value","Set RGB Value received update - output: "+output)
-
-
- /*            
-			gHuesLivColor.send(hsbValue)
- 			if (hsbValue.getBrightness() as Number != 0) 
-				gHuesLivColor.postUpdate(ON)
-			else 
-				gHuesLivColor.postUpdate(OFF)
-*/
-
-				
-			
- /* 			gHuesLivColor.members.forEach( s |
-				if( s.state == ON ) {
-					s.sendCommand(hsbValue as Number)
-				}
-			)
-*/
-end
-
-
 
 rule "Switch All Lights ON"
     when
@@ -584,7 +1005,7 @@ end
 
 
 
-
+/* 
 
 rule "Switch Group Light OFF"
     when
@@ -622,6 +1043,6 @@ then
     logInfo("HVAC","HVAC Command sent - output: "+output)
 end	
 
-
+*/
 
 // vim: syntax=Xtend syntax=openhab

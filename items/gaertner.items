@@ -2,6 +2,7 @@ Group gAll		"All"
 
 Group gRooms	"Rooms"				(gAll)
 Group gRoomsLiv	"Living Room"		(gRooms)
+Group gMainToggles
 
 
 //Group gLights 	"Lights"			(gAll)
@@ -41,35 +42,49 @@ Number  Weather_Temp        "Dzisiaj [%.2f °C]"  (gWeather) {weather="locationI
 String	activeHABPanel
 
 // virtual Controls for Hues
-Switch	hueLivMainToggle "Wohnzimmer Licht" ["Lighting"]
+Switch	hueLivMainToggle "Wohnzimmer Licht" (gMainToggles) ["Lighting"] 
 Dimmer  hueLivMainDimmer "Wohnzimmer Dimmer" ["Lighting"]
 Color	hueLivMainColor
 Dimmer	hueLivMainColorTemp
 
-Switch	hueKitMainToggle
+Switch	hueKitMainToggle "Küchen Licht" (gMainToggles) ["Lighting"]
 Dimmer  hueKitMainDimmer
 Color	hueKitMainColor
 Dimmer	hueKitMainColorTemp
 
-Switch	hueFloorMainToggle
+Switch	hueFloorMainToggle 	"Flur Licht" (gMainToggles)  ["Lighting"]
 Dimmer  hueFloorMainDimmer
 Color	hueFloorMainColor
 Dimmer	hueFloorMainColorTemp
 
-Switch	hueSleepMainToggle "Schlafzimmer Licht" ["Lighting"]
+Switch	hueSleepMainToggle "Schlafzimmer Licht" (gMainToggles) ["Lighting"]
 Dimmer  hueSleepMainDimmer "Schlafzimmer Dimmer" ["Lighting"]
 Color	hueSleepMainColor
 Dimmer	hueSleepMainColorTemp
 
-Switch	hueBathMainToggle
+Switch	hueBathMainToggle 	"Badezimmer Licht" (gMainToggles) ["Lighting"]
 Dimmer  hueBathMainDimmer
 Color	hueBathMainColor
 Dimmer	hueBathMainColorTemp
 
 Switch	hueMainToggle	"Alle Lichter" ["Lighting"]
 
+// virtual Switches for scenes
+Switch	sceneMovie	"Dune Player" ["Lighting"] {autoupdate="false"}
+Switch	sceneGaming	"Playstation" ["Lighting"] {autoupdate="false"}
+Switch	sceneMusic	"Musik" ["Lighting"] {autoupdate="false"}
+Switch	sceneChill	"Chillige Atmosphäre" ["Lighting"] {autoupdate="false"}
+Switch	sceneAllOff	"Anlage" ["Lighting"] {autoupdate="false"}
+Switch	sceneNetflix	"Netflix" ["Lighting"] {autoupdate="false"}
 
 
+Switch sceneHueKitLight 	"Küchenlicht Standard" 		(gScenes) ["Lighting"] {autoupdate="false"} 
+Switch sceneHueKitCandle 	"Küchenlicht Kerzenschein" 	(gScenes) ["Lighting"] {autoupdate="false"} 
+Switch sceneHueKitDawn 		"Küchenlicht Dämmerung" 	(gScenes) ["Lighting"] {autoupdate="false"} 
+
+Switch sceneHueBathLight 	"Badezimmer Standard" 		(gScenes) ["Lighting"] {autoupdate="false"} 
+Switch sceneHueBathCandle 	"Badezimmer Kerzenschein" 	(gScenes) ["Lighting"] {autoupdate="false"} 
+Switch sceneHueBathPink 	"Badezimmer Pink" 			(gScenes) ["Lighting"] {autoupdate="false"} 
 
 
 /* 
