@@ -1,8 +1,13 @@
 Group gAll		"All"
+Group Whg		"Wohnung"
 
 Group gRooms	"Rooms"				(gAll)
 Group gRoomsLiv	"Living Room"		(gRooms)
 Group gMainToggles
+
+Group gRSSI		"RSSI"				(Whg)			
+Group gPending	"Pending"			(Whg)
+Group gUnreach	"Unreach"			(Whg)
 
 
 //Group gLights 	"Lights"			(gAll)
@@ -27,6 +32,22 @@ Group gHuesLivColor "Hues Living Color"
 
 // Groups for Heaters
 Group:Number:AVG gTempLiv "[%.1f °C]" (gTemp)
+
+ 
+
+// Test ecobee
+Number desired_heat
+Number desired_cool
+Number humidity
+String hvac_mode
+String remote_sensor_name
+Number remote_sensor_temp
+Switch use_celsius
+Number user_cool
+Number user_heat
+Number schedule
+String event_type
+Switch remote_occupied
 
  
 
@@ -85,6 +106,10 @@ Switch sceneHueKitDawn 		"Küchenlicht Dämmerung" 	(gScenes) ["Lighting"] {auto
 Switch sceneHueBathLight 	"Badezimmer Standard" 		(gScenes) ["Lighting"] {autoupdate="false"} 
 Switch sceneHueBathCandle 	"Badezimmer Kerzenschein" 	(gScenes) ["Lighting"] {autoupdate="false"} 
 Switch sceneHueBathPink 	"Badezimmer Pink" 			(gScenes) ["Lighting"] {autoupdate="false"} 
+
+Switch sceneHueSleepLight 	"Schlafzimmer Standard" 		(gScenes) ["Lighting"] {autoupdate="false"} 
+Switch sceneHueSleepCandle 	"Schlafzimmer Kerzenschein" 	(gScenes) ["Lighting"] {autoupdate="false"} 
+Switch sceneHueSleepPink 	"Schlafzimmer Pink" 			(gScenes) ["Lighting"] {autoupdate="false"} 
 
 
 /* 
@@ -157,9 +182,10 @@ String duneRemoteCode	// Pressing a button on dune Remote Panel puts button code
 // Scene Selector
 String sceneName
 
- 
+
 // Homematic Items
 
+/* 
 // Heating
 Number heatLivEActTemp "heatLivEActTemp" (gTempLiv) { channel = "homematic:HM-CC-RT-DN:ccu2:MEQ0571893:4#ACTUAL_TEMPERATURE" }
 Switch heatLivEAutoMode "heatLivEAutoMode" { channel = "homematic:HM-CC-RT-DN:ccu2:MEQ0571893:4#AUTO_MODE" }
@@ -182,7 +208,7 @@ String heatLivWCtrlMode "heatLivWCtrlMode" { channel ="homematic:HM-CC-RT-DN:ccu
 Number heatLivWBoostState "heatLivWBoostState" { channel = "homematic:HM-CC-RT-DN:ccu2:MEQ0571874:4#BOOST_STATE" }
 Number heatLivWSetTemp "heatLivWSetTemp" { channel = "homematic:HM-CC-RT-DN:ccu2:MEQ0571874:4#SET_TEMPERATURE" }
 Number heatLivWValveState "heatLivWValveState" { channel = "homematic:HM-CC-RT-DN:ccu2:MEQ0571874:4#VALVE_STATE" } 
-
+*/
 
 
 // Window/ Door Contacts

@@ -15,7 +15,7 @@ Bridge hue:bridge:1 [ ipAddress="192.168.11.32", userName="b-MWuUtzyAY-YkQYqcMq2
 }
 */
 
-
+/*
 Bridge homematic:bridge:ccu2 [gatewayAddress="ccu2.fritz.box"]
 {
   Thing HM-CC-RT-DN    MEQ0571893	// Heat Living East
@@ -34,6 +34,6 @@ Bridge homematic:bridge:ccu2 [gatewayAddress="ccu2.fritz.box"]
   Thing HM-Sec-SCo    LEQ1469074	// Contact Sleep
 
 }
-
+*/
 
 // vim: syntax=Xtend syntax=openhab

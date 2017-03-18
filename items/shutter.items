@@ -1,0 +1,266 @@
+Group						gShut		"Rollläden gesamt"				<rollershutter>			(Whg)
+Group:Switch:OR(ON, OFF)	gShutWork	"Aktive Rollläden [%d]"			<rollershutter>       	(Whg)
+Group:Switch:MAX			gShutLevel	"Öffnung Rollläden [%.2f]"		<rollershutter>       	(Whg)
+Group						gShutSleep															(gShut)
+Group						gShutBath															(gShut)
+
+// HM-LC-Bl1PBU-FM Shutter Actuator Entrance
+Number 			shutEnt_RSSI			"Dachfenster Steuerung RSSI Signalstärkr [%d dBm]"							(gShut,gRSSI)			{ channel="homematic:HM-LC-Bl1PBU-FM:ccu2:NEQ1600579:0#RSSI_DEVICE" }
+Switch 			shutEnt_Unreach			"Dachfenster Steuerung unreachable"						<siren>				(gShut,gUnreach)		{ channel="homematic:HM-LC-Bl1PBU-FM:ccu2:NEQ1600579:0#UNREACH" }
+Switch 			shutEnt_Pending			"Dachfenster Steuerung config pending"					<siren>				(gShut,gPending)		{ channel="homematic:HM-LC-Bl1PBU-FM:ccu2:NEQ1600579:0#CONFIG_PENDING" }
+// Switch shutEnt_Inhibit				"Dachfenster Steuerung inhibit"												(gShut)					{ channel="homematic:HM-LC-Bl1PBU-FM:ccu2:NEQ1600579:1#INHIBIT" }	
+String			shutEnt_Direction		"Dachfenster Steuerung Richtung"						<rollershutter>		(gShut)					{ channel="homematic:HM-LC-Bl1PBU-FM:ccu2:NEQ1600579:1#DIRECTION" }
+Rollershutter 	shutEnt					"Dachfenster geschlossen zu [%d %%]"					<rollershutter>		(gShut,gShutEntrance,gShutLevel)	{ channel="homematic:HM-LC-Bl1PBU-FM:ccu2:NEQ1600579:1#LEVEL" }
+Switch 			shutEnt_Working			"Dachfenster Steuerung Working"							<rollershutter>		(gShut,gShutWork)		{ channel="homematic:HM-LC-Bl1PBU-FM:ccu2:NEQ1600579:1#WORKING" }
+Switch 			shutEnt_Stop			"Dachfenster Steuerung Stop"												(gShut)					{ channel="homematic:HM-LC-Bl1PBU-FM:ccu2:NEQ1600579:1#STOP" }
+
+
+// HM-LC-Bl1PBU-FM Shutter Actuator Sleeping Room South
+Number 			shutSleepS_RSSI			"Schlafzimmerrollo Süd RSSI Signalstärkr [%d dBm]"						(gShut,gRSSI)			{ channel="homematic:HM-LC-Bl1PBU-FM:ccu2:NEQ1370598:0#RSSI_DEVICE" }
+Switch 			shutSleepS_Unreach		"Schlafzimmerrollo Süd unreachable"					<siren>				(gShut,gUnreach)		{ channel="homematic:HM-LC-Bl1PBU-FM:ccu2:NEQ1370598:0#UNREACH" }
+Switch 			shutSleepS_Pending		"Schlafzimmerrollo Süd config pending"				<siren>				(gShut,gPending)		{ channel="homematic:HM-LC-Bl1PBU-FM:ccu2:NEQ1370598:0#CONFIG_PENDING" }
+// Switch shutSleepN_Inhibit			"Schlafzimmerrollo Süd inhibit"											(gShut)					{ channel="homematic:HM-LC-Bl1PBU-FM:ccu2:NEQ1370598:1#INHIBIT" }	
+String			shutSleepS_Direction	"Schlafzimmerrollo Süd Richtung"					<rollershutter>		(gShut)					{ channel="homematic:HM-LC-Bl1PBU-FM:ccu2:NEQ1370598:1#DIRECTION" }
+Rollershutter 	shutSleepS				"Schlafzimmerrollo Süd geschlossen zu [%d %%]"		<rollershutter>		(gShut,gShutSleep,gShutLevel)		{ channel="homematic:HM-LC-Bl1PBU-FM:ccu2:NEQ1370598:1#LEVEL" }
+Switch 			shutSleepS_Working		"Schlafzimmerrollo Süd Working"						<rollershutter>		(gShut,gShutWork)		{ channel="homematic:HM-LC-Bl1PBU-FM:ccu2:NEQ1370598:1#WORKING" }
+Switch 			shutSleepS_Stop			"Schlafzimmerrollo Süd Stop"											(gShut)					{ channel="homematic:HM-LC-Bl1PBU-FM:ccu2:NEQ1370598:1#STOP" }
+
+
+// HM-LC-Bl1PBU-FM Shutter Actuator Sleeping Room North
+Number 			shutSleepN_RSSI			"Schlafzimmerrollo Nord RSSI Signalstärkr [%d dBm]"						(gShut,gRSSI)			{ channel="homematic:HM-LC-Bl1PBU-FM:ccu2:NEQ1370608:0#RSSI_DEVICE" }
+Switch 			shutSleepN_Unreach		"Schlafzimmerrollo Nord unreachable"				<siren>				(gShut,gUnreach)		{ channel="homematic:HM-LC-Bl1PBU-FM:ccu2:NEQ1370608:0#UNREACH" }
+Switch 			shutSleepN_Pending		"Schlafzimmerrollo Nord config pending"				<siren>				(gShut,gPending)		{ channel="homematic:HM-LC-Bl1PBU-FM:ccu2:NEQ1370608:0#CONFIG_PENDING" }
+// Switch shutSleepN_Inhibit			"Schlafzimmerrollo Nord inhibit"										(gShut)					{ channel="homematic:HM-LC-Bl1PBU-FM:ccu2:NEQ1370608:1#INHIBIT" }	
+String			shutSleepN_Direction	"Schlafzimmerrollo Nord Richtung"					<rollershutter>		(gShut)					{ channel="homematic:HM-LC-Bl1PBU-FM:ccu2:NEQ1370608:1#DIRECTION" }
+Rollershutter 	shutSleepN				"Schlafzimmerrollo Nord geschlossen zu [%d %%]"		<rollershutter>		(gShut,gShutSleep,gShutLevel)		{ channel="homematic:HM-LC-Bl1PBU-FM:ccu2:NEQ1370608:1#LEVEL" }
+Switch 			shutSleepN_Working		"Schlafzimmerrollo Nord Working"					<rollershutter>		(gShut,gShutWork)		{ channel="homematic:HM-LC-Bl1PBU-FM:ccu2:NEQ1370608:1#WORKING" }
+Switch 			shutSleepN_Stop			"Schlafzimmerrollo Nord Stop"											(gShut)					{ channel="homematic:HM-LC-Bl1PBU-FM:ccu2:NEQ1370608:1#STOP" }
+
+
+// Virtual Items for Sleepingroom
+Rollershutter 	shutSleep				"Schlafzimmerrollos"								<rollershutter>		(gShut,gLevel)										
+
+// Virtual Switch for Antares			
+Switch			shutSleepCat																												{autoupdate="false"}  
+
+
+// HM-LC-Bl1PBU-FM Shutter Actuator Sleeping Room North
+Number 			shutBathN_RSSI			"Badezimmerrollo Nord RSSI Signalstärkr [%d dBm]"						(gShut,gRSSI)			{ channel="homematic:HM-LC-Bl1PBU-FM:ccu2:NEQ1365947:0#RSSI_DEVICE" }
+Switch 			shutBathN_Unreach		"Badezimmerrollo Nord unreachable"					<siren>				(gShut,gUnreach)		{ channel="homematic:HM-LC-Bl1PBU-FM:ccu2:NEQ1365947:0#UNREACH" }
+Switch 			shutBathN_Pending		"Badezimmerrollo Nord config pending"				<siren>				(gShut,gPending)		{ channel="homematic:HM-LC-Bl1PBU-FM:ccu2:NEQ1365947:0#CONFIG_PENDING" }
+// Switch shutBathN_Inhibit				"Badezimmerrollo Nord inhibit"											(gShut)					{ channel="homematic:HM-LC-Bl1PBU-FM:ccu2:NEQ1365947:1#INHIBIT" }	
+String			shutBathN_Direction		"Badezimmerrollo Nord Richtung"						<rollershutter>		(gShut)					{ channel="homematic:HM-LC-Bl1PBU-FM:ccu2:NEQ1365947:1#DIRECTION" }
+Rollershutter 	shutBathN				"Badezimmerrollo Nord geschlossen zu [%d %%]"		<rollershutter>		(gShut,gShutBath,gShutLevel)		{ channel="homematic:HM-LC-Bl1PBU-FM:ccu2:NEQ1365947:1#LEVEL" }
+Switch 			shutBathN_Working		"Badezimmerrollo Nord Working"						<rollershutter>		(gShut,gShutWork)		{ channel="homematic:HM-LC-Bl1PBU-FM:ccu2:NEQ1365947:1#WORKING" }
+Switch 			shutBathN_Stop			"Badezimmerrollo Nord Stop"												(gShut)						{ channel="homematic:HM-LC-Bl1PBU-FM:ccu2:NEQ1365947:1#STOP" }
+
+
+// HM-LC-Bl1PBU-FM Shutter Actuator Sleeping Room North
+Number 			shutBathS_RSSI			"Badezimmerrollo Süd RSSI Signalstärkr [%d dBm]"						(gShut,gRSSI)			{ channel="homematic:HM-LC-Bl1PBU-FM:ccu2:NEQ1366009:0#RSSI_DEVICE" }
+Switch 			shutBathS_Unreach		"Badezimmerrollo Süd unreachable"					<siren>				(gShut,gUnreach)		{ channel="homematic:HM-LC-Bl1PBU-FM:ccu2:NEQ1366009:0#UNREACH" }
+Switch 			shutBathS_Pending		"Badezimmerrollo Süd config pending"				<siren>				(gShut,gPending)		{ channel="homematic:HM-LC-Bl1PBU-FM:ccu2:NEQ1366009:0#CONFIG_PENDING" }
+// Switch shutBathS_Inhibit				"Badezimmerrollo Süd inhibit"											(gShut)					{ channel="homematic:HM-LC-Bl1PBU-FM:ccu2:NEQ1366009:1#INHIBIT" }	
+String			shutBathS_Direction		"Badezimmerrollo Süd Richtung"						<rollershutter>		(gShut)					{ channel="homematic:HM-LC-Bl1PBU-FM:ccu2:NEQ1366009:1#DIRECTION" }
+Rollershutter 	shutBathS				"Badezimmerrollo Süd geschlossen zu [%d %%]"		<rollershutter>		(gShut,gShutBath,gShutLevel)		{ channel="homematic:HM-LC-Bl1PBU-FM:ccu2:NEQ1366009:1#LEVEL" }
+Switch 			shutBathS_Working		"Badezimmerrollo Süd Working"						<rollershutter>		(gShut,gShutWork)		{ channel="homematic:HM-LC-Bl1PBU-FM:ccu2:NEQ1366009:1#WORKING" }
+Switch 			shutBathS_Stop			"Badezimmerrollo Süd Stop"												(gShut)					{ channel="homematic:HM-LC-Bl1PBU-FM:ccu2:NEQ1366009:1#STOP" }
+
+
+// Virtual Items for Bath
+Rollershutter 	shutBath				"Badezimmerrollos"									<rollershutter>		(gShut)										
+
+// Virtual Switch for Antares			
+Switch			shutBathCat																												{autoupdate="false"}  
+
+
+/* 
+Group                           gHeat           "Heizung Gesamt"                                <heating>       (Whg)
+Group:Switch:OR(ON, OFF)        gHeatValve      "Aktive Heizkörper [%d]"                        <heating>       (Whg)
+Group:Number:AVG                gHeatAct        "Raumtemperaturen [%.1f °C]"                    <temperature>   (Whg)
+Group:Number:AVG                gHeatActLR     "Raumtemperatur Wohnzimmer [%.1f °C]"           <temperature>   (Whg)
+Group:Number:AVG                gHeatActKI     "Raumtemperatur Küche [%.1f °C]"                <temperature>   (Whg)
+Group:Number:AVG                gHeatSet        "Raumtemperaturen Soll [%.1f °C]"               <temperature>   (Whg)
+Group:Number:AVG                gHeatSetLR     "Raumtemperatur Soll Wohnzimmer [%.1f °C]"		<temperature>   (Whg)
+Group:Number:AVG                gHeatSetKI     "Raumtemperatur Soll Küche [%.1f °C]"               <temperature>   (Whg)
+Group                           gHeatMode       "Raumtemperaturen Mode [%.1f °C]"               <temperature>   (Whg)
+
+// Heating mode for the whole group:
+//  0: Automatik-Betrieb (Standard)
+//  1: Abwesend/Urlaubs-Betrieb
+//  2: Dauerfeuer-Betrieb
+Number WhgHeatState "Wohnung Heizmodus [%d]" <heating> (Whg)
+
+// Two mode variables are used:
+//          HM-CC-RT-DN            openHAB Programm
+// Nr.      "*_Heizung_Mode"       "*_Heizung_SetMode"
+//------------------------------------------------------
+// -1:                             Aus
+//  0:       Automatik             Automatik
+//  1:       Manuell               Manuell
+//  2:       Urlaub
+//  3:       Boost                 Boost
+//  4:                             Fenster Absenkung
+
+//HM-CC-RT-DN Heizkörperthermostat
+Number SR_Heat_RSSI				"Schlafzimmer Heizung RSSI [%d dBm]"													(gHeat,gW,gRSSI)		{ channel="homematic:HM-CC-RT-DN:ccu2:MEQ0571847:0#RSSI_DEVICE" }
+Switch SR_Heat_Unreach			"Schlafzimmer Heizung unreachable"										<siren>			(gHeat,gW,gUnreach)		{ channel="homematic:HM-CC-RT-DN:ccu2:MEQ0571847:0#UNREACH" }
+Switch SR_Heat_Pending			"Schlafzimmer Heizung config pending"									<siren>			(gHeat,gW,gPending)		{ channel="homematic:HM-CC-RT-DN:ccu2:MEQ0571847:0#CONFIG_PENDING" }
+Number SR_Heat_Battery			"Schlafzimmer Heizung Batteriezustand [%.1f V]"							<battery>		(gHeat,gW,gBattery)		{ channel="homematic:HM-CC-RT-DN:ccu2:MEQ0571847:4#BATTERY_STATE" }
+String SR_Heat_Fault			"Schlafzimmer Heizung Fehlerwert [MAP(HM-CC-RT-DN.map):%s]"				<error2>		(gHeat,gError)			{ channel="homematic:HM-CC-RT-DN:ccu2:MEQ0571847:4#FAULT_REPORTING" }
+Number SR_Heat_ActTemp			"Schlafzimmer Heizung Ist-Temperatur [%.1f °C]"							<temperature>	(SR,gHeat,gHeatAct)		{ channel="homematic:HM-CC-RT-DN:ccu2:MEQ0571847:4#ACTUAL_TEMPERATURE" }
+Number SR_Heat_SetTemp			"Schlafzimmer Heizung Soll-Temperatur [%.1f °C]"						<temperature>	(SR,gHeat,gHeatSet)		{ channel="homematic:HM-CC-RT-DN:ccu2:MEQ0571847:4#SET_TEMPERATURE" }
+Number SR_Heat_Valve			"Schlafzimmer Heizung Ventilstellung [%d %%]"							<heating>		(SR,gHeat,gHeatValve)	{ channel="homematic:HM-CC-RT-DN:ccu2:MEQ0571847:4#VALVE_STATE" }
+Switch SR_Heat_Auto				"Schlafzimmer Heizung Auto-Mode"										<temperature>	(gHeat)					{ channel="homematic:HM-CC-RT-DN:ccu2:MEQ0571847:4#AUTO_MODE" }
+Number SR_Heat_Manu				"Schlafzimmer Heizung Manu-Mode [%.1f °C]"								<temperature>	(gHeat)					{ channel="homematic:HM-CC-RT-DN:ccu2:MEQ0571847:4#MANU_MODE" }
+Switch SR_Heat_BoostMode		"Schlafzimmer Heizung Boost-Mode"										<temperature>	(gHeat)					{ channel="homematic:HM-CC-RT-DN:ccu2:MEQ0571847:4#BOOST_MODE" }
+Number SR_Heat_BoostTime		"Schlafzimmer Heizung Boost-Restdauer [%d min]"							<"clock-on">	(gHeat)					{ channel="homematic:HM-CC-RT-DN:ccu2:MEQ0571847:4#BOOST_STATE" }
+Switch SR_Heat_Lowering			"Schlafzimmer Heizung Spar Modus"										<temperature>	(gHeat)					{ channel="homematic:HM-CC-RT-DN:ccu2:MEQ0571847:4#LOWERING_MODE" }
+Switch SR_Heat_Comfort			"Schlafzimmer Heizung Komfort Modus"									<temperature>	(gHeat)					{ channel="homematic:HM-CC-RT-DN:ccu2:MEQ0571847:4#COMFORT_MODE" }
+//Number SR_Heat_Mode              "Schlafzimmer Heizung Betriebsart [MAP(HM-CC-RT-DN.map):%s]"          <temperature>   (BD,gHeat,gHeatMode)      { channel="homematic:HM-CC-RT-DN:ccu2:MEQ0571847:4#CONTROL_MODE" }
+String SR_Heat_Mode				"Schlafzimmer Heizung Betriebsart"										<temperature>	(SR,gHeat,gHeatMode)	{ channel="homematic:HM-CC-RT-DN:ccu2:MEQ0571847:4#CONTROL_MODE" }
+Number SR_Heat_SetMode			"Schlafzimmer Heizung Betriebsart Auswahl [MAP(HM-CC-RT-DN.map):%s]"	<"heating-80">	(gHeat,gInitNone)
+Number SR_Heat_Preset			"Schlafzimmer Heizung Soll-Temperatur Schnellauswahl"					<"heating-40">	(gHeat,gInitNone)					
+Number SR_Heat_EcoTemp			"Schlafzimmer Heizung Spar-Temperatur [%.1f °C]"										(gHeat,value_persist)
+Number SR_Heat_ComfTemp			"Schlafzimmer Heizung Komfort-Temperatur [%.1f °C]"										(gHeat,value_persist)
+String SR_Heat_Summary			"Schlafzimmer Heizung Übersicht [%s]"									<heating>		(gHeat)
+
+
+Number SR_Heat_TempSlider		"Schlafzimmer Heizung Slider [%1.f °C]"									<heating>		(gHeatControl)
+String SR_Heat_WidgetMode		"Schlafzimmer Heizung Widget Menü"	
+
+ 
+
+
+// One Widget for all Heaters in Living Room so we need some vitrual Elements
+Number LR_Heat_TempSlider		"Wohnzimmer Heizung Slider [%1.f °C]"									<heating>		(gHeatControl)
+String LR_Heat_WidgetMode		"Wohnzimmer Heizung Widget Menü"	
+Number LR_Heat_SetTemp			"Wohnzimmer Heizung Soll-Temperatur"	
+Number LR_Heat_ActTemp			"Wohnzimmer Heizung Soll-Temperatur"	
+Number LR_Heat_Manu				"Wohnzimmer Heizung Manu-Mode [%.1f °C]"								<temperature>				
+Switch LR_Heat_Auto				"Wohnzimmer Heizung Auto-Mode"											<temperature>	(gHeat)					
+Switch LR_Heat_Lowering			"Wohnzimmer Heizung Spar Modus"											<temperature>	(gHeat)	
+Switch LR_Heat_Comfort			"Wohnzimmer Heizung Komfort Modus"										<temperature>	(gHeat)	
+
+
+
+
+//HM-CC-RT-DN Heater Livingroom West
+Number LW_Heat_RSSI				"Wohnzimmer Heizung West RSSI [%d dBm]"														(gHeat,gW,gRSSI)		{ channel="homematic:HM-CC-RT-DN:ccu2:MEQ0571874:0#RSSI_DEVICE" }
+Switch LW_Heat_Unreach			"Wohnzimmer Heizung West unreachable"										<siren>			(gHeat,gW,gUnreach)		{ channel="homematic:HM-CC-RT-DN:ccu2:MEQ0571874:0#UNREACH" }
+Switch LW_Heat_Pending			"Wohnzimmer Heizung West config pending"									<siren>			(gHeat,gW,gPending)		{ channel="homematic:HM-CC-RT-DN:ccu2:MEQ0571874:0#CONFIG_PENDING" }
+Number LW_Heat_Battery			"Wohnzimmer Heizung West Batteriezustand [%.1f V]"							<battery>		(gHeat,gW,gBattery)		{ channel="homematic:HM-CC-RT-DN:ccu2:MEQ0571874:4#BATTERY_STATE" }
+String LW_Heat_Fault			"Wohnzimmer Heizung West Fehlerwert [MAP(HM-CC-RT-DN.map):%s]"				<error2>		(gHeat,gError)			{ channel="homematic:HM-CC-RT-DN:ccu2:MEQ0571874:4#FAULT_REPORTING" }
+Number LW_Heat_ActTemp			"Wohnzimmer Heizung West Ist-Temperatur [%.1f °C]"							<temperature>	(LR,gHeat,gHeatAct,gHeatActLR)		{ channel="homematic:HM-CC-RT-DN:ccu2:MEQ0571874:4#ACTUAL_TEMPERATURE" }
+Number LW_Heat_SetTemp			"Wohnzimmer Heizung West Soll-Temperatur [%.1f °C]"							<temperature>	(LR,gHeat,gHeatSet,gHeatSetLR)		{ channel="homematic:HM-CC-RT-DN:ccu2:MEQ0571874:4#SET_TEMPERATURE" }
+Number LW_Heat_Valve			"Wohnzimmer Heizung West Ventilstellung [%d %%]"							<heating>		(LR,gHeat,gHeatValve)	{ channel="homematic:HM-CC-RT-DN:ccu2:MEQ0571874:4#VALVE_STATE" }
+Switch LW_Heat_Auto				"Wohnzimmer Heizung West Auto-Mode"											<temperature>	(gHeat)					{ channel="homematic:HM-CC-RT-DN:ccu2:MEQ0571874:4#AUTO_MODE" }
+Number LW_Heat_Manu				"Wohnzimmer Heizung West Manu-Mode [%.1f °C]"								<temperature>	(gHeat)					{ channel="homematic:HM-CC-RT-DN:ccu2:MEQ0571874:4#MANU_MODE" }
+Switch LW_Heat_BoostMode		"Wohnzimmer Heizung West Boost-Mode"										<temperature>	(gHeat)					{ channel="homematic:HM-CC-RT-DN:ccu2:MEQ0571874:4#BOOST_MODE" }
+Number LW_Heat_BoostTime		"Wohnzimmer Heizung West Boost-Restdauer [%d min]"							<"clock-on">	(gHeat)					{ channel="homematic:HM-CC-RT-DN:ccu2:MEQ0571874:4#BOOST_STATE" }
+Switch LW_Heat_Lowering			"Wohnzimmer Heizung West Spar Modus"										<temperature>	(gHeat)					{ channel="homematic:HM-CC-RT-DN:ccu2:MEQ0571874:4#LOWERING_MODE" }
+Switch LW_Heat_Comfort			"Wohnzimmer Heizung West Konfort Modus"										<temperature>	(gHeat)					{ channel="homematic:HM-CC-RT-DN:ccu2:MEQ0571874:4#COMFORT_MODE" }
+//Number LW_Heat_Mode              "Wohnzimmer Heizung West Betriebsart [MAP(HM-CC-RT-DN.map):%s]"          <temperature>   (BD,gHeat,gHeatMode)      { channel="homematic:HM-CC-RT-DN:ccu2:MEQ0571874:4#CONTROL_MODE" }
+String LW_Heat_Mode				"Wohnzimmer Heizung West Betriebsart"										<temperature>	(LW,gHeat,gHeatMode)	{ channel="homematic:HM-CC-RT-DN:ccu2:MEQ0571874:4#CONTROL_MODE" }
+Number LW_Heat_SetMode			"Wohnzimmer Heizung West Betriebsart Auswahl [MAP(HM-CC-RT-DN.map):%s]"		<"heating-80">	(gHeat,gInitNone)
+Number LW_Heat_Preset			"Wohnzimmer Heizung West Soll-Temperatur Schnellauswahl"					<"heating-40">	(gHeat,gInitNone)					
+Number LW_Heat_EcoTemp			"Wohnzimmer Heizung West Spar-Temperatur [%.1f °C]"											(gHeat,value_persist)
+Number LW_Heat_ComfTemp			"Wohnzimmer Heizung West Komfort-Temperatur [%.1f °C]"										(gHeat,value_persist)
+String LW_Heat_Summary			"Wohnzimmer Heizung West Übersicht [%s]"									<heating>		(gHeat)
+
+
+
+
+//HM-CC-RT-DN Heater Livingroom East
+Number LE_Heat_RSSI				"Wohnzimmer Heizung Ost RSSI [%d dBm]"														(gHeat,gW,gRSSI)		{ channel="homematic:HM-CC-RT-DN:ccu2:MEQ0571893:0#RSSI_DEVICE" }
+Switch LE_Heat_Unreach			"Wohnzimmer Heizung Ost unreachable"										<siren>			(gHeat,gW,gUnreach)		{ channel="homematic:HM-CC-RT-DN:ccu2:MEQ0571893:0#UNREACH" }
+Switch LE_Heat_Pending			"Wohnzimmer Heizung Ost config pending"										<siren>			(gHeat,gW,gPending)		{ channel="homematic:HM-CC-RT-DN:ccu2:MEQ0571893:0#CONFIG_PENDING" }
+Number LE_Heat_Battery			"Wohnzimmer Heizung Ost Batteriezustand [%.1f V]"							<battery>		(gHeat,gW,gBattery)		{ channel="homematic:HM-CC-RT-DN:ccu2:MEQ0571893:4#BATTERY_STATE" }
+String LE_Heat_Fault			"Wohnzimmer Heizung Ost Fehlerwert [MAP(HM-CC-RT-DN.map):%s]"				<error2>		(gHeat,gError)			{ channel="homematic:HM-CC-RT-DN:ccu2:MEQ0571893:4#FAULT_REPORTING" }
+Number LE_Heat_ActTemp			"Wohnzimmer Heizung Ost Ist-Temperatur [%.1f °C]"							<temperature>	(LE,gHeat,gHeatAct,gHeatActLR)		{ channel="homematic:HM-CC-RT-DN:ccu2:MEQ0571893:4#ACTUAL_TEMPERATURE" }
+Number LE_Heat_SetTemp			"Wohnzimmer Heizung Ost Soll-Temperatur [%.1f °C]"							<temperature>	(LE,gHeat,gHeatSet,gHeatSetLR)		{ channel="homematic:HM-CC-RT-DN:ccu2:MEQ0571893:4#SET_TEMPERATURE" }
+Number LE_Heat_Valve			"Wohnzimmer Heizung Ost Ventilstellung [%d %%]"								<heating>		(LE,gHeat,gHeatValve)	{ channel="homematic:HM-CC-RT-DN:ccu2:MEQ0571893:4#VALVE_STATE" }
+Switch LE_Heat_Auto				"Wohnzimmer Heizung Ost Auto-Mode"											<temperature>	(gHeat)					{ channel="homematic:HM-CC-RT-DN:ccu2:MEQ0571893:4#AUTO_MODE" }
+Number LE_Heat_Manu				"Wohnzimmer Heizung Ost Manu-Mode [%.1f °C]"								<temperature>	(gHeat)					{ channel="homematic:HM-CC-RT-DN:ccu2:MEQ0571893:4#MANU_MODE" }
+Switch LE_Heat_BoostMode		"Wohnzimmer Heizung Ost Boost-Mode"											<temperature>	(gHeat)					{ channel="homematic:HM-CC-RT-DN:ccu2:MEQ0571893:4#BOOST_MODE" }
+Number LE_Heat_BoostTime		"Wohnzimmer Heizung Ost Boost-Restdauer [%d min]"							<"clock-on">	(gHeat)					{ channel="homematic:HM-CC-RT-DN:ccu2:MEQ0571893:4#BOOST_STATE" }
+Switch LE_Heat_Lowering			"Wohnzimmer Heizung Ost Spar Modus"											<temperature>	(gHeat)					{ channel="homematic:HM-CC-RT-DN:ccu2:MEQ0571893:4#LOWERING_MODE" }
+Switch LE_Heat_Comfort			"Wohnzimmer Heizung Ost Konfort Modus"										<temperature>	(gHeat)					{ channel="homematic:HM-CC-RT-DN:ccu2:MEQ0571893:4#COMFORT_MODE" }
+//Number LE_Heat_Mode              "Wohnzimmer Heizung Ost Betriebsart [MAP(HM-CC-RT-DN.map):%s]"          <temperature>   (BD,gHeat,gHeatMode)      { channel="homematic:HM-CC-RT-DN:ccu2:MEQ0571893:4#CONTROL_MODE" }
+String LE_Heat_Mode				"Wohnzimmer Heizung Ost Betriebsart"										<temperature>	(LE,gHeat,gHeatMode)	{ channel="homematic:HM-CC-RT-DN:ccu2:MEQ0571893:4#CONTROL_MODE" }
+Number LE_Heat_SetMode			"Wohnzimmer Heizung Ost Betriebsart Auswahl [MAP(HM-CC-RT-DN.map):%s]"		<"heating-80">	(gHeat,gInitNone)
+Number LE_Heat_Preset			"Wohnzimmer Heizung Ost Soll-Temperatur Schnellauswahl"						<"heating-40">	(gHeat,gInitNone)					
+Number LE_Heat_EcoTemp			"Wohnzimmer Heizung Ost Spar-Temperatur [%.1f °C]"											(gHeat,value_persist)
+Number LE_Heat_ComfTemp			"Wohnzimmer Heizung Ost Komfort-Temperatur [%.1f °C]"										(gHeat,value_persist)
+String LE_Heat_Summary			"Wohnzimmer Heizung Ost Übersicht [%s]"										<heating>		(gHeat)
+
+
+
+
+
+// One Widget for all Heaters in Kitchen so we need some vitrual Elements
+Number KI_Heat_TempSlider		"Wohnzimmer Heizung Slider [%1.f °C]"									<heating>		(gHeatControl)
+String KI_Heat_WidgetMode		"Wohnzimmer Heizung Widget Menü"	
+Number KI_Heat_SetTemp			"Wohnzimmer Heizung Soll-Temperatur"	
+Number KI_Heat_ActTemp			"Wohnzimmer Heizung Ist-Temperatur"	 
+Number KI_Heat_Manu				"Wohnzimmer Heizung Manu-Mode [%.1f °C]"								<temperature>				
+Switch KI_Heat_Auto				"Wohnzimmer Heizung Auto-Mode"											<temperature>	(gHeat)					
+Switch KI_Heat_Lowering			"Wohnzimmer Heizung Spar Modus"											<temperature>	(gHeat)	
+Switch KI_Heat_Comfort			"Wohnzimmer Heizung Komfort Modus"										<temperature>	(gHeat)	
+
+
+
+
+//HM-CC-RT-DN Heater Kitchen West
+Number KW_Heat_RSSI				"Küche Heizung West RSSI [%d dBm]"															(gHeat,gW,gRSSI)		{ channel="homematic:HM-CC-RT-DN:ccu2:LEQ0783545:0#RSSI_DEVICE" }
+Switch KW_Heat_Unreach			"Küche Heizung West unreachable"											<siren>			(gHeat,gW,gUnreach)		{ channel="homematic:HM-CC-RT-DN:ccu2:LEQ0783545:0#UNREACH" }
+Switch KW_Heat_Pending			"Küche Heizung West config pending"											<siren>			(gHeat,gW,gPending)		{ channel="homematic:HM-CC-RT-DN:ccu2:LEQ0783545:0#CONFIG_PENDING" }
+Number KW_Heat_Battery			"Küche Heizung West Batteriezustand [%.1f V]"								<battery>		(gHeat,gW,gBattery)		{ channel="homematic:HM-CC-RT-DN:ccu2:LEQ0783545:4#BATTERY_STATE" }
+String KW_Heat_Fault			"Küche Heizung West Fehlerwert [MAP(HM-CC-RT-DN.map):%s]"					<error2>		(gHeat,gError)			{ channel="homematic:HM-CC-RT-DN:ccu2:LEQ0783545:4#FAULT_REPORTING" }
+Number KW_Heat_ActTemp			"Küche Heizung West Ist-Temperatur [%.1f °C]"								<temperature>	(KI,gHeat,gHeatAct,gHeatActKI)		{ channel="homematic:HM-CC-RT-DN:ccu2:LEQ0783545:4#ACTUAL_TEMPERATURE" }
+Number KW_Heat_SetTemp			"Küche Heizung West Soll-Temperatur [%.1f °C]"								<temperature>	(KI,gHeat,gHeatSet,gHeatSetKI)		{ channel="homematic:HM-CC-RT-DN:ccu2:LEQ0783545:4#SET_TEMPERATURE" }
+Number KW_Heat_Valve			"Küche Heizung West Ventilstellung [%d %%]"									<heating>		(KI,gHeat,gHeatValve)	{ channel="homematic:HM-CC-RT-DN:ccu2:LEQ0783545:4#VALVE_STATE" }
+Switch KW_Heat_Auto				"Küche Heizung West Auto-Mode"												<temperature>	(gHeat)					{ channel="homematic:HM-CC-RT-DN:ccu2:LEQ0783545:4#AUTO_MODE" }
+Number KW_Heat_Manu				"Küche Heizung West Manu-Mode [%.1f °C]"									<temperature>	(gHeat)					{ channel="homematic:HM-CC-RT-DN:ccu2:LEQ0783545:4#MANU_MODE" }
+Switch KW_Heat_BoostMode		"Küche Heizung West Boost-Mode"												<temperature>	(gHeat)					{ channel="homematic:HM-CC-RT-DN:ccu2:LEQ0783545:4#BOOST_MODE" }
+Number KW_Heat_BoostTime		"Küche Heizung West Boost-Restdauer [%d min]"								<"clock-on">	(gHeat)					{ channel="homematic:HM-CC-RT-DN:ccu2:LEQ0783545:4#BOOST_STATE" }
+Switch KW_Heat_Lowering			"Küche Heizung West Spar Modus"												<temperature>	(gHeat)					{ channel="homematic:HM-CC-RT-DN:ccu2:LEQ0783545:4#LOWERING_MODE" }
+Switch KW_Heat_Comfort			"Küche Heizung West Konfort Modus"											<temperature>	(gHeat)					{ channel="homematic:HM-CC-RT-DN:ccu2:LEQ0783545:4#COMFORT_MODE" }
+//Number KW_Heat_Mode              "Küche Heizung West Betriebsart [MAP(HM-CC-RT-DN.map):%s]"          		<temperature>   (BD,gHeat,gHeatMode)      { channel="homematic:HM-CC-RT-DN:ccu2:LEQ0783545:4#CONTROL_MODE" }
+String KW_Heat_Mode				"Küche Heizung West Betriebsart"											<temperature>	(KI,gHeat,gHeatMode)	{ channel="homematic:HM-CC-RT-DN:ccu2:LEQ0783545:4#CONTROL_MODE" }
+Number KW_Heat_SetMode			"Küche Heizung West Betriebsart Auswahl [MAP(HM-CC-RT-DN.map):%s]"			<"heating-80">	(gHeat,gInitNone)
+Number KW_Heat_Preset			"Küche Heizung West Soll-Temperatur Schnellauswahl"							<"heating-40">	(gHeat,gInitNone)					
+Number KW_Heat_EcoTemp			"Küche Heizung West Spar-Temperatur [%.1f °C]"												(gHeat,value_persist)
+Number KW_Heat_ComfTemp			"Küche Heizung West Komfort-Temperatur [%.1f °C]"											(gHeat,value_persist)
+String KW_Heat_Summary			"Küche Heizung West Übersicht [%s]"											<heating>		(gHeat)
+
+
+
+
+
+//HM-CC-RT-DN Heater Kitchen East
+Number KE_Heat_RSSI				"Küche Heizung Ost RSSI [%d dBm]"															(gHeat,gW,gRSSI)		{ channel="homematic:HM-CC-RT-DN:ccu2:LEQ0783667:0#RSSI_DEVICE" }
+Switch KE_Heat_Unreach			"Küche Heizung Ost unreachable"											<siren>			(gHeat,gW,gUnreach)		{ channel="homematic:HM-CC-RT-DN:ccu2:LEQ0783667:0#UNREACH" }
+Switch KE_Heat_Pending			"Küche Heizung Ost config pending"											<siren>			(gHeat,gW,gPending)		{ channel="homematic:HM-CC-RT-DN:ccu2:LEQ0783667:0#CONFIG_PENDING" }
+Number KE_Heat_Battery			"Küche Heizung Ost Batteriezustand [%.1f V]"								<battery>		(gHeat,gW,gBattery)		{ channel="homematic:HM-CC-RT-DN:ccu2:LEQ0783667:4#BATTERY_STATE" }
+String KE_Heat_Fault			"Küche Heizung Ost Fehlerwert [MAP(HM-CC-RT-DN.map):%s]"					<error2>		(gHeat,gError)			{ channel="homematic:HM-CC-RT-DN:ccu2:LEQ0783667:4#FAULT_REPORTING" }
+Number KE_Heat_ActTemp			"Küche Heizung Ost Ist-Temperatur [%.1f °C]"								<temperature>	(KI,gHeat,gHeatAct,gHeatActKI)		{ channel="homematic:HM-CC-RT-DN:ccu2:LEQ0783667:4#ACTUAL_TEMPERATURE" }
+Number KE_Heat_SetTemp			"Küche Heizung Ost Soll-Temperatur [%.1f °C]"								<temperature>	(KI,gHeat,gHeatSet,gHeatSetKI)		{ channel="homematic:HM-CC-RT-DN:ccu2:LEQ0783667:4#SET_TEMPERATURE" }
+Number KE_Heat_Valve			"Küche Heizung Ost Ventilstellung [%d %%]"									<heating>		(KI,gHeat,gHeatValve)	{ channel="homematic:HM-CC-RT-DN:ccu2:LEQ0783667:4#VALVE_STATE" }
+Switch KE_Heat_Auto				"Küche Heizung Ost Auto-Mode"												<temperature>	(gHeat)					{ channel="homematic:HM-CC-RT-DN:ccu2:LEQ0783667:4#AUTO_MODE" }
+Number KE_Heat_Manu				"Küche Heizung Ost Manu-Mode [%.1f °C]"									<temperature>	(gHeat)					{ channel="homematic:HM-CC-RT-DN:ccu2:LEQ0783667:4#MANU_MODE" }
+Switch KE_Heat_BoostMode		"Küche Heizung Ost Boost-Mode"												<temperature>	(gHeat)					{ channel="homematic:HM-CC-RT-DN:ccu2:LEQ0783667:4#BOOST_MODE" }
+Number KE_Heat_BoostTime		"Küche Heizung Ost Boost-Restdauer [%d min]"								<"clock-on">	(gHeat)					{ channel="homematic:HM-CC-RT-DN:ccu2:LEQ0783667:4#BOOST_STATE" }
+Switch KE_Heat_Lowering			"Küche Heizung Ost Spar Modus"												<temperature>	(gHeat)					{ channel="homematic:HM-CC-RT-DN:ccu2:LEQ0783667:4#LOWERING_MODE" }
+Switch KE_Heat_Comfort			"Küche Heizung Ost Konfort Modus"											<temperature>	(gHeat)					{ channel="homematic:HM-CC-RT-DN:ccu2:LEQ0783667:4#COMFORT_MODE" }
+//Number KE_Heat_Mode              "Küche Heizung Ost Betriebsart [MAP(HM-CC-RT-DN.map):%s]"          		<temperature>   (BD,gHeat,gHeatMode)      { channel="homematic:HM-CC-RT-DN:ccu2:LEQ0783667:4#CONTROL_MODE" }
+String KE_Heat_Mode				"Küche Heizung Ost Betriebsart"											<temperature>	(KI,gHeat,gHeatMode)	{ channel="homematic:HM-CC-RT-DN:ccu2:LEQ0783667:4#CONTROL_MODE" }
+Number KE_Heat_SetMode			"Küche Heizung Ost Betriebsart Auswahl [MAP(HM-CC-RT-DN.map):%s]"			<"heating-80">	(gHeat,gInitNone)
+Number KE_Heat_Preset			"Küche Heizung Ost Soll-Temperatur Schnellauswahl"							<"heating-40">	(gHeat,gInitNone)					
+Number KE_Heat_EcoTemp			"Küche Heizung Ost Spar-Temperatur [%.1f °C]"												(gHeat,value_persist)
+Number KE_Heat_ComfTemp			"Küche Heizung Ost Komfort-Temperatur [%.1f °C]"											(gHeat,value_persist)
+String KE_Heat_Summary			"Küche Heizung Ost Übersicht [%s]"											<heating>		(gHeat)
+
+
+
+
+*/

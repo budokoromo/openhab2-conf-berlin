@@ -422,7 +422,7 @@ end
 
 rule "toggle Sleep Light"
     when
-            Item hueSleepMainToggle changed
+            Item hueSleepMainToggle received command
     then
             
 	var key = hueGrpSleepID
@@ -594,6 +594,21 @@ then
 	    			hueKeyGID + ":" + hueGroupsMap.get(key).get(hueKeyGID) + ", "
 	    			)
 	}
+ 
+
+// Test ecobee	
+//val seconds = (House_leave_time.state as DecimalType).intValue
+	val Number dc = 17
+	val Number dh = 25 
+	val Number hum = 71.7
+	val Number rst = 22.2
+
+	
+	desired_cool.send(dc as DecimalType)
+	desired_heat.send(dh as DecimalType)
+	humidity.send(hum as DecimalType)
+	remote_sensor_temp.send(rst as DecimalType)
+	use_celsius.sendCommand(ON)
 
 
 end
@@ -936,8 +951,20 @@ end
 */
 
 
+rule "Switch All Lights"
+when
+	Item hueMainToggle received command
+then
+    hueLivMainToggle.sendCommand(receivedCommand)	
+    hueKitMainToggle.sendCommand(receivedCommand)	
+    hueFloorMainToggle.sendCommand(receivedCommand)	
+    hueSleepMainToggle.sendCommand(receivedCommand)	
+    hueBathMainToggle.sendCommand(receivedCommand)	
+end
 
 
+
+/*
 rule "Switch All Lights ON"
     when
             Item hueMainToggle changed to ON
@@ -994,7 +1021,7 @@ rule "Switch All Lights OFF"
 	}
 end
 
-
+*/
 
 
 
