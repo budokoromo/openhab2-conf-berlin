@@ -14,7 +14,9 @@ Group gUnreach	"Unreach"			(Whg)
 //Group gHues 	"Hues" 				(gLights) 
 //Group:Switch:OR(ON, OFF) gHuesLiv  "Hues Living Room" 	(gLights, gRoomLiv)
 
-Group gPowerSwitches
+Group:Switch:OR(ON, OFF) gPowerSwitches
+
+Group gFyrePower // Tablets on/off via Fully Browser
 
 Group gTemp
 Group gWeather
@@ -149,16 +151,32 @@ Dimmer 	hueLivSeColorTemp	(gHuesLiv)					{ channel="hue:0210:1:HueLivingSE:color
 // LGTV	
 
 // PowerSwitch
-Switch lgtvPower "LGTV Power" (gPowerSwitches) { channel="connectsdk:WebOSTV:192_168_11_72:power"}
-Switch lgtvMute "LGTV Mute" { channel="connectsdk:WebOSTV:192_168_11_72:mute"}
-Number lgtvVolume "LGTV Volume" { channel="connectsdk:WebOSTV:192_168_11_72:volume"}
-String lgtvInput "LGTV Input" { channel="connectsdk:WebOSTV:192_168_11_72:externalInput"}
-String lgtvToast "LGTV Toast" { channel="connectsdk:WebOSTV:192_168_11_72:toast"}
-String lgtvState "LGTV Toast" { channel="connectsdk:WebOSTV:192_168_11_72:mediaState"}
+/* 
+Switch lgtvPower "LGTV Power" (gPowerSwitches) { channel="connectsdk:WebOSTV:192_168_11_73:power"}
+Switch lgtvMute "LGTV Mute" { channel="connectsdk:WebOSTV:192_168_11_73:mute"}
+Number lgtvVolume "LGTV Volume" { channel="connectsdk:WebOSTV:192_168_11_73:volume"}
+String lgtvInput "LGTV Input" { channel="connectsdk:WebOSTV:192_168_11_73:externalInput"}
+String lgtvToast "LGTV Toast" { channel="connectsdk:WebOSTV:192_168_11_73:toast"}
+String lgtvState "LGTV Toast" { channel="connectsdk:WebOSTV:192_168_11_73:mediaState"}
 
+*/
+
+
+Switch lgtvLivPower "LGTV Power" (gPowerSwitches) { channel="connectsdk:WebOSTV:192_168_11_73:power"}
+Switch lgtvLivMute "LGTV Mute" { channel="connectsdk:WebOSTV:192_168_11_73:mute"}
+Number lgtvLivVolume "LGTV Volume" { channel="connectsdk:WebOSTV:192_168_11_73:volume"}
+String lgtvLivInput "LGTV Input" { channel="connectsdk:WebOSTV:192_168_11_73:externalInput"}
+String lgtvLivToast "LGTV Toast" { channel="connectsdk:WebOSTV:192_168_11_73:toast"}
+String lgtvLivState "LGTV Toast" { channel="connectsdk:WebOSTV:192_168_11_73:mediaState"}
+String lgtvLivAppLaunch "LGTV AppLauch" { channel="connectsdk:WebOSTV:192_168_11_73:appLauncher"}
+String lgtvLivNetflix "LGTV Netflix" { channel="connectsdk:WebOSTV:192_168_11_73:netflixLauncher"}
+String lgtvLivHulu "LGTV Hulu" { channel="connectsdk:WebOSTV:192_168_11_73:huluLauncher"}
+String lgtvLivYouTube "LGTV YouTube" { channel="connectsdk:WebOSTV:192_168_11_73:youtubeLauncher"}
+String lgtvLivBrowser "LGTV Browser" { channel="connectsdk:WebOSTV:192_168_11_73:browserLauncher"}
 
 // Power on is not Supported, so we need to Wake on LAN with WOL Binding (See rule file)
-Switch lgtvWOL   "Power WOL"  { wol="192.168.11.255#3c:cd:93:7b:bb:9e" }
+// 55"LGTV Switch lgtvWOL   "Power WOL"  { wol="192.168.11.255#3c:cd:93:7b:bb:9e" }
+Switch lgtvLivWOL   "Power WOL"  { wol="192.168.11.255#14:c9:13:ba:06:a5" }
 
 // Yamaha
 Switch yamahaPower "Yamaha Power" (gPowerSwitches) {channel="yamahareceiver:yamahaAV:9ab0c000_f668_11de_9976_00a0de872741:power"}
@@ -175,9 +193,12 @@ Switch TestScene
 /* Dune items */
 /* Living */
 Switch Dune_Living      "power"     (gPowerSwitches, Dune, Persistence)		{http=">[ON:GET:http://192.168.11.71/cgi-bin/do?cmd=ir_code&ir_code=A05FBF00] >[OFF:GET:http://192.168.11.71/cgi-bin/do?cmd=ir_code&ir_code=A15EBF00]", autoupdate="false"}
+Switch dunePlayPause														{http=">[ON:GET:http://192.168.11.71/cgi-bin/do?cmd=ir_code&ir_code=A956BF00]", autoupdate="false"}
+Switch duneSTOP         													{http=">[ON:GET:http://192.168.11.71/cgi-bin/do?cmd=ir_code&ir_code=E619BF00]", autoupdate="false"}
+Switch duneREW         														{http=">[ON:GET:http://192.168.11.71/cgi-bin/do?cmd=ir_code&ir_code=E31CBF00]", autoupdate="false"}
+Switch duneFWD																{http=">[ON:GET:http://192.168.11.71/cgi-bin/do?cmd=ir_code&ir_code=E41BBF00]", autoupdate="false"}
 
-
-String duneRemoteCode	// Pressing a button on dune Remote Panel puts button code in var
+String duneRemoteCode	// Pressing a button on dune Remote Panel puts button code in var   00 BF 56 A9
 
 // Scene Selector
 String sceneName
@@ -228,7 +249,16 @@ Contact contRest "contRest" (gContacts) {channel = "homematic:HM-Sec-SCo:ccu2:LE
 Contact contSleep "contSleep" (gContacts) {channel = "homematic:HM-Sec-SCo:ccu2:LEQ1469074:1#STATE"}
 
  
- 
+
+// tablets switch on/off via Fully Browser REST API
+Switch fyreLivGuest		"Tablet LivGuest"	(gPowerSwitches,gFyrePower)		{http=">[ON:GET:http://fyre-livguest.fritz.box:2323/?cmd=screenOn&password=cronos34] >[OFF:GET:http://fyre-livguest.fritz.box:2323/?cmd=screenOff&password=cronos34]"}
+Switch fyreEntrance		"Tablet Entrance" 	(gPowerSwitches,gFyrePower)		{http=">[ON:GET:http://fyre-entrance.fritz.box:2323/?cmd=screenOn&password=cronos34] >[OFF:GET:http://fyre-entrance.fritz.box:2323/?cmd=screenOff&password=cronos34]"}
+Switch fyreLivKit		"Tablet LivKit"  	(gPowerSwitches,gFyrePower)		{http=">[ON:GET:http://fyre-livkit.fritz.box:2323/?cmd=screenOn&password=cronos34] >[OFF:GET:http://fyre-livkit.fritz.box:2323/?cmd=screenOff&password=cronos34]"}
+Switch fyreKitFloor     "Tablet KitFloor" 	(gPowerSwitches,gFyrePower)		{http=">[ON:GET:http://fyre-kitfloor.fritz.box:2323/?cmd=screenOn&password=cronos34] >[OFF:GET:http://fyre-kitfloor.fritz.box:2323/?cmd=screenOff&password=cronos34]"}
+Switch fyreFloorSleep 	"Tablet FloorSleep"	(gPowerSwitches,gFyrePower)		{http=">[ON:GET:http://fyre-floorsleep.fritz.box:2323/?cmd=screenOn&password=cronos34] >[OFF:GET:http://fyre-floorsleep.fritz.box:2323/?cmd=screenOff&password=cronos34]"}
+Switch fyreSleepBath 	"Tablet SleepBath"	(gPowerSwitches,gFyrePower)		{http=">[ON:GET:http://fyre-sleepbath.fritz.box:2323/?cmd=screenOn&password=cronos34] >[OFF:GET:http://fyre-sleepbath.fritz.box:2323/?cmd=screenOff&password=cronos34]"}
+
+Switch fyrePower 		"alle Tablets" ["Lighting"] 
 
 // vim: syntax=Xtend syntax=openhab
 

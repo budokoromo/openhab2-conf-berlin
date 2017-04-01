@@ -3,6 +3,10 @@ Group:Switch:OR(ON, OFF)	gShutWork	"Aktive Rollläden [%d]"			<rollershutter>   
 Group:Switch:MAX			gShutLevel	"Öffnung Rollläden [%.2f]"		<rollershutter>       	(Whg)
 Group						gShutSleep															(gShut)
 Group						gShutBath															(gShut)
+Group						gShutKit															(gShut)
+Group						gShutKitAtrium														(gShutKit)
+Group						gShutKitBalcony														(gShutKit)
+Group						gShutLiv															(gShut)
 
 // HM-LC-Bl1PBU-FM Shutter Actuator Entrance
 Number 			shutEnt_RSSI			"Dachfenster Steuerung RSSI Signalstärkr [%d dBm]"							(gShut,gRSSI)			{ channel="homematic:HM-LC-Bl1PBU-FM:ccu2:NEQ1600579:0#RSSI_DEVICE" }
@@ -71,6 +75,115 @@ Rollershutter 	shutBath				"Badezimmerrollos"									<rollershutter>		(gShut)
 
 // Virtual Switch for Antares			
 Switch			shutBathCat																												{autoupdate="false"}  
+
+
+
+
+// HM-LC-Bl1PBU-FM Shutter Actuator Kitchen East
+Number 			shutKitE_RSSI			"Rollo Atrium Ost RSSI Signalstärkr [%d dBm]"						(gShut,gRSSI)			{ channel="homematic:HM-LC-Bl1PBU-FM:ccu2:NEQ1366491:0#RSSI_DEVICE" }
+Switch 			shutKitE_Unreach		"Rollo Atrium Ost unreachable"					<siren>				(gShut,gUnreach)		{ channel="homematic:HM-LC-Bl1PBU-FM:ccu2:NEQ1366491:0#UNREACH" }
+Switch 			shutKitE_Pending		"Rollo Atrium Ost config pending"				<siren>				(gShut,gPending)		{ channel="homematic:HM-LC-Bl1PBU-FM:ccu2:NEQ1366491:0#CONFIG_PENDING" }
+// Switch shutKitE_Inhibit				"Rollo Atrium Ost inhibit"										(gShut)					{ channel="homematic:HM-LC-Bl1PBU-FM:ccu2:NEQ1366491:1#INHIBIT" }	
+String			shutKitE_Direction		"Rollo Atrium Ost Richtung"						<rollershutter>		(gShut)					{ channel="homematic:HM-LC-Bl1PBU-FM:ccu2:NEQ1366491:1#DIRECTION" }
+Rollershutter 	shutKitE				"Rollo Atrium Ost geschlossen zu [%d %%]"		<rollershutter>		(gShut,gShutKit,gShutKitAtrium,gShutLevel)		{ channel="homematic:HM-LC-Bl1PBU-FM:ccu2:NEQ1366491:1#LEVEL" }
+Switch 			shutKitE_Working		"Rollo Atrium Ost Working"						<rollershutter>		(gShut,gShutWork)		{ channel="homematic:HM-LC-Bl1PBU-FM:ccu2:NEQ1366491:1#WORKING" }
+Switch 			shutKitE_Stop			"Rollo Atrium Ost Stop"												(gShut)					{ channel="homematic:HM-LC-Bl1PBU-FM:ccu2:NEQ1366491:1#STOP" }
+
+
+// HM-LC-Bl1PBU-FM Shutter Actuator Kitchen West
+Number 			shutKitW_RSSI			"Rollo Atrium West RSSI Signalstärkr [%d dBm]"						(gShut,gRSSI)			{ channel="homematic:HM-LC-Bl1PBU-FM:ccu2:NEQ1365988:0#RSSI_DEVICE" }
+Switch 			shutKitW_Unreach		"Rollo Atrium West unreachable"					<siren>				(gShut,gUnreach)		{ channel="homematic:HM-LC-Bl1PBU-FM:ccu2:NEQ1365988:0#UNREACH" }
+Switch 			shutKitW_Pending		"Rollo Atrium West config pending"				<siren>				(gShut,gPending)		{ channel="homematic:HM-LC-Bl1PBU-FM:ccu2:NEQ1365988:0#CONFIG_PENDING" }
+// Switch shutKitW_Inhibit				"Rollo Atrium West inhibit"										(gShut)					{ channel="homematic:HM-LC-Bl1PBU-FM:ccu2:NEQ1365988:1#INHIBIT" }	
+String			shutKitW_Direction		"Rollo Atrium West Richtung"					<rollershutter>		(gShut)					{ channel="homematic:HM-LC-Bl1PBU-FM:ccu2:NEQ1365988:1#DIRECTION" }
+Rollershutter 	shutKitW				"Rollo Atrium West geschlossen zu [%d %%]"		<rollershutter>		(gShut,gShutKit,gShutKitAtrium,gShutLevel)		{ channel="homematic:HM-LC-Bl1PBU-FM:ccu2:NEQ1365988:1#LEVEL" }
+Switch 			shutKitW_Working		"Rollo Atrium West Working"						<rollershutter>		(gShut,gShutWork)		{ channel="homematic:HM-LC-Bl1PBU-FM:ccu2:NEQ1365988:1#WORKING" }
+Switch 			shutKitW_Stop			"Rollo Atrium West Stop"											(gShut)					{ channel="homematic:HM-LC-Bl1PBU-FM:ccu2:NEQ1365988:1#STOP" }
+
+
+
+// HM-LC-Bl1PBU-FM Shutter Actuator Kitchen North
+Number 			shutKitN_RSSI			"Rollo Küche Balkon Nord RSSI Signalstärkr [%d dBm]"					(gShut,gRSSI)			{ channel="homematic:HM-LC-Bl1PBU-FM:ccu2:NEQ1370544:0#RSSI_DEVICE" }
+Switch 			shutKitN_Unreach		"Rollo Küche Balkon Nord unreachable"				<siren>				(gShut,gUnreach)		{ channel="homematic:HM-LC-Bl1PBU-FM:ccu2:NEQ1370544:0#UNREACH" }
+Switch 			shutKitN_Pending		"Rollo Küche Balkon Nord config pending"			<siren>				(gShut,gPending)		{ channel="homematic:HM-LC-Bl1PBU-FM:ccu2:NEQ1370544:0#CONFIG_PENDING" }
+// Switch shutKitN_Inhibit				"Rollo Küche Balkon Nord inhibit"										(gShut)					{ channel="homematic:HM-LC-Bl1PBU-FM:ccu2:NEQ1370544:1#INHIBIT" }	
+String			shutKitN_Direction		"Rollo Küche Balkon Nord Richtung"					<rollershutter>		(gShut)					{ channel="homematic:HM-LC-Bl1PBU-FM:ccu2:NEQ1370544:1#DIRECTION" }
+Rollershutter 	shutKitN				"Rollo Küche Balkon Nord geschlossen zu [%d %%]"	<rollershutter>		(gShut,gShutKit,gShutKitBalcony,gShutLevel)		{ channel="homematic:HM-LC-Bl1PBU-FM:ccu2:NEQ1370544:1#LEVEL" }
+Switch 			shutKitN_Working		"Rollo Küche Balkon Nord Working"					<rollershutter>		(gShut,gShutWork)		{ channel="homematic:HM-LC-Bl1PBU-FM:ccu2:NEQ1370544:1#WORKING" }
+Switch 			shutKitN_Stop			"Rollo Küche Balkon Nord Stop"											(gShut)					{ channel="homematic:HM-LC-Bl1PBU-FM:ccu2:NEQ1370544:1#STOP" }
+
+
+// HM-LC-Bl1PBU-FM Shutter Actuator Kitchen South
+Number 			shutKitS_RSSI			"Rollo Küche Balkon Süd RSSI Signalstärkr [%d dBm]"						(gShut,gRSSI)			{ channel="homematic:HM-LC-Bl1PBU-FM:ccu2:NEQ1370281:0#RSSI_DEVICE" }
+Switch 			shutKitS_Unreach		"Rollo Küche Balkon Süd unreachable"				<siren>				(gShut,gUnreach)		{ channel="homematic:HM-LC-Bl1PBU-FM:ccu2:NEQ1370281:0#UNREACH" }
+Switch 			shutKitS_Pending		"Rollo Küche Balkon Süd config pending"				<siren>				(gShut,gPending)		{ channel="homematic:HM-LC-Bl1PBU-FM:ccu2:NEQ1370281:0#CONFIG_PENDING" }
+// Switch shutKitS_Inhibit				"Rollo Küche Balkon Süd inhibit"										(gShut)					{ channel="homematic:HM-LC-Bl1PBU-FM:ccu2:NEQ1370281:1#INHIBIT" }	
+String			shutKitS_Direction		"Rollo Küche Balkon Süd Richtung"					<rollershutter>		(gShut)					{ channel="homematic:HM-LC-Bl1PBU-FM:ccu2:NEQ1370281:1#DIRECTION" }
+Rollershutter 	shutKitS				"Rollo Küche Balkon Süd geschlossen zu [%d %%]"		<rollershutter>		(gShut,gShutKit,gShutKitBalcony,gShutLevel)		{ channel="homematic:HM-LC-Bl1PBU-FM:ccu2:NEQ1370281:1#LEVEL" }
+Switch 			shutKitS_Working		"Rollo Küche Balkon Süd Working"					<rollershutter>		(gShut,gShutWork)		{ channel="homematic:HM-LC-Bl1PBU-FM:ccu2:NEQ1370281:1#WORKING" }
+Switch 			shutKitS_Stop			"Rollo Küche Balkon Süd Stop"											(gShut)					{ channel="homematic:HM-LC-Bl1PBU-FM:ccu2:NEQ1370281:1#STOP" }
+
+
+
+
+
+// HM-LC-Bl1PBU-FM Shutter Actuator Livingroom 1
+Number 			shutLiv1_RSSI			"Rollo Wohnzimmer 1 RSSI Signalstärkr [%d dBm]"						(gShut,gRSSI)			{ channel="homematic:HM-LC-Bl1PBU-FM:ccu2:NEQ1365970:0#RSSI_DEVICE" }
+Switch 			shutLiv1_Unreach		"Rollo Wohnzimmer 1 unreachable"				<siren>				(gShut,gUnreach)		{ channel="homematic:HM-LC-Bl1PBU-FM:ccu2:NEQ1365970:0#UNREACH" }
+Switch 			shutLiv1_Pending		"Rollo Wohnzimmer 1 config pending"				<siren>				(gShut,gPending)		{ channel="homematic:HM-LC-Bl1PBU-FM:ccu2:NEQ1365970:0#CONFIG_PENDING" }
+// Switch shutLiv1_Inhibit				"Rollo Wohnzimmer 1 inhibit"										(gShut)					{ channel="homematic:HM-LC-Bl1PBU-FM:ccu2:NEQ1365970:1#INHIBIT" }	
+String			shutLiv1_Direction		"Rollo Wohnzimmer 1 Richtung"					<rollershutter>		(gShut)					{ channel="homematic:HM-LC-Bl1PBU-FM:ccu2:NEQ1365970:1#DIRECTION" }
+Rollershutter 	shutLiv1				"Rollo Wohnzimmer 1 geschlossen zu [%d %%]"		<rollershutter>		(gShut,gShutLiv,gShutLevel)		{ channel="homematic:HM-LC-Bl1PBU-FM:ccu2:NEQ1365970:1#LEVEL" }
+Switch 			shutLiv1_Working		"Rollo Wohnzimmer 1 Working"					<rollershutter>		(gShut,gShutWork)		{ channel="homematic:HM-LC-Bl1PBU-FM:ccu2:NEQ1365970:1#WORKING" }
+Switch 			shutLiv1_Stop			"Rollo Wohnzimmer 1 Stop"											(gShut)					{ channel="homematic:HM-LC-Bl1PBU-FM:ccu2:NEQ1365970:1#STOP" }
+
+
+// HM-LC-Bl1PBU-FM Shutter Actuator Livingroom 2
+Number 			shutLiv2_RSSI			"Rollo Wohnzimmer 2 RSSI Signalstärkr [%d dBm]"						(gShut,gRSSI)			{ channel="homematic:HM-LC-Bl1PBU-FM:ccu2:NEQ1366060:0#RSSI_DEVICE" }
+Switch 			shutLiv2_Unreach		"Rollo Wohnzimmer 2 unreachable"				<siren>				(gShut,gUnreach)		{ channel="homematic:HM-LC-Bl1PBU-FM:ccu2:NEQ1366060:0#UNREACH" }
+Switch 			shutLiv2_Pending		"Rollo Wohnzimmer 2 config pending"				<siren>				(gShut,gPending)		{ channel="homematic:HM-LC-Bl1PBU-FM:ccu2:NEQ1366060:0#CONFIG_PENDING" }
+// Switch shutLiv2_Inhibit				"Rollo Wohnzimmer 2 inhibit"										(gShut)					{ channel="homematic:HM-LC-Bl1PBU-FM:ccu2:NEQ1366060:1#INHIBIT" }	
+String			shutLiv2_Direction		"Rollo Wohnzimmer 2 Richtung"					<rollershutter>		(gShut)					{ channel="homematic:HM-LC-Bl1PBU-FM:ccu2:NEQ1366060:1#DIRECTION" }
+Rollershutter 	shutLiv2				"Rollo Wohnzimmer 2 geschlossen zu [%d %%]"		<rollershutter>		(gShut,gShutLiv,gShutLevel)		{ channel="homematic:HM-LC-Bl1PBU-FM:ccu2:NEQ1366060:1#LEVEL" }
+Switch 			shutLiv2_Working		"Rollo Wohnzimmer 2 Working"					<rollershutter>		(gShut,gShutWork)		{ channel="homematic:HM-LC-Bl1PBU-FM:ccu2:NEQ1366060:1#WORKING" }
+Switch 			shutLiv2_Stop			"Rollo Wohnzimmer 2 Stop"											(gShut)					{ channel="homematic:HM-LC-Bl1PBU-FM:ccu2:NEQ1366060:1#STOP" }
+
+
+// HM-LC-Bl1PBU-FM Shutter Actuator Livingroom 3
+Number 			shutLiv3_RSSI			"Rollo Wohnzimmer 3 RSSI Signalstärkr [%d dBm]"						(gShut,gRSSI)			{ channel="homematic:HM-LC-Bl1PBU-FM:ccu2:NEQ1365989:0#RSSI_DEVICE" }
+Switch 			shutLiv3_Unreach		"Rollo Wohnzimmer 3 unreachable"				<siren>				(gShut,gUnreach)		{ channel="homematic:HM-LC-Bl1PBU-FM:ccu2:NEQ1365989:0#UNREACH" }
+Switch 			shutLiv3_Pending		"Rollo Wohnzimmer 3 config pending"				<siren>				(gShut,gPending)		{ channel="homematic:HM-LC-Bl1PBU-FM:ccu2:NEQ1365989:0#CONFIG_PENDING" }
+// Switch shutLiv3_Inhibit				"Rollo Wohnzimmer 3 inhibit"										(gShut)					{ channel="homematic:HM-LC-Bl1PBU-FM:ccu2:NEQ1365989:1#INHIBIT" }	
+String			shutLiv3_Direction		"Rollo Wohnzimmer 3 Richtung"					<rollershutter>		(gShut)					{ channel="homematic:HM-LC-Bl1PBU-FM:ccu2:NEQ1365989:1#DIRECTION" }
+Rollershutter 	shutLiv3				"Rollo Wohnzimmer 3 geschlossen zu [%d %%]"		<rollershutter>		(gShut,gShutLiv,gShutLevel)		{ channel="homematic:HM-LC-Bl1PBU-FM:ccu2:NEQ1365989:1#LEVEL" }
+Switch 			shutLiv3_Working		"Rollo Wohnzimmer 3 Working"					<rollershutter>		(gShut,gShutWork)		{ channel="homematic:HM-LC-Bl1PBU-FM:ccu2:NEQ1365989:1#WORKING" }
+Switch 			shutLiv3_Stop			"Rollo Wohnzimmer 3 Stop"											(gShut)					{ channel="homematic:HM-LC-Bl1PBU-FM:ccu2:NEQ1365989:1#STOP" }
+
+
+// HM-LC-Bl1PBU-FM Shutter Actuator Livingroom 4
+Number 			shutLiv4_RSSI			"Rollo Wohnzimmer 4 RSSI Signalstärkr [%d dBm]"						(gShut,gRSSI)			{ channel="homematic:HM-LC-Bl1PBU-FM:ccu2:NEQ1365961:0#RSSI_DEVICE" }
+Switch 			shutLiv4_Unreach		"Rollo Wohnzimmer 4 unreachable"				<siren>				(gShut,gUnreach)		{ channel="homematic:HM-LC-Bl1PBU-FM:ccu2:NEQ1365961:0#UNREACH" }
+Switch 			shutLiv4_Pending		"Rollo Wohnzimmer 4 config pending"				<siren>				(gShut,gPending)		{ channel="homematic:HM-LC-Bl1PBU-FM:ccu2:NEQ1365961:0#CONFIG_PENDING" }
+// Switch shutLiv4_Inhibit				"Rollo Wohnzimmer 4 inhibit"										(gShut)					{ channel="homematic:HM-LC-Bl1PBU-FM:ccu2:NEQ1365961:1#INHIBIT" }	
+String			shutLiv4_Direction		"Rollo Wohnzimmer 4 Richtung"					<rollershutter>		(gShut)					{ channel="homematic:HM-LC-Bl1PBU-FM:ccu2:NEQ1365961:1#DIRECTION" }
+Rollershutter 	shutLiv4				"Rollo Wohnzimmer 4 geschlossen zu [%d %%]"		<rollershutter>		(gShut,gShutLiv,gShutLevel)		{ channel="homematic:HM-LC-Bl1PBU-FM:ccu2:NEQ1365961:1#LEVEL" }
+Switch 			shutLiv4_Working		"Rollo Wohnzimmer 4 Working"					<rollershutter>		(gShut,gShutWork)		{ channel="homematic:HM-LC-Bl1PBU-FM:ccu2:NEQ1365961:1#WORKING" }
+Switch 			shutLiv4_Stop			"Rollo Wohnzimmer 4 Stop"											(gShut)					{ channel="homematic:HM-LC-Bl1PBU-FM:ccu2:NEQ1365961:1#STOP" }
+
+
+// HM-LC-Bl1PBU-FM Shutter Actuator Livingroom 5
+Number 			shutLiv5_RSSI			"Rollo Wohnzimmer 5 RSSI Signalstärkr [%d dBm]"						(gShut,gRSSI)			{ channel="homematic:HM-LC-Bl1PBU-FM:ccu2:NEQ1366023:0#RSSI_DEVICE" }
+Switch 			shutLiv5_Unreach		"Rollo Wohnzimmer 5 unreachable"				<siren>				(gShut,gUnreach)		{ channel="homematic:HM-LC-Bl1PBU-FM:ccu2:NEQ1366023:0#UNREACH" }
+Switch 			shutLiv5_Pending		"Rollo Wohnzimmer 5 config pending"				<siren>				(gShut,gPending)		{ channel="homematic:HM-LC-Bl1PBU-FM:ccu2:NEQ1366023:0#CONFIG_PENDING" }
+// Switch shutLiv5_Inhibit				"Rollo Wohnzimmer 5 inhibit"										(gShut)					{ channel="homematic:HM-LC-Bl1PBU-FM:ccu2:NEQ1366023:1#INHIBIT" }	
+String			shutLiv5_Direction		"Rollo Wohnzimmer 5 Richtung"					<rollershutter>		(gShut)					{ channel="homematic:HM-LC-Bl1PBU-FM:ccu2:NEQ1366023:1#DIRECTION" }
+Rollershutter 	shutLiv5				"Rollo Wohnzimmer 5 geschlossen zu [%d %%]"		<rollershutter>		(gShut,gShutLiv,gShutLevel)		{ channel="homematic:HM-LC-Bl1PBU-FM:ccu2:NEQ1366023:1#LEVEL" }
+Switch 			shutLiv5_Working		"Rollo Wohnzimmer 5 Working"					<rollershutter>		(gShut,gShutWork)		{ channel="homematic:HM-LC-Bl1PBU-FM:ccu2:NEQ1366023:1#WORKING" }
+Switch 			shutLiv5_Stop			"Rollo Wohnzimmer 5 Stop"											(gShut)					{ channel="homematic:HM-LC-Bl1PBU-FM:ccu2:NEQ1366023:1#STOP" }
+
+
+
+
 
 
 /* 

@@ -90,6 +90,7 @@ val String lgtvInputAMP = "HDMI_1"
 
 
 // DUNE
+// find codes here: http://dune-hd.com/firmware/rc/
 val String duneHTTP = "http://192.168.11.71/cgi-bin/do?cmd=ir_code&ir_code="
 
 val String duneCodeON = 		"A05FBF00"
@@ -630,13 +631,15 @@ then
 //	hueLivMainToggle.postUpdate(ON)
  
 	// Turn on TV
-	lgtvPower.sendCommand(ON)
+	lgtvLivPower.sendCommand(ON)
 	// Mute TV, Sound comes from AMP
-	lgtvMute.sendCommand(ON)
+	lgtvLivMute.sendCommand(OFF)	// to get rid off the crappy Mute Logo
+	lgtvLivVolume.sendCommand(0)
+
 	// Set TV Input to HDMI1
-	lgtvInput.sendCommand(lgtvInputAMP)
+	lgtvLivInput.sendCommand(lgtvInputAMP)
 	// Say Hello
-	lgtvToast.sendCommand("Let's see some freaky Movies!")
+	lgtvLivToast.sendCommand("Let's see some freaky Movies!")
 	
 	// Turn Amp On
 	yamahaPower.sendCommand(ON)
@@ -654,13 +657,13 @@ then
 	sendHttpGetRequest( duneHTTP + duneCodeOFF)
 	
 	// Turn on TV
-	lgtvPower.sendCommand(ON)
+	lgtvLivPower.sendCommand(ON) 
 	// Mute TV, Sound comes from AMP
-	lgtvMute.sendCommand(ON)
+	lgtvLivMute.sendCommand(ON)
 	// Set TV Input to HDMI1
-	lgtvInput.sendCommand(lgtvInputAMP)
+	lgtvLivInput.sendCommand(lgtvInputAMP)
 	// Say Hello
-	lgtvToast.sendCommand("Let's play some funny Gamez!")
+	lgtvLivToast.sendCommand("Let's play some funny Gamez!")
 	
 	// Turn Amp On
 	yamahaPower.sendCommand(ON)
@@ -684,7 +687,7 @@ then
 			sendHttpGetRequest( duneHTTP + duneCodeOFF)
 			
 			// Turn off TV
-	    	lgtvPower.sendCommand(OFF)
+	    	lgtvLivPower.sendCommand(OFF)
 
 	    	// Turn Amp OFF
 	    	yamahaPower.sendCommand(OFF)
@@ -698,13 +701,13 @@ then
 	sendHttpGetRequest( duneHTTP + duneCodeOFF)
 	
 	// Turn on TV
-	lgtvPower.sendCommand(ON)
+	lgtvLivPower.sendCommand(ON)
 	// Mute TV, Sound comes from AMP
-	lgtvMute.sendCommand(ON)
+	lgtvLivMute.sendCommand(ON)
 	// Set TV Input to HDMI1
-	lgtvInput.sendCommand(lgtvInputAMP)
+	lgtvLivInput.sendCommand(lgtvInputAMP)
 	// Say Hello
-	lgtvToast.sendCommand("Let's play some funny Gamez!")
+	lgtvLivToast.sendCommand("Let's play some funny Gamez!")
 	
 	// Turn Amp On
 	yamahaPower.sendCommand(ON)
@@ -725,13 +728,13 @@ then
 	sendHttpGetRequest( duneHTTP + duneCodeOFF)
 	
 	// Turn on TV
-	lgtvPower.sendCommand(ON)
+	lgtvLivPower.sendCommand(ON)
 	// Mute TV, Sound comes from AMP
-	lgtvMute.sendCommand(ON)
+	lgtvLivMute.sendCommand(ON)
 	// Set TV Input to HDMI1
-	lgtvInput.sendCommand(lgtvInputAMP)
+	lgtvLivInput.sendCommand(lgtvInputAMP)
 	// Say Hello
-	lgtvToast.sendCommand("Let's play some funny Gamez!")
+	lgtvLivToast.sendCommand("Let's play some funny Gamez!")
 	
 	// Turn Amp On
 	yamahaPower.sendCommand(ON)
@@ -739,6 +742,9 @@ then
 	yamahaInput.sendCommand(yInputTV)
 	// Switch Surround Programm to MOVIE ADVENTURE
 	yamahaSurround.sendCommand(ySurrMOVIEADV)
+
+	// Start Netflix
+	lgtvLivNetflix.sendCommand("Metallica")
 
 
 	// switch to "Easy Remote" Panel
@@ -778,7 +784,7 @@ then
 			sendHttpGetRequest( duneHTTP + duneCodeOFF)
 			
 			// Turn off TV
-	    	lgtvPower.sendCommand(OFF)
+	    	lgtvLivPower.sendCommand(OFF)
 
 	    	// Turn Amp OFF
 	    	yamahaPower.sendCommand(OFF)
@@ -796,13 +802,13 @@ then
 			hueLivMainToggle.sendCommand(ON)
 	
 			// Turn on TV
-	    	lgtvPower.sendCommand(ON)
+	    	lgtvLivPower.sendCommand(ON)
 	    	// Mute TV, Sound comes from AMP
-	    	lgtvMute.sendCommand(ON)
+	    	lgtvLivMute.sendCommand(ON)
 	    	// Set TV Input to HDMI1
-	    	lgtvInput.sendCommand(lgtvInputAMP)
+	    	lgtvLivInput.sendCommand(lgtvInputAMP)
 	    	// Say Hello
-	    	lgtvToast.sendCommand("Let's see some freaky Movies!")
+	    	lgtvLivToast.sendCommand("Let's see some freaky Movies!")
 	    	
 	    	// Turn Amp On
 	    	yamahaPower.sendCommand(ON)
@@ -817,13 +823,13 @@ then
 			sendHttpGetRequest( duneHTTP + duneCodeOFF)
 			
 			// Turn on TV
-	    	lgtvPower.sendCommand(ON)
+	    	lgtvLivPower.sendCommand(ON)
 	    	// Mute TV, Sound comes from AMP
-	    	lgtvMute.sendCommand(ON)
+	    	lgtvLivMute.sendCommand(ON)
 	    	// Set TV Input to HDMI1
-	    	lgtvInput.sendCommand(lgtvInputAMP)
+	    	lgtvLivInput.sendCommand(lgtvInputAMP)
 	    	// Say Hello
-	    	lgtvToast.sendCommand("Let's play some funny Gamez!")
+	    	lgtvLivToast.sendCommand("Let's play some funny Gamez!")
 	    	
 	    	// Turn Amp On
 	    	yamahaPower.sendCommand(ON)
@@ -841,13 +847,13 @@ then
 			sendHttpGetRequest( duneHTTP + duneCodeOFF)
 			
 			// Turn on TV
-	    	lgtvPower.sendCommand(ON)
+	    	lgtvLivPower.sendCommand(ON)
 	    	// Mute TV, Sound comes from AMP
-	    	lgtvMute.sendCommand(ON)
+	    	lgtvLivMute.sendCommand(ON)
 	    	// Set TV Input to HDMI1
-	    	lgtvInput.sendCommand(lgtvInputAMP)
+	    	lgtvLivInput.sendCommand(lgtvInputAMP)
 	    	// Say Hello
-	    	lgtvToast.sendCommand("Let's play some funny Gamez!")
+	    	lgtvLivToast.sendCommand("Let's play some funny Gamez!")
 	    	
 	    	// Turn Amp On
 	    	yamahaPower.sendCommand(ON)
@@ -865,13 +871,13 @@ then
 			sendHttpGetRequest( duneHTTP + duneCodeOFF)
 			
 			// Turn on TV
-	    	lgtvPower.sendCommand(ON)
+	    	lgtvLivPower.sendCommand(ON)
 	    	// Mute TV, Sound comes from AMP
-	    	lgtvMute.sendCommand(ON)
+	    	lgtvLivMute.sendCommand(ON)
 	    	// Set TV Input to HDMI1
-	    	lgtvInput.sendCommand(lgtvInputAMP)
+	    	lgtvLivInput.sendCommand(lgtvInputAMP)
 	    	// Say Hello
-	    	lgtvToast.sendCommand("Let's play some funny Gamez!")
+	    	lgtvLivToast.sendCommand("Let's play some funny Gamez!")
 	    	
 	    	// Turn Amp On
 	    	yamahaPower.sendCommand(ON)
@@ -879,6 +885,9 @@ then
 	    	yamahaInput.sendCommand(yInputTV)
 	    	// Switch Surround Programm to MOVIE ADVENTURE
 	    	yamahaSurround.sendCommand(ySurrMOVIEADV)
+	    	
+	    	// Start Netflix
+	    	lgtvLivNetflix.sendCommand("Metallica")
 
 
 			// switch to "Easy Remote" Panel
@@ -908,11 +917,11 @@ end
 
 
 // Start lgtv through Wake On LAN
-rule lgtvWOL
+rule lgtvLivWOL
 when 
-	Item lgtvPower received command ON
+	Item lgtvLivPower received command ON
 then
-    sendCommand( lgtvWOL, ON) 
+    sendCommand( lgtvLivWOL, ON) 
 end
 
 
@@ -962,6 +971,15 @@ then
     hueBathMainToggle.sendCommand(receivedCommand)	
 end
 
+
+
+// Tablets on/off
+rule "Switch all Tablets"
+when 
+	Item fyrePower received command
+then
+	gFyrePower.sendCommand(receivedCommand)
+end
 
 
 /*

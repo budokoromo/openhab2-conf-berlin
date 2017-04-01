@@ -6,6 +6,8 @@ Bridge homematic:bridge:ccu2 [gatewayAddress="ccu2.fritz.box"]
   	Thing HM-CC-RT-DN    	MEQ0571847	// Heat Bedroom
   	Thing HM-CC-RT-DN    	LEQ0783667	// Heat Kitchen East
   	Thing HM-CC-RT-DN    	LEQ0783545	// Heat Kitchen West
+  	Thing HM-CC-RT-DN    	NEQ1224798	// Heat Bath 
+  	Thing HM-CC-RT-DN    	NEQ1224807	// Heat Guest
 
   	Thing HM-Sec-SCo    	LEQ1469830	// Contact Kitchen Atrium
   	Thing HM-Sec-SCo    	MEQ0174917	// Contact Kitchen Balcony
@@ -32,7 +34,7 @@ Bridge homematic:bridge:ccu2 [gatewayAddress="ccu2.fritz.box"]
 	Thing HM-LC-Bl1PBU-FM	NEQ1366060  // Shutter ShutLiv2
 	Thing HM-LC-Bl1PBU-FM	NEQ1365989  // Shutter ShutLiv3
 	Thing HM-LC-Bl1PBU-FM	NEQ1365961  // Shutter ShutLiv4
-	Thing HM-LC-Bl1PBU-FM	NEQ1366023  // Shutter ShutLiv
+	Thing HM-LC-Bl1PBU-FM	NEQ1366023  // Shutter ShutLiv5
 
 }
 

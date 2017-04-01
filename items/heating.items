@@ -187,4 +187,61 @@ String KE_Heat_Summary			"Küche Heizung Ost Übersicht [%s]"											<heating
 
 
 
+//HM-CC-RT-DN Heizkörperthermostat
+Number BR_Heat_RSSI				"Badezimmer Heizung RSSI [%d dBm]"														(gHeat,gW,gRSSI)		{ channel="homematic:HM-CC-RT-DN:ccu2:NEQ1224798:0#RSSI_DEVICE" }
+Switch BR_Heat_Unreach			"Badezimmer Heizung unreachable"										<siren>			(gHeat,gW,gUnreach)		{ channel="homematic:HM-CC-RT-DN:ccu2:NEQ1224798:0#UNREACH" }
+Switch BR_Heat_Pending			"Badezimmer Heizung config pending"										<siren>			(gHeat,gW,gPending)		{ channel="homematic:HM-CC-RT-DN:ccu2:NEQ1224798:0#CONFIG_PENDING" }
+Number BR_Heat_Battery			"Badezimmer Heizung Batteriezustand [%.1f V]"							<battery>		(gHeat,gW,gBattery)		{ channel="homematic:HM-CC-RT-DN:ccu2:NEQ1224798:4#BRTTERY_STATE" }
+String BR_Heat_Fault			"Badezimmer Heizung Fehlerwert [MAP(HM-CC-RT-DN.map):%s]"				<error2>		(gHeat,gError)			{ channel="homematic:HM-CC-RT-DN:ccu2:NEQ1224798:4#FAULT_REPORTING" }
+Number BR_Heat_ActTemp			"Badezimmer Heizung Ist-Temperatur [%.1f °C]"							<temperature>	(BR,gHeat,gHeatAct)		{ channel="homematic:HM-CC-RT-DN:ccu2:NEQ1224798:4#ACTUAL_TEMPERATURE" }
+Number BR_Heat_SetTemp			"Badezimmer Heizung Soll-Temperatur [%.1f °C]"							<temperature>	(BR,gHeat,gHeatSet)		{ channel="homematic:HM-CC-RT-DN:ccu2:NEQ1224798:4#SET_TEMPERATURE" }
+Number BR_Heat_Valve			"Badezimmer Heizung Ventilstellung [%d %%]"								<heating>		(BR,gHeat,gHeatValve)	{ channel="homematic:HM-CC-RT-DN:ccu2:NEQ1224798:4#VALVE_STATE" }
+Switch BR_Heat_Auto				"Badezimmer Heizung Auto-Mode"											<temperature>	(gHeat)					{ channel="homematic:HM-CC-RT-DN:ccu2:NEQ1224798:4#AUTO_MODE" }
+Number BR_Heat_Manu				"Badezimmer Heizung Manu-Mode [%.1f °C]"								<temperature>	(gHeat)					{ channel="homematic:HM-CC-RT-DN:ccu2:NEQ1224798:4#MANU_MODE" }
+Switch BR_Heat_BoostMode		"Badezimmer Heizung Boost-Mode"											<temperature>	(gHeat)					{ channel="homematic:HM-CC-RT-DN:ccu2:NEQ1224798:4#BOOST_MODE" }
+Number BR_Heat_BoostTime		"Badezimmer Heizung Boost-Restdauer [%d min]"							<"clock-on">	(gHeat)					{ channel="homematic:HM-CC-RT-DN:ccu2:NEQ1224798:4#BOOST_STATE" }
+Switch BR_Heat_Lowering			"Badezimmer Heizung Spar Modus"											<temperature>	(gHeat)					{ channel="homematic:HM-CC-RT-DN:ccu2:NEQ1224798:4#LOWERING_MODE" }
+Switch BR_Heat_Comfort			"Badezimmer Heizung Komfort Modus"										<temperature>	(gHeat)					{ channel="homematic:HM-CC-RT-DN:ccu2:NEQ1224798:4#COMFORT_MODE" }
+//Number BR_Heat_Mode              "Badezimmer Heizung Betriebsart [MAP(HM-CC-RT-DN.map):%s]"          <temperature>   (BD,gHeat,gHeatMode)      { channel="homematic:HM-CC-RT-DN:ccu2:NEQ1224798:4#CONTROL_MODE" }
+String BR_Heat_Mode				"Badezimmer Heizung Betriebsart"										<temperature>	(BR,gHeat,gHeatMode)	{ channel="homematic:HM-CC-RT-DN:ccu2:NEQ1224798:4#CONTROL_MODE" }
+Number BR_Heat_SetMode			"Badezimmer Heizung Betriebsart Auswahl [MAP(HM-CC-RT-DN.map):%s]"		<"heating-80">	(gHeat,gInitNone)
+Number BR_Heat_Preset			"Badezimmer Heizung Soll-Temperatur Schnellauswahl"						<"heating-40">	(gHeat,gInitNone)					
+Number BR_Heat_EcoTemp			"Badezimmer Heizung Spar-Temperatur [%.1f °C]"											(gHeat,value_persist)
+Number BR_Heat_ComfTemp			"Badezimmer Heizung Komfort-Temperatur [%.1f °C]"										(gHeat,value_persist)
+String BR_Heat_Summary			"Badezimmer Heizung Übersicht [%s]"										<heating>		(gHeat)
+
+
+Number BR_Heat_TempSlider		"Badezimmer Heizung Slider [%1.f °C]"									<heating>		(gHeatControl)
+String BR_Heat_WidgetMode		"Badezimmer Heizung Widget Menü"	
+
+ 
+
+//HM-CC-RT-DN Heizkörperthermostat
+Number GR_Heat_RSSI				"Gästezimmer Heizung RSSI [%d dBm]"														(gHeat,gW,gRSSI)		{ channel="homematic:HM-CC-RT-DN:ccu2:NEQ1224807:0#RSSI_DEVICE" }
+Switch GR_Heat_Unreach			"Gästezimmer Heizung unreachable"										<siren>			(gHeat,gW,gUnreach)		{ channel="homematic:HM-CC-RT-DN:ccu2:NEQ1224807:0#UNREACH" }
+Switch GR_Heat_Pending			"Gästezimmer Heizung config pending"									<siren>			(gHeat,gW,gPending)		{ channel="homematic:HM-CC-RT-DN:ccu2:NEQ1224807:0#CONFIG_PENDING" }
+Number GR_Heat_Battery			"Gästezimmer Heizung Batteriezustand [%.1f V]"							<battery>		(gHeat,gW,gBattery)		{ channel="homematic:HM-CC-RT-DN:ccu2:NEQ1224807:4#BATTERY_STATE" }
+String GR_Heat_Fault			"Gästezimmer Heizung Fehlerwert [MAP(HM-CC-RT-DN.map):%s]"				<error2>		(gHeat,gError)			{ channel="homematic:HM-CC-RT-DN:ccu2:NEQ1224807:4#FAULT_REPORTING" }
+Number GR_Heat_ActTemp			"Gästezimmer Heizung Ist-Temperatur [%.1f °C]"							<temperature>	(GR,gHeat,gHeatAct)		{ channel="homematic:HM-CC-RT-DN:ccu2:NEQ1224807:4#ACTUAL_TEMPERATURE" }
+Number GR_Heat_SetTemp			"Gästezimmer Heizung Soll-Temperatur [%.1f °C]"							<temperature>	(GR,gHeat,gHeatSet)		{ channel="homematic:HM-CC-RT-DN:ccu2:NEQ1224807:4#SET_TEMPERATURE" }
+Number GR_Heat_Valve			"Gästezimmer Heizung Ventilstellung [%d %%]"							<heating>		(GR,gHeat,gHeatValve)	{ channel="homematic:HM-CC-RT-DN:ccu2:NEQ1224807:4#VALVE_STATE" }
+Switch GR_Heat_Auto				"Gästezimmer Heizung Auto-Mode"											<temperature>	(gHeat)					{ channel="homematic:HM-CC-RT-DN:ccu2:NEQ1224807:4#AUTO_MODE" }
+Number GR_Heat_Manu				"Gästezimmer Heizung Manu-Mode [%.1f °C]"								<temperature>	(gHeat)					{ channel="homematic:HM-CC-RT-DN:ccu2:NEQ1224807:4#MANU_MODE" }
+Switch GR_Heat_BoostMode		"Gästezimmer Heizung Boost-Mode"										<temperature>	(gHeat)					{ channel="homematic:HM-CC-RT-DN:ccu2:NEQ1224807:4#BOOST_MODE" }
+Number GR_Heat_BoostTime		"Gästezimmer Heizung Boost-Restdauer [%d min]"							<"clock-on">	(gHeat)					{ channel="homematic:HM-CC-RT-DN:ccu2:NEQ1224807:4#BOOST_STATE" }
+Switch GR_Heat_Lowering			"Gästezimmer Heizung Spar Modus"										<temperature>	(gHeat)					{ channel="homematic:HM-CC-RT-DN:ccu2:NEQ1224807:4#LOWERING_MODE" }
+Switch GR_Heat_Comfort			"Gästezimmer Heizung Komfort Modus"										<temperature>	(gHeat)					{ channel="homematic:HM-CC-RT-DN:ccu2:NEQ1224807:4#COMFORT_MODE" }
+//Number GR_Heat_Mode              "Gästezimmer Heizung Betriebsart [MAP(HM-CC-RT-DN.map):%s]"          <temperature>   (BD,gHeat,gHeatMode)      { channel="homematic:HM-CC-RT-DN:ccu2:NEQ1224807:4#CONTROL_MODE" }
+String GR_Heat_Mode				"Gästezimmer Heizung Betriebsart"										<temperature>	(GR,gHeat,gHeatMode)	{ channel="homematic:HM-CC-RT-DN:ccu2:NEQ1224807:4#CONTROL_MODE" }
+Number GR_Heat_SetMode			"Gästezimmer Heizung Betriebsart Auswahl [MAP(HM-CC-RT-DN.map):%s]"		<"heating-80">	(gHeat,gInitNone)
+Number GR_Heat_Preset			"Gästezimmer Heizung Soll-Temperatur Schnellauswahl"					<"heating-40">	(gHeat,gInitNone)					
+Number GR_Heat_EcoTemp			"Gästezimmer Heizung Spar-Temperatur [%.1f °C]"											(gHeat,value_persist)
+Number GR_Heat_ComfTemp			"Gästezimmer Heizung Komfort-Temperatur [%.1f °C]"										(gHeat,value_persist)
+String GR_Heat_Summary			"Gästezimmer Heizung Übersicht [%s]"									<heating>		(gHeat)
+
+
+Number GR_Heat_TempSlider		"Gästezimmer Heizung Slider [%1.f °C]"									<heating>		(gHeatControl)
+String GR_Heat_WidgetMode		"Gästezimmer Heizung Widget Menü"	
+
+ 
 

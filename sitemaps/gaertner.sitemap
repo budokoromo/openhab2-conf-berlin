@@ -229,6 +229,9 @@ sitemap gaertner label="Gärtner openHAB Installation" {
             Group item=gHeat
             Group item=gHeatAct
             Group item=gHeatValve valuecolor=[0="green"]
+            Group item=gShut valuecolor=[0="green"]
+            Group item=gShutLevel valuecolor=[0="green"]
+            
 //            Group item=gWindow valuecolor=[0="green"]
 //            Group item=gBattery valuecolor=[0="green"]
 //            Group item=gLight
@@ -246,6 +249,7 @@ sitemap gaertner label="Gärtner openHAB Installation" {
         Group item=Whg label="Alle Elemente" icon="house"
     }
 
+	Group item=gFyrePower
 
 }
 
