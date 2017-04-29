@@ -542,6 +542,9 @@ rule "Initialize all items"
 when
     System started
 then
+	guardMode.send(ON)
+	alarmMode.send(OFF)
+	
 	hueGroups.put("living", newArrayList("hue-living.fritz.box", "b-MWuUtzyAY-YkQYqcMq2yEXq0to9skQgb5QYFbA", "1"))
 	
 	hueGroupData.put(hueKeyName, hueGrpLivName)
@@ -659,7 +662,9 @@ then
 	// Turn on TV
 	lgtvLivPower.sendCommand(ON) 
 	// Mute TV, Sound comes from AMP
-	lgtvLivMute.sendCommand(ON)
+	lgtvLivMute.sendCommand(OFF)	// to get rid off the crappy Mute Logo
+	lgtvLivVolume.sendCommand(0)
+
 	// Set TV Input to HDMI1
 	lgtvLivInput.sendCommand(lgtvInputAMP)
 	// Say Hello
@@ -730,7 +735,9 @@ then
 	// Turn on TV
 	lgtvLivPower.sendCommand(ON)
 	// Mute TV, Sound comes from AMP
-	lgtvLivMute.sendCommand(ON)
+	lgtvLivMute.sendCommand(OFF)
+	lgtvLivVolume.sendCommand(0)
+	
 	// Set TV Input to HDMI1
 	lgtvLivInput.sendCommand(lgtvInputAMP)
 	// Say Hello

@@ -9,6 +9,8 @@ Group gRSSI		"RSSI"				(Whg)
 Group gPending	"Pending"			(Whg)
 Group gUnreach	"Unreach"			(Whg)
 
+Group:Switch:OR(ON, OFF) gWarn		"Alarm Meldungen"
+
 
 //Group gLights 	"Lights"			(gAll)
 //Group gHues 	"Hues" 				(gLights) 
@@ -35,7 +37,15 @@ Group gHuesLivColor "Hues Living Color"
 // Groups for Heaters
 Group:Number:AVG gTempLiv "[%.1f °C]" (gTemp)
 
- 
+// Alarm mode
+//Switch guardMode	"Überwachung [MAP(de.map):%s]"
+Switch guardMode	"Überwachung"
+Switch alarmMode	"Alarm"
+
+
+Switch warnJochen		"Alarm an Jochen"	(gWarn) 
+Switch warnNora			"Alarm an Nora"		(gWarn)
+
 
 // Test ecobee
 Number desired_heat
@@ -171,7 +181,7 @@ String lgtvLivState "LGTV Toast" { channel="connectsdk:WebOSTV:192_168_11_73:med
 String lgtvLivAppLaunch "LGTV AppLauch" { channel="connectsdk:WebOSTV:192_168_11_73:appLauncher"}
 String lgtvLivNetflix "LGTV Netflix" { channel="connectsdk:WebOSTV:192_168_11_73:netflixLauncher"}
 String lgtvLivHulu "LGTV Hulu" { channel="connectsdk:WebOSTV:192_168_11_73:huluLauncher"}
-String lgtvLivYouTube "LGTV YouTube" { channel="connectsdk:WebOSTV:192_168_11_73:youtubeLauncher"}
+String lgtvLivYouTube "LGTV YouTube" { channel="connectsdk:WebOSTV:192_168_11_73:youtubeLauncher"} 
 String lgtvLivBrowser "LGTV Browser" { channel="connectsdk:WebOSTV:192_168_11_73:browserLauncher"}
 
 // Power on is not Supported, so we need to Wake on LAN with WOL Binding (See rule file)
@@ -197,6 +207,8 @@ Switch dunePlayPause														{http=">[ON:GET:http://192.168.11.71/cgi-bin/d
 Switch duneSTOP         													{http=">[ON:GET:http://192.168.11.71/cgi-bin/do?cmd=ir_code&ir_code=E619BF00]", autoupdate="false"}
 Switch duneREW         														{http=">[ON:GET:http://192.168.11.71/cgi-bin/do?cmd=ir_code&ir_code=E31CBF00]", autoupdate="false"}
 Switch duneFWD																{http=">[ON:GET:http://192.168.11.71/cgi-bin/do?cmd=ir_code&ir_code=E41BBF00]", autoupdate="false"}
+Switch dunePAGEDOWN 														{http=">[ON:GET:http://192.168.11.71/cgi-bin/do?cmd=ir_code&ir_code=B34CBF00]", autoupdate="false"}
+Switch dunePAGEUP	 														{http=">[ON:GET:http://192.168.11.71/cgi-bin/do?cmd=ir_code&ir_code=B44BBF00]", autoupdate="false"}
 
 String duneRemoteCode	// Pressing a button on dune Remote Panel puts button code in var   00 BF 56 A9
 
@@ -204,59 +216,13 @@ String duneRemoteCode	// Pressing a button on dune Remote Panel puts button code
 String sceneName
 
 
-// Homematic Items
-
-/* 
-// Heating
-Number heatLivEActTemp "heatLivEActTemp" (gTempLiv) { channel = "homematic:HM-CC-RT-DN:ccu2:MEQ0571893:4#ACTUAL_TEMPERATURE" }
-Switch heatLivEAutoMode "heatLivEAutoMode" { channel = "homematic:HM-CC-RT-DN:ccu2:MEQ0571893:4#AUTO_MODE" }
-Switch heatLivEComfMode "heatLivEComfMode" { channel ="homematic:HM-CC-RT-DN:ccu2:MEQ0571893:4#COMFORT_MODE" }
-Switch heatLivELowMode "heatLivELowMode" { channel ="homematic:HM-CC-RT-DN:ccu2:MEQ0571893:4#LOWERING_MODE" }
-Number heatLivEManuMode "heatLivEManuMode" { channel = "homematic:HM-CC-RT-DN:ccu2:MEQ0571893:4#MANU_MODE" }
-Switch heatLivEBoostMode "heatLivEBoostMode" { channel ="homematic:HM-CC-RT-DN:ccu2:MEQ0571893:4#BOOST_MODE" }
-String heatLivECtrlMode "heatLivECtrlMode" { channel ="homematic:HM-CC-RT-DN:ccu2:MEQ0571893:4#CONTROL_MODE" }
-Number heatLivEBoostState "heatLivEBoostState" { channel = "homematic:HM-CC-RT-DN:ccu2:MEQ0571893:4#BOOST_STATE" }
-Number heatLivESetTemp "heatLivESetTemp" { channel = "homematic:HM-CC-RT-DN:ccu2:MEQ0571893:4#SET_TEMPERATURE" }
-Number heatLivEValveState "heatLivEValveState" { channel = "homematic:HM-CC-RT-DN:ccu2:MEQ0571893:4#VALVE_STATE" }
-
-Number heatLivWActTemp "heatLivWActTemp" (gTempLiv) { channel = "homematic:HM-CC-RT-DN:ccu2:MEQ0571874:4#ACTUAL_TEMPERATURE" }
-Switch heatLivWAutoMode "heatLivWAutoMode" { channel = "homematic:HM-CC-RT-DN:ccu2:MEQ0571874:4#AUTO_MODE" }
-Switch heatLivWComfMode "heatLivWComfMode" { channel ="homematic:HM-CC-RT-DN:ccu2:MEQ0571874:4#COMFORT_MODE" }
-Switch heatLivWLowMode "heatLivWLowMode" { channel ="homematic:HM-CC-RT-DN:ccu2:MEQ0571874:4#LOWERING_MODE" }
-Number heatLivWManuMode "heatLivWManuMode" { channel = "homematic:HM-CC-RT-DN:ccu2:MEQ0571874:4#MANU_MODE" }
-Switch heatLivWBoostMode "heatLivWBoostMode" { channel ="homematic:HM-CC-RT-DN:ccu2:MEQ0571874:4#BOOST_MODE" }
-String heatLivWCtrlMode "heatLivWCtrlMode" { channel ="homematic:HM-CC-RT-DN:ccu2:MEQ0571874:4#CONTROL_MODE" }
-Number heatLivWBoostState "heatLivWBoostState" { channel = "homematic:HM-CC-RT-DN:ccu2:MEQ0571874:4#BOOST_STATE" }
-Number heatLivWSetTemp "heatLivWSetTemp" { channel = "homematic:HM-CC-RT-DN:ccu2:MEQ0571874:4#SET_TEMPERATURE" }
-Number heatLivWValveState "heatLivWValveState" { channel = "homematic:HM-CC-RT-DN:ccu2:MEQ0571874:4#VALVE_STATE" } 
-*/
-
-
-// Window/ Door Contacts
-
-Contact contKitDoorAtrium "contKitDoorAtrium" (gContacts) {channel = "homematic:HM-Sec-SCo:ccu2:LEQ1469830:1#STATE"}
-Contact contKitBalcony "contKitBalcony" (gContacts) {channel = "homematic:HM-Sec-SCo:ccu2:MEQ0174917:1#STATE"}
-
-Contact contLivDoorW "contLivDoorW" (gContacts) {channel = "homematic:HM-Sec-SCo:ccu2:LEQ1470385:1#STATE"}
-Contact contLivDoorE "contLivDoorE" (gContacts) {channel = "homematic:HM-Sec-SCo:ccu2:LEQ1469816:1#STATE"}
-Contact contLivWinRoof "contLivWinRoof" (gContacts) {channel = "homematic:HM-Sec-SCo:ccu2:LEQ1470280:1#STATE"}
-Contact contLivEntrance "contLivEntrance" (gContacts) {channel = "homematic:HM-Sec-SCo:ccu2:LEQ1470368:1#STATE"}
-
-Contact contBath "contBath" (gContacts) {channel = "homematic:HM-Sec-SCo:ccu2:LEQ0924258:1#STATE"}
-Contact contEscape "contEscape" (gContacts) {channel = "homematic:HM-Sec-SCo:ccu2:MEQ0174904:1#STATE"}
-Contact contGuest "contGuest" (gContacts) {channel = "homematic:HM-Sec-SCo:ccu2:LEQ1469812:1#STATE"}
-Contact contRest "contRest" (gContacts) {channel = "homematic:HM-Sec-SCo:ccu2:LEQ1470004:1#STATE"}
-Contact contSleep "contSleep" (gContacts) {channel = "homematic:HM-Sec-SCo:ccu2:LEQ1469074:1#STATE"}
-
- 
-
 // tablets switch on/off via Fully Browser REST API
-Switch fyreLivGuest		"Tablet LivGuest"	(gPowerSwitches,gFyrePower)		{http=">[ON:GET:http://fyre-livguest.fritz.box:2323/?cmd=screenOn&password=cronos34] >[OFF:GET:http://fyre-livguest.fritz.box:2323/?cmd=screenOff&password=cronos34]"}
-Switch fyreEntrance		"Tablet Entrance" 	(gPowerSwitches,gFyrePower)		{http=">[ON:GET:http://fyre-entrance.fritz.box:2323/?cmd=screenOn&password=cronos34] >[OFF:GET:http://fyre-entrance.fritz.box:2323/?cmd=screenOff&password=cronos34]"}
-Switch fyreLivKit		"Tablet LivKit"  	(gPowerSwitches,gFyrePower)		{http=">[ON:GET:http://fyre-livkit.fritz.box:2323/?cmd=screenOn&password=cronos34] >[OFF:GET:http://fyre-livkit.fritz.box:2323/?cmd=screenOff&password=cronos34]"}
-Switch fyreKitFloor     "Tablet KitFloor" 	(gPowerSwitches,gFyrePower)		{http=">[ON:GET:http://fyre-kitfloor.fritz.box:2323/?cmd=screenOn&password=cronos34] >[OFF:GET:http://fyre-kitfloor.fritz.box:2323/?cmd=screenOff&password=cronos34]"}
-Switch fyreFloorSleep 	"Tablet FloorSleep"	(gPowerSwitches,gFyrePower)		{http=">[ON:GET:http://fyre-floorsleep.fritz.box:2323/?cmd=screenOn&password=cronos34] >[OFF:GET:http://fyre-floorsleep.fritz.box:2323/?cmd=screenOff&password=cronos34]"}
-Switch fyreSleepBath 	"Tablet SleepBath"	(gPowerSwitches,gFyrePower)		{http=">[ON:GET:http://fyre-sleepbath.fritz.box:2323/?cmd=screenOn&password=cronos34] >[OFF:GET:http://fyre-sleepbath.fritz.box:2323/?cmd=screenOff&password=cronos34]"}
+Switch fyreLivGuest		"Tablet LivGuest"	(gFyrePower)		{http=">[ON:GET:http://fyre-livguest.fritz.box:2323/?cmd=screenOn&password=cronos34] >[OFF:GET:http://fyre-livguest.fritz.box:2323/?cmd=screenOff&password=cronos34]"}
+Switch fyreEntrance		"Tablet Entrance" 	(gFyrePower)		{http=">[ON:GET:http://fyre-entrance.fritz.box:2323/?cmd=screenOn&password=cronos34] >[OFF:GET:http://fyre-entrance.fritz.box:2323/?cmd=screenOff&password=cronos34]"}
+Switch fyreLivKit		"Tablet LivKit"  	(gFyrePower)		{http=">[ON:GET:http://fyre-livkit.fritz.box:2323/?cmd=screenOn&password=cronos34] >[OFF:GET:http://fyre-livkit.fritz.box:2323/?cmd=screenOff&password=cronos34]"}
+Switch fyreKitFloor     "Tablet KitFloor" 	(gFyrePower)		{http=">[ON:GET:http://fyre-kitfloor.fritz.box:2323/?cmd=screenOn&password=cronos34] >[OFF:GET:http://fyre-kitfloor.fritz.box:2323/?cmd=screenOff&password=cronos34]"}
+Switch fyreFloorSleep 	"Tablet FloorSleep"	(gFyrePower)		{http=">[ON:GET:http://fyre-floorsleep.fritz.box:2323/?cmd=screenOn&password=cronos34] >[OFF:GET:http://fyre-floorsleep.fritz.box:2323/?cmd=screenOff&password=cronos34]"}
+Switch fyreSleepBath 	"Tablet SleepBath"	(gFyrePower)		{http=">[ON:GET:http://fyre-sleepbath.fritz.box:2323/?cmd=screenOn&password=cronos34] >[OFF:GET:http://fyre-sleepbath.fritz.box:2323/?cmd=screenOff&password=cronos34]"}
 
 Switch fyrePower 		"alle Tablets" ["Lighting"] 
 

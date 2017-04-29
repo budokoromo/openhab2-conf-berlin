@@ -1,0 +1,22 @@
+sitemap simple label="Gärtner openHAB Installation" {
+
+	Frame label="Präsenz" {
+		Switch item=guardMode
+		Switch item=alarmMode
+//		Switch item=guardMode label="Überwachung []" mappings=[ON="An", OFF="Aus"]
+		Group item= gWarn
+	}
+/* 	
+	Frame label="Jalousien" {
+		Switch item=gShutWork label="[]" mappings=[ON="An", OFF="Aus"]
+		Group	item=gShutLevel  
+	}
+*/	
+	Group item=gFyrePower
+	Switch item=shutEnt
+	Switch item=smokeEntranceAlarm
+	Group item=gMotion
+
+}
+
+// vim: syntax=Xtend

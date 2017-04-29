@@ -36,7 +36,12 @@ Bridge homematic:bridge:ccu2 [gatewayAddress="ccu2.fritz.box"]
 	Thing HM-LC-Bl1PBU-FM	NEQ1365961  // Shutter ShutLiv4
 	Thing HM-LC-Bl1PBU-FM	NEQ1366023  // Shutter ShutLiv5
 
+	Thing HmIP-SWSD         000A55699D63BE  // Smoke Detector Entrance
+	Thing HmIP-SWSD         000A55699D5B5D  // Smoke Detector LivKit
+	Thing HmIP-SWSD         000A55699D62F7  // Smoke Detector Storage
+	
+	Thing HmIP-SMO         000955699D410D  	// Motion Detector Roof East
+	Thing HmIP-SMO         000955699D40D6  	// Motion Detector Roof West
 }
-
 
 // vim: syntax=Xtend syntax=openhab

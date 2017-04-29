@@ -1,0 +1,75 @@
+/*
+ * TODOs
+ * 
+ * Write Down all Datapoints from all Smoke Detectors
+ * 
+ */
+
+
+Group                           	gSmoke        "Fenster / Tür Kontakte"                                <heating>       (Whg)
+
+Switch smokeEntrance_DELETE_DEVICE 	"smokeEntrance_DeleteDevice" 			(gSmoke) {channel = "homematic:HM-Sec-SD-2:ccu2:NEQ1029634:0#DELETE_DEVICE"}
+Number smokeEntrance_RSSI_PEER 		"smokeEntrance_RSSI_PEER [%d dBm]"		(gSmoke) {channel = "homematic:HM-Sec-SD-2:ccu2:NEQ1029634:0#RSSI_PEER"}
+Number smokeEntrance_RSSI_DEVICE 	"smokeEntrance_RSSI_DEVICE [%d dBm]"	(gSmoke) {channel = "homematic:HM-Sec-SD-2:ccu2:NEQ1029634:0#RSSI_DEVICE"}
+Switch smokeEntrance_LowBat 		"smokeEntrance_LowBat" 					(gSmoke) {channel = "homematic:HM-Sec-SD-2:ccu2:NEQ1029634:0#LOWBAT"}
+
+
+Switch smokeEntrance_STATE	 		"smokeEntrance_State" 					(gSmoke) {channel = "homematic:HM-Sec-SD-2:ccu2:NEQ1029634:1#STATE"}
+Switch smokeEntrance_INSTALL_TEST	"smokeEntrance_InstallTest" 			(gSmoke) {channel = "homematic:HM-Sec-SD-2:ccu2:NEQ1029634:1#INSTALL_TEST"}
+
+
+
+
+String smokeEntrance_SMOKE_DETECTOR_COMMAND	 "smokeEntrance_Command" 	(gSmoke) {channel = "homematic:HmIP-SWSD:ccu2:000A55699D63BE:1#SMOKE_DETECTOR_COMMAND"}
+String smokeLivKit_SMOKE_DETECTOR_COMMAND	 "smokeEntrance_Command" 	(gSmoke) {channel = "homematic:HmIP-SWSD:ccu2:000A55699D5B5D:1#SMOKE_DETECTOR_COMMAND"}
+String smokeStorage_SMOKE_DETECTOR_COMMAND	 "smokeEntrance_Command" 	(gSmoke) {channel = "homematic:HmIP-SWSD:ccu2:000A55699D62F7:1#SMOKE_DETECTOR_COMMAND"}
+
+
+
+Switch smokeEntranceAlarm
+
+
+
+/* 
+
+// Heating mode for the whole group:
+//  0: Automatik-Betrieb (Standard)
+//  1: Abwesend/Urlaubs-Betrieb
+//  2: Dauerfeuer-Betrieb
+Number WhgHeatState "Wohnung Heizmodus [%d]" <heating> (Whg)
+
+// Two mode variables are used:
+//          HM-CC-RT-DN            openHAB Programm
+// Nr.      "*_Heizung_Mode"       "*_Heizung_SetMode"
+//------------------------------------------------------
+// -1:                             Aus
+//  0:       Automatik             Automatik
+//  1:       Manuell               Manuell
+//  2:       Urlaub
+//  3:       Boost                 Boost
+//  4:                             Fenster Absenkung
+
+//HM-CC-RT-DN Heizkörperthermostat
+Number SR_Heat_RSSI				"Schlafzimmer Heizung RSSI [%d dBm]"													(gHeat,gW,gRSSI)		{ channel="homematic:HM-CC-RT-DN:ccu2:MEQ0571847:0#RSSI_DEVICE" }
+Switch SR_Heat_Unreach			"Schlafzimmer Heizung unreachable"										<siren>			(gHeat,gW,gUnreach)		{ channel="homematic:HM-CC-RT-DN:ccu2:MEQ0571847:0#UNREACH" }
+Switch SR_Heat_Pending			"Schlafzimmer Heizung config pending"									<siren>			(gHeat,gW,gPending)		{ channel="homematic:HM-CC-RT-DN:ccu2:MEQ0571847:0#CONFIG_PENDING" }
+Number SR_Heat_Battery			"Schlafzimmer Heizung Batteriezustand [%.1f V]"							<battery>		(gHeat,gW,gBattery)		{ channel="homematic:HM-CC-RT-DN:ccu2:MEQ0571847:4#BATTERY_STATE" }
+String SR_Heat_Fault			"Schlafzimmer Heizung Fehlerwert [MAP(HM-CC-RT-DN.map):%s]"				<error2>		(gHeat,gError)			{ channel="homematic:HM-CC-RT-DN:ccu2:MEQ0571847:4#FAULT_REPORTING" }
+Number SR_Heat_ActTemp			"Schlafzimmer Heizung Ist-Temperatur [%.1f °C]"							<temperature>	(SR,gHeat,gHeatAct)		{ channel="homematic:HM-CC-RT-DN:ccu2:MEQ0571847:4#ACTUAL_TEMPERATURE" }
+Number SR_Heat_SetTemp			"Schlafzimmer Heizung Soll-Temperatur [%.1f °C]"						<temperature>	(SR,gHeat,gHeatSet)		{ channel="homematic:HM-CC-RT-DN:ccu2:MEQ0571847:4#SET_TEMPERATURE" }
+Number SR_Heat_Valve			"Schlafzimmer Heizung Ventilstellung [%d %%]"							<heating>		(SR,gHeat,gHeatValve)	{ channel="homematic:HM-CC-RT-DN:ccu2:MEQ0571847:4#VALVE_STATE" }
+Switch SR_Heat_Auto				"Schlafzimmer Heizung Auto-Mode"										<temperature>	(gHeat)					{ channel="homematic:HM-CC-RT-DN:ccu2:MEQ0571847:4#AUTO_MODE" }
+Number SR_Heat_Manu				"Schlafzimmer Heizung Manu-Mode [%.1f °C]"								<temperature>	(gHeat)					{ channel="homematic:HM-CC-RT-DN:ccu2:MEQ0571847:4#MANU_MODE" }
+Switch SR_Heat_BoostMode		"Schlafzimmer Heizung Boost-Mode"										<temperature>	(gHeat)					{ channel="homematic:HM-CC-RT-DN:ccu2:MEQ0571847:4#BOOST_MODE" }
+Number SR_Heat_BoostTime		"Schlafzimmer Heizung Boost-Restdauer [%d min]"							<"clock-on">	(gHeat)					{ channel="homematic:HM-CC-RT-DN:ccu2:MEQ0571847:4#BOOST_STATE" }
+Switch SR_Heat_Lowering			"Schlafzimmer Heizung Spar Modus"										<temperature>	(gHeat)					{ channel="homematic:HM-CC-RT-DN:ccu2:MEQ0571847:4#LOWERING_MODE" }
+Switch SR_Heat_Comfort			"Schlafzimmer Heizung Komfort Modus"									<temperature>	(gHeat)					{ channel="homematic:HM-CC-RT-DN:ccu2:MEQ0571847:4#COMFORT_MODE" }
+//Number SR_Heat_Mode              "Schlafzimmer Heizung Betriebsart [MAP(HM-CC-RT-DN.map):%s]"          <temperature>   (BD,gHeat,gHeatMode)      { channel="homematic:HM-CC-RT-DN:ccu2:MEQ0571847:4#CONTROL_MODE" }
+String SR_Heat_Mode				"Schlafzimmer Heizung Betriebsart"										<temperature>	(SR,gHeat,gHeatMode)	{ channel="homematic:HM-CC-RT-DN:ccu2:MEQ0571847:4#CONTROL_MODE" }
+Number SR_Heat_SetMode			"Schlafzimmer Heizung Betriebsart Auswahl [MAP(HM-CC-RT-DN.map):%s]"	<"heating-80">	(gHeat,gInitNone)
+Number SR_Heat_Preset			"Schlafzimmer Heizung Soll-Temperatur Schnellauswahl"					<"heating-40">	(gHeat,gInitNone)					
+Number SR_Heat_EcoTemp			"Schlafzimmer Heizung Spar-Temperatur [%.1f °C]"										(gHeat,value_persist)
+Number SR_Heat_ComfTemp			"Schlafzimmer Heizung Komfort-Temperatur [%.1f °C]"										(gHeat,value_persist)
+String SR_Heat_Summary			"Schlafzimmer Heizung Übersicht [%s]"									<heating>		(gHeat)
+
+*/

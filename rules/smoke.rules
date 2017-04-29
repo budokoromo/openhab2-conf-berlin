@@ -1,0 +1,28 @@
+import java.math.BigDecimal
+import java.util.Locale
+
+val String filename = "smoke.rules"
+
+/*
+ * Possible Commands for a smoke detector are
+ * RESERVED_ALARM_OFF
+ * INTRUSION_ALARM_OFF
+ * INTRUSION_ALARM
+ * SMOKE_TEST
+ * COMMUNICATION_TEST
+ * 
+ */
+
+
+rule "Smoke Alarm ON"
+when
+	Item smokeEntranceAlarm received command
+then
+    logInfo(filename, "smokeEntranceAlarm Received command = [{}]", receivedCommand)
+    switch(receivedCommand) {
+    case ON:
+    	smokeEntrance_SMOKE_DETECTOR_COMMAND.sendCommand("INTRUSION_ALARM")
+	case OFF:
+    	smokeEntrance_SMOKE_DETECTOR_COMMAND.sendCommand("INTRUSION_ALARM_OFF")	
+    }
+end	

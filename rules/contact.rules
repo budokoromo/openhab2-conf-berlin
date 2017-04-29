@@ -1,0 +1,83 @@
+val String filename="contact.rules"
+
+rule "Guard Mode ON"
+when
+	Item guardMode changed to ON 
+then
+	//DOC on Groups: https://community.openhab.org/t/design-pattern-working-with-groups-in-rules/20512
+	if(gContacts.state == OPEN) {
+		val StringBuilder sb = new StringBuilder
+		sb.append("Alarm aktiv. Folgende Kontakte sind noch geöffnet: ")
+		gContacts.members.filter[i | i.state == OPEN].forEach[i | sb.append("\n🚫 " + transform("MAP", "contact_de.map", i.name))]
+//		gContacts?.members.forEach[element1|
+//		logInfo(filename, "Name of contact = " + transform("MAP", "contact_de.map", element1.name))
+		logInfo(filename, sb.toString())
+		gWarn.members.filter[i | i.state == ON].forEach[i | sendTelegram( transform("MAP", "telegram.map", i.name), sb.toString())]
+//		guardMode.postUpdate(ON)
+	} 
+	else {
+//		sendTelegram("jochen", "👍 Alarm wurde aktiviert 👍" )
+		gWarn.members.filter[i | i.state == ON].forEach[i | sendTelegram( transform("MAP", "telegram.map", i.name), "👍 Alarm wurde aktiviert 👍")]
+	}
+end	
+
+
+
+rule "Guard Mode OFF"
+when
+	Item guardMode changed to OFF 
+then
+	gWarn.members.filter[i | i.state == ON].forEach[i | sendTelegram( transform("MAP", "telegram.map", i.name), "👍 Alarm wurde deaktiviert 👍")]
+end
+
+/*
+rule "Fire Alarm"
+when 
+	Item gContacts changed from CLOSED to OPEN 
+then
+	if(guardMode.state == ON) {
+		val StringBuilder sb = new StringBuilder
+		sb.append("☠️ Kontakt geöffnet ☠️")
+		gContacts.members.filter[i | i.state == OPEN].forEach[i | sb.append("\n🔓️ " + transform("MAP", "contact_de.map", i.name))]
+		sendTelegram("jochen", sb.toString)
+		logInfo(filename, sb.toString)
+	}
+end
+*/
+
+
+rule "Fire Alarm"
+when 
+	Item contLivEntrance changed to OPEN or
+	Item contKitDoorAtrium changed to OPEN or
+	Item contKitBalcony changed to OPEN or
+	Item contLivDoorW changed to OPEN or
+	Item contLivDoorE changed to OPEN or
+	Item contLivWinRoof changed to OPEN or
+	Item contBath changed to OPEN or
+	Item contEscape changed to OPEN or
+	Item contGuest changed to OPEN or
+	Item contRest changed to OPEN or
+	Item contSleep changed to OPEN 
+then
+	if(alarmMode.state == ON) {
+		smokeEntranceAlarm.sendCommand(ON)
+		hueMainToggle.sendCommand(ON)		
+	}
+	if(guardMode.state == ON) {
+		val StringBuilder sb = new StringBuilder
+		sb.append("☠️ Kontakt geöffnet ☠️")
+		gContacts.members.filter[i | i.state == OPEN].forEach[i | sb.append("\n🔓️ " + transform("MAP", "contact_de.map", i.name))]
+		gWarn.members.filter[i | i.state == ON].forEach[i | sendTelegram( transform("MAP", "telegram.map", i.name), sb.toString())]
+//		sendTelegram("jochen", sb.toString)
+		logInfo(filename, sb.toString)
+	}
+end
+
+
+rule "alarmMode sets guardMode"
+when
+	Item alarmMode received command ON
+then
+	guardMode.send(ON)
+end
