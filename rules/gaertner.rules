@@ -1,13 +1,16 @@
-import org.openhab.core.library.types.*
+//import org.openhab.core.library.types.*
+//import org.openhab.core.library.types.DecimalType
+import org.eclipse.smarthome.core.library.types.DecimalType
+import org.eclipse.smarthome.core.library.types.*
 import java.util.ArrayList
-import java.util.Arrays
+//import java.util.Arrays
 import java.util.List
-import java.util.Map
+//import java.util.Map
 import java.util.HashMap
-import java.util.Set
-import java.util.List
+//import java.util.Set
+//import java.util.List
 
-import org.junit.Assert.*
+//import org.junit.Assert.*
 
 
 
@@ -69,7 +72,7 @@ val List<String> yamahaSurrType = newArrayList(	"2ch Stereo", "7ch Stereo", "Hal
 												"Surround Decoder" )
 
 val String yInputDUNE = 	"AV2"
-val String yInputVUPLUS = 	"AV1"
+val String yInputVUSOLO4K = "AV1"
 val String yInputPS4BLACK = "AV3"
 val String yInputPS4PRO = 	"AV6"
 val String yInputPS3 = 		"AV4"
@@ -87,6 +90,7 @@ val String ySurr2CH ="2ch Stereo"
 
 // lgvt
 val String lgtvInputAMP = "HDMI_1"
+val String lgtvInputHDMI2 = "HDMI_2"
 
 
 // DUNE
@@ -607,12 +611,12 @@ then
 	val Number hum = 71.7
 	val Number rst = 22.2
 
-	
-	desired_cool.send(dc as DecimalType)
-	desired_heat.send(dh as DecimalType)
-	humidity.send(hum as DecimalType)
-	remote_sensor_temp.send(rst as DecimalType)
-	use_celsius.sendCommand(ON)
+
+//	desired_cool.send(dc as DecimalType)
+//	desired_heat.send(dh as DecimalType)
+//	humidity.send(hum as DecimalType)
+//	remote_sensor_temp.send(rst as DecimalType)
+//	use_celsius.sendCommand(ON)
 
 
 end
@@ -758,6 +762,66 @@ then
 	activeHABPanel.sendCommand("Easy Remote")
 end
 
+
+rule "Switch Scene Computer"
+when
+	Item sceneComputer received command ON
+then
+	// Turn Off Dune
+	sendHttpGetRequest( duneHTTP + duneCodeOFF)
+	
+	// Turn on TV
+	lgtvLivPower.sendCommand(ON)
+	// Mute TV, Sound comes from AMP
+	lgtvLivMute.sendCommand(OFF)
+	lgtvLivVolume.sendCommand(0)
+	
+	// Set TV Input to HDMI1
+	lgtvLivInput.sendCommand(lgtvInputHDMI2)
+	// Say Hello
+	lgtvLivToast.sendCommand("Computer on HDMI 2")
+	
+	// Turn Amp On
+	yamahaPower.sendCommand(ON)
+	// Switch Amp Input to Dune
+	yamahaInput.sendCommand(yInputTV)
+	// Switch Surround Programm to MOVIE ADVENTURE
+	yamahaSurround.sendCommand(ySurrMOVIEADV)
+
+	// switch to "Easy Remote" Panel
+	activeHABPanel.sendCommand("Easy Remote")
+end
+
+
+rule "Switch Scene VUSOLO4K"
+when
+	Item sceneTV received command ON
+then
+	// Turn Off Dune
+	sendHttpGetRequest( duneHTTP + duneCodeOFF)
+	
+	// Turn on TV
+	lgtvLivPower.sendCommand(ON)
+	// Mute TV, Sound comes from AMP
+	lgtvLivMute.sendCommand(OFF)
+	lgtvLivVolume.sendCommand(0)
+	// Set TV Input to HDMI1
+	lgtvLivInput.sendCommand(lgtvInputAMP)
+	// Say Hello
+	lgtvLivToast.sendCommand("VUSOLO4K on AV1")
+	
+	// Turn Amp On
+	yamahaPower.sendCommand(ON)
+	// Switch Amp Input to Dune
+	yamahaInput.sendCommand(yInputVUSOLO4K)
+	// Switch Surround Programm to MOVIE ADVENTURE
+	yamahaSurround.sendCommand(ySurrMOVIEADV)
+
+	// switch to "Easy Remote" Panel
+	activeHABPanel.sendCommand("Easy Remote")
+end
+
+
 rule "Switch Scene AllOff"
 when
 	Item sceneAllOff received command OFF
@@ -772,154 +836,6 @@ when
 	Item duneRemoteCode received command
 then
 	sendHttpGetRequest( duneHTTP + duneRemoteCode.state.toString() )
-end
-
-
-// Switch to Scenes
-rule "Switch to Scene"
-when
-	Item sceneName received command
-then
-	switch (sceneName.state) {
-		case "CHILL": {
-			// set Light
-			
-//	    	gHuesLivColor.send(hueColorLIGHT)
-			hueLivMainColor.send(hueColorLIGHT)
-
-			// Turn Off Dune
-			sendHttpGetRequest( duneHTTP + duneCodeOFF)
-			
-			// Turn off TV
-	    	lgtvLivPower.sendCommand(OFF)
-
-	    	// Turn Amp OFF
-	    	yamahaPower.sendCommand(OFF)
-
-		}
-		case "Movie Remote":{
-			// switch to Movie Remote Panel
-			activeHABPanel.sendCommand("Movie Remote")
-			// Turn on Dune
-			sendHttpGetRequest( duneHTTP + duneCodeON)
-			
-			// Switch Lights
-//	    	gHuesLivColor.send(hueColorTV)
-			hueLivMainColor.send(hueColorTV)
-			hueLivMainToggle.sendCommand(ON)
-	
-			// Turn on TV
-	    	lgtvLivPower.sendCommand(ON)
-	    	// Mute TV, Sound comes from AMP
-	    	lgtvLivMute.sendCommand(ON)
-	    	// Set TV Input to HDMI1
-	    	lgtvLivInput.sendCommand(lgtvInputAMP)
-	    	// Say Hello
-	    	lgtvLivToast.sendCommand("Let's see some freaky Movies!")
-	    	
-	    	// Turn Amp On
-	    	yamahaPower.sendCommand(ON)
-	    	// Switch Amp Input to Dune
-	    	yamahaInput.sendCommand(yInputDUNE)
-	    	// Switch Surround Programm to MOVIE ADVENTURE
-	    	yamahaSurround.sendCommand(ySurrMOVIEADV)
-			
-		}
-		case "PS4": {
-			// Turn Off Dune
-			sendHttpGetRequest( duneHTTP + duneCodeOFF)
-			
-			// Turn on TV
-	    	lgtvLivPower.sendCommand(ON)
-	    	// Mute TV, Sound comes from AMP
-	    	lgtvLivMute.sendCommand(ON)
-	    	// Set TV Input to HDMI1
-	    	lgtvLivInput.sendCommand(lgtvInputAMP)
-	    	// Say Hello
-	    	lgtvLivToast.sendCommand("Let's play some funny Gamez!")
-	    	
-	    	// Turn Amp On
-	    	yamahaPower.sendCommand(ON)
-	    	// Switch Amp Input to Dune
-	    	yamahaInput.sendCommand(yInputPS4BLACK)
-	    	// Switch Surround Programm to MOVIE ADVENTURE
-	    	yamahaSurround.sendCommand(ySurrENTACTGAME)
-
-			// switch to "Easy Remote" Panel
-			activeHABPanel.sendCommand("Easy Remote")
-
-		}
-		case "MUSIC": {
-			// Turn Off Dune
-			sendHttpGetRequest( duneHTTP + duneCodeOFF)
-			
-			// Turn on TV
-	    	lgtvLivPower.sendCommand(ON)
-	    	// Mute TV, Sound comes from AMP
-	    	lgtvLivMute.sendCommand(ON)
-	    	// Set TV Input to HDMI1
-	    	lgtvLivInput.sendCommand(lgtvInputAMP)
-	    	// Say Hello
-	    	lgtvLivToast.sendCommand("Let's play some funny Gamez!")
-	    	
-	    	// Turn Amp On
-	    	yamahaPower.sendCommand(ON)
-	    	// Switch Amp Input to Dune
-	    	yamahaInput.sendCommand(yInputCHROME)
-	    	// Switch Surround Programm to MOVIE ADVENTURE
-	    	yamahaSurround.sendCommand(ySurr2CH)
-
-			// switch to "Easy Remote" Panel
-			activeHABPanel.sendCommand("Easy Remote")
-
-		}
-		case "NETFLIX": {
-			// Turn Off Dune
-			sendHttpGetRequest( duneHTTP + duneCodeOFF)
-			
-			// Turn on TV
-	    	lgtvLivPower.sendCommand(ON)
-	    	// Mute TV, Sound comes from AMP
-	    	lgtvLivMute.sendCommand(ON)
-	    	// Set TV Input to HDMI1
-	    	lgtvLivInput.sendCommand(lgtvInputAMP)
-	    	// Say Hello
-	    	lgtvLivToast.sendCommand("Let's play some funny Gamez!")
-	    	
-	    	// Turn Amp On
-	    	yamahaPower.sendCommand(ON)
-	    	// Switch Amp Input to Dune
-	    	yamahaInput.sendCommand(yInputTV)
-	    	// Switch Surround Programm to MOVIE ADVENTURE
-	    	yamahaSurround.sendCommand(ySurrMOVIEADV)
-	    	
-	    	// Start Netflix
-	    	lgtvLivNetflix.sendCommand("Metallica")
-
-
-			// switch to "Easy Remote" Panel
-			activeHABPanel.sendCommand("Easy Remote")
-		}
-		case "SHUTDOWN": {
-//			gHuesLivColor.send(OFF)
-//			hueLivMainColor.send(OFF)
-
-			hueLivMainToggle.sendCommand(OFF)
-
-//	var output = sendHttpPutRequest("http://hue-living.fritz.box/api/b-MWuUtzyAY-YkQYqcMq2yEXq0to9skQgb5QYFbA/groups/1/action", "application/json", '{"on": false}')
-//    logInfo("HVAC","HVAC Command sent - output: "+output)
-
-
-//			gHuesLivToggle.send(OFF)
-			gPowerSwitches.send(OFF)
-//			ColLivMain.postUpdate(OFF)
-//			gHuesLivToggle.postUpdate(OFF)
-//			gHuesLivDimmer.postUpdate(0)
-//			gHuesLivColor.postUpdate(OFF)
-			
-			
-		}
-	}
 end
 
 

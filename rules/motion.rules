@@ -1,0 +1,20 @@
+val String filename="motion.rules"
+
+rule "Motion detected"
+when 
+	Item motionRoofE_MOTION changed to ON or
+	Item motionRoofW_MOTION changed to ON
+then
+//	if(alarmMode.state == ON) {
+//		smokeEntranceAlarm.sendCommand(ON)
+//		hueMainToggle.sendCommand(ON)		
+//	}
+	if(guardMode.state == ON) {
+		val StringBuilder sb = new StringBuilder
+		sb.append("👣 Bewegung auf dem Dach 👣")
+		gMotion.members.filter[i | i.state == ON].forEach[i | sb.append("\n" + transform("MAP", "motion_de.map", i.name))]
+		gWarn.members.filter[i | i.state == ON].forEach[i | sendTelegram( transform("MAP", "telegram.map", i.name), sb.toString())]
+//		sendTelegram("jochen", sb.toString)
+		logInfo(filename, sb.toString)
+	}
+end

@@ -109,6 +109,8 @@ Switch	sceneMusic	"Musik" ["Lighting"] {autoupdate="false"}
 Switch	sceneChill	"Chillige Atmosphäre" ["Lighting"] {autoupdate="false"}
 Switch	sceneAllOff	"Anlage" ["Lighting"] {autoupdate="false"}
 Switch	sceneNetflix	"Netflix" ["Lighting"] {autoupdate="false"}
+Switch	sceneComputer	"Computer" ["Lighting"] {autoupdate="false"}
+Switch	sceneTV		"Fernsehen" ["Lighting"] {autoupdate="false"}
 
 
 Switch sceneHueKitLight 	"Küchenlicht Standard" 		(gScenes) ["Lighting"] {autoupdate="false"} 
@@ -171,6 +173,96 @@ String lgtvState "LGTV Toast" { channel="connectsdk:WebOSTV:192_168_11_73:mediaS
 
 */
 
+/*
+ * Example im Terminal:
+ * 
+ * smarthome:send lgtvLivAppLaunch com.webos.app.browser
+ * 
+14:42:38.037 [DEBUG] [nnectsdk.handler.LauncherApplication] - AppInfo maxdome - maxdome
+14:42:38.041 [DEBUG] [nnectsdk.handler.LauncherApplication] - AppInfo netflix - Netflix
+14:42:38.042 [DEBUG] [nnectsdk.handler.LauncherApplication] - AppInfo lovefilm.de - Amazon Prime Video
+14:42:38.043 [DEBUG] [nnectsdk.handler.LauncherApplication] - AppInfo dazn - DAZN
+14:42:38.044 [DEBUG] [nnectsdk.handler.LauncherApplication] - AppInfo ui30 - Wuaki.tv
+14:42:38.044 [DEBUG] [nnectsdk.handler.LauncherApplication] - AppInfo googleplaymovieswebos - Google Play Filme
+14:42:38.045 [DEBUG] [nnectsdk.handler.LauncherApplication] - AppInfo youtube.leanback.v4 - YouTube
+14:42:38.046 [DEBUG] [nnectsdk.handler.LauncherApplication] - AppInfo com.webos.app.livetv - LiveTV
+14:42:38.046 [DEBUG] [nnectsdk.handler.LauncherApplication] - AppInfo com.webos.app.discovery - LG Content Store
+14:42:38.047 [DEBUG] [nnectsdk.handler.LauncherApplication] - AppInfo com.webos.app.voice - Suche
+14:42:38.048 [DEBUG] [nnectsdk.handler.LauncherApplication] - AppInfo com.webos.app.tvguide - PROGRAMMFÜHRER
+14:42:38.049 [DEBUG] [nnectsdk.handler.LauncherApplication] - AppInfo com.webos.app.browser - Webbrowser
+14:42:38.051 [DEBUG] [nnectsdk.handler.LauncherApplication] - AppInfo com.webos.app.tvuserguide - Benutzeranleitung
+14:42:38.053 [DEBUG] [nnectsdk.handler.LauncherApplication] - AppInfo com.webos.app.music - Musik
+14:42:38.054 [DEBUG] [nnectsdk.handler.LauncherApplication] - AppInfo com.webos.app.photovideo - Foto und Video
+14:42:38.055 [DEBUG] [nnectsdk.handler.LauncherApplication] - AppInfo com.webos.app.recordings - Aufnahmen
+14:42:38.056 [DEBUG] [nnectsdk.handler.LauncherApplication] - AppInfo com.webos.app.scheduler - Planer
+14:42:38.058 [DEBUG] [nnectsdk.handler.LauncherApplication] - AppInfo com.webos.app.miracast - Screen Share
+14:42:38.059 [DEBUG] [nnectsdk.handler.LauncherApplication] - AppInfo com.webos.app.connectionwizard - Geräteanschluss
+14:42:38.061 [DEBUG] [nnectsdk.handler.LauncherApplication] - AppInfo com.webos.app.camera - Kamera
+14:42:38.062 [DEBUG] [nnectsdk.handler.LauncherApplication] - AppInfo com.webos.app.multiview - Multi-view
+14:42:38.064 [DEBUG] [nnectsdk.handler.LauncherApplication] - AppInfo com.webos.app.accessibility - Barrierefreiheit
+14:42:38.066 [DEBUG] [nnectsdk.handler.LauncherApplication] - AppInfo com.webos.app.notificationcenter - Benachrichtigungen
+14:42:38.068 [DEBUG] [nnectsdk.handler.LauncherApplication] - AppInfo com.webos.app.adapp - Werbung
+14:42:38.070 [DEBUG] [nnectsdk.handler.LauncherApplication] - AppInfo com.webos.app.brandshop - Brand Shop
+14:42:38.071 [DEBUG] [nnectsdk.handler.LauncherApplication] - AppInfo com.webos.app.facebooklogin - Thirdparty Login
+14:42:38.073 [DEBUG] [nnectsdk.handler.LauncherApplication] - AppInfo com.webos.app.inputcommon - InputCommon
+14:42:38.074 [DEBUG] [nnectsdk.handler.LauncherApplication] - AppInfo com.webos.app.membership - LG-Mitgliedschaft
+14:42:38.075 [DEBUG] [nnectsdk.handler.LauncherApplication] - AppInfo com.palm.app.firstuse - Erste Verwendung
+14:42:38.076 [DEBUG] [nnectsdk.handler.LauncherApplication] - AppInfo com.palm.app.settings - Einstellungen
+14:42:38.078 [DEBUG] [nnectsdk.handler.LauncherApplication] - AppInfo com.webos.app.hdmi1 - HDMI-1
+14:42:38.079 [DEBUG] [nnectsdk.handler.LauncherApplication] - AppInfo com.webos.app.cameragallery - Kameragalerie
+14:42:38.080 [DEBUG] [nnectsdk.handler.LauncherApplication] - AppInfo com.webos.app.channeledit - SENDERMANAGER
+14:42:38.081 [DEBUG] [nnectsdk.handler.LauncherApplication] - AppInfo com.webos.app.channelsetting - Sendereinstellung
+14:42:38.083 [DEBUG] [nnectsdk.handler.LauncherApplication] - AppInfo com.webos.app.cheeringtv - Cheering Mode
+14:42:38.085 [DEBUG] [nnectsdk.handler.LauncherApplication] - AppInfo com.webos.app.container - Enyo (2.6) App Container
+14:42:38.086 [DEBUG] [nnectsdk.handler.LauncherApplication] - AppInfo com.webos.app.crb - Connected Red Button
+14:42:38.088 [DEBUG] [nnectsdk.handler.LauncherApplication] - AppInfo com.webos.app.customersupport - Kundendienst
+14:42:38.089 [DEBUG] [nnectsdk.handler.LauncherApplication] - AppInfo com.webos.app.dvrpopup - DvrPopup
+14:42:38.090 [DEBUG] [nnectsdk.handler.LauncherApplication] - AppInfo com.webos.app.eula - User Agreement
+14:42:38.091 [DEBUG] [nnectsdk.handler.LauncherApplication] - AppInfo com.webos.app.externalinput.av1 - AV
+14:42:38.092 [DEBUG] [nnectsdk.handler.LauncherApplication] - AppInfo com.webos.app.externalinput.av2 - AV-2
+14:42:38.094 [DEBUG] [nnectsdk.handler.LauncherApplication] - AppInfo com.webos.app.externalinput.component - Komponente
+14:42:38.095 [DEBUG] [nnectsdk.handler.LauncherApplication] - AppInfo com.webos.app.externalinput.scart - AV-1
+14:42:38.096 [DEBUG] [nnectsdk.handler.LauncherApplication] - AppInfo com.webos.app.factorywin - QML Factorywin
+14:42:38.098 [DEBUG] [nnectsdk.handler.LauncherApplication] - AppInfo com.webos.app.favshows - My Content
+14:42:38.099 [DEBUG] [nnectsdk.handler.LauncherApplication] - AppInfo com.webos.app.hdmi2 - HDMI-2
+14:42:38.100 [DEBUG] [nnectsdk.handler.LauncherApplication] - AppInfo com.webos.app.hdmi3 - HDMI-3
+14:42:38.102 [DEBUG] [nnectsdk.handler.LauncherApplication] - AppInfo com.webos.app.hdmi4 - HDMI-4
+14:42:38.103 [DEBUG] [nnectsdk.handler.LauncherApplication] - AppInfo com.webos.app.inputmgr - Input Hub
+14:42:38.105 [DEBUG] [nnectsdk.handler.LauncherApplication] - AppInfo com.webos.app.installation - Installation Settings
+14:42:38.107 [DEBUG] [nnectsdk.handler.LauncherApplication] - AppInfo com.webos.app.livehbbtv - Live HbbTV
+14:42:38.108 [DEBUG] [nnectsdk.handler.LauncherApplication] - AppInfo com.webos.app.livezoom-inhdmi1 - Live Zoom App
+14:42:38.110 [DEBUG] [nnectsdk.handler.LauncherApplication] - AppInfo com.webos.app.livezoom-inhdmi2 - Live Zoom App
+14:42:38.111 [DEBUG] [nnectsdk.handler.LauncherApplication] - AppInfo com.webos.app.livezoom-inhdmi3 - Live Zoom App
+14:42:38.113 [DEBUG] [nnectsdk.handler.LauncherApplication] - AppInfo com.webos.app.livezoom-inhdmi4 - Live Zoom App
+14:42:38.114 [DEBUG] [nnectsdk.handler.LauncherApplication] - AppInfo com.webos.app.livezoom-inphotovideo - Live Zoom App
+14:42:38.116 [DEBUG] [nnectsdk.handler.LauncherApplication] - AppInfo com.webos.app.livezoom-insmhl - Live Zoom App
+14:42:38.117 [DEBUG] [nnectsdk.handler.LauncherApplication] - AppInfo com.webos.app.livezoom-intv - Live Zoom App
+14:42:38.119 [DEBUG] [nnectsdk.handler.LauncherApplication] - AppInfo com.webos.app.mvpdwin - MVPDWin
+14:42:38.120 [DEBUG] [nnectsdk.handler.LauncherApplication] - AppInfo com.webos.app.mystarter - My Starter
+14:42:38.122 [DEBUG] [nnectsdk.handler.LauncherApplication] - AppInfo com.webos.app.remotesetting - Einstellung der Fernbedienung
+14:42:38.123 [DEBUG] [nnectsdk.handler.LauncherApplication] - AppInfo com.webos.app.screensaver - Screen Saver
+14:42:38.125 [DEBUG] [nnectsdk.handler.LauncherApplication] - AppInfo com.webos.app.softwareupdate - Software Update
+14:42:38.126 [DEBUG] [nnectsdk.handler.LauncherApplication] - AppInfo com.webos.app.store-demo - Demo im Geschäft
+14:42:38.128 [DEBUG] [nnectsdk.handler.LauncherApplication] - AppInfo com.webos.app.systemmusic - Music Overlay
+14:42:38.129 [DEBUG] [nnectsdk.handler.LauncherApplication] - AppInfo com.webos.app.tvhotkey - Local Control Panel
+14:42:38.131 [DEBUG] [nnectsdk.handler.LauncherApplication] - AppInfo com.webos.app.tvsimpleviewer - Viewer
+14:42:38.132 [DEBUG] [nnectsdk.handler.LauncherApplication] - AppInfo com.webos.app.tvtutorial - Adjust camera angle
+14:42:38.134 [DEBUG] [nnectsdk.handler.LauncherApplication] - AppInfo com.webos.app.twindemo - Twin USB Demo
+14:42:38.135 [DEBUG] [nnectsdk.handler.LauncherApplication] - AppInfo com.webos.app.twinlivezoom-inphotovideo - Twin Live Zoom App
+14:42:38.137 [DEBUG] [nnectsdk.handler.LauncherApplication] - AppInfo com.webos.app.twinlivezoom-intwindemo - Twin Live Zoom App
+14:42:38.139 [DEBUG] [nnectsdk.handler.LauncherApplication] - AppInfo com.webos.app.twinwizard - Twin-Setup-Assistent
+14:42:38.140 [DEBUG] [nnectsdk.handler.LauncherApplication] - AppInfo com.webos.app.twinzoom-inhdmi1 - Twin Zoom App
+14:42:38.142 [DEBUG] [nnectsdk.handler.LauncherApplication] - AppInfo com.webos.app.twinzoom-inhdmi2 - Twin Zoom App
+14:42:38.144 [DEBUG] [nnectsdk.handler.LauncherApplication] - AppInfo com.webos.app.twinzoom-inhdmi3 - Live Zoom App
+14:42:38.145 [DEBUG] [nnectsdk.handler.LauncherApplication] - AppInfo com.webos.app.twinzoom-inhdmi4 - Twin Zoom App
+14:42:38.147 [DEBUG] [nnectsdk.handler.LauncherApplication] - AppInfo com.webos.app.twinzoom-inmiracast - Twin Zoom App
+14:42:38.148 [DEBUG] [nnectsdk.handler.LauncherApplication] - AppInfo com.webos.app.twinzoom-inphotovideo - Twin Zoom App
+14:42:38.150 [DEBUG] [nnectsdk.handler.LauncherApplication] - AppInfo com.webos.app.twinzoom-inrecordings - Twin Zoom App
+14:42:38.152 [DEBUG] [nnectsdk.handler.LauncherApplication] - AppInfo com.webos.app.twinzoom-intv - Twin Zoom App
+14:42:38.154 [DEBUG] [nnectsdk.handler.LauncherApplication] - AppInfo com.webos.app.twinzoom-intwindemo - Twin Zoom App
+14:42:38.156 [DEBUG] [nnectsdk.handler.LauncherApplication] - AppInfo com.webos.app.webapphost - Web App
+14:42:38.157 [DEBUG] [nnectsdk.handler.LauncherApplication] - AppInfo de.2kit.castbrowserlg - TV Cast
+ */
 
 Switch lgtvLivPower "LGTV Power" (gPowerSwitches) { channel="connectsdk:WebOSTV:192_168_11_73:power"}
 Switch lgtvLivMute "LGTV Mute" { channel="connectsdk:WebOSTV:192_168_11_73:mute"}
@@ -178,7 +270,7 @@ Number lgtvLivVolume "LGTV Volume" { channel="connectsdk:WebOSTV:192_168_11_73:v
 String lgtvLivInput "LGTV Input" { channel="connectsdk:WebOSTV:192_168_11_73:externalInput"}
 String lgtvLivToast "LGTV Toast" { channel="connectsdk:WebOSTV:192_168_11_73:toast"}
 String lgtvLivState "LGTV Toast" { channel="connectsdk:WebOSTV:192_168_11_73:mediaState"}
-String lgtvLivAppLaunch "LGTV AppLauch" { channel="connectsdk:WebOSTV:192_168_11_73:appLauncher"}
+String lgtvLivAppLaunch "LGTV AppLauch [%s]" { channel="connectsdk:WebOSTV:192_168_11_73:appLauncher"}
 String lgtvLivNetflix "LGTV Netflix" { channel="connectsdk:WebOSTV:192_168_11_73:netflixLauncher"}
 String lgtvLivHulu "LGTV Hulu" { channel="connectsdk:WebOSTV:192_168_11_73:huluLauncher"}
 String lgtvLivYouTube "LGTV YouTube" { channel="connectsdk:WebOSTV:192_168_11_73:youtubeLauncher"} 
@@ -218,13 +310,18 @@ String sceneName
 
 // tablets switch on/off via Fully Browser REST API
 Switch fyreLivGuest		"Tablet LivGuest"	(gFyrePower)		{http=">[ON:GET:http://fyre-livguest.fritz.box:2323/?cmd=screenOn&password=cronos34] >[OFF:GET:http://fyre-livguest.fritz.box:2323/?cmd=screenOff&password=cronos34]"}
-Switch fyreEntrance		"Tablet Entrance" 	(gFyrePower)		{http=">[ON:GET:http://fyre-entrance.fritz.box:2323/?cmd=screenOn&password=cronos34] >[OFF:GET:http://fyre-entrance.fritz.box:2323/?cmd=screenOff&password=cronos34]"}
+Switch fyreEntrance		"Tablet Entrance" 						{http=">[ON:GET:http://fyre-entrance.fritz.box:2323/?cmd=screenOn&password=cronos34] >[OFF:GET:http://fyre-entrance.fritz.box:2323/?cmd=screenOff&password=cronos34]"}
 Switch fyreLivKit		"Tablet LivKit"  	(gFyrePower)		{http=">[ON:GET:http://fyre-livkit.fritz.box:2323/?cmd=screenOn&password=cronos34] >[OFF:GET:http://fyre-livkit.fritz.box:2323/?cmd=screenOff&password=cronos34]"}
 Switch fyreKitFloor     "Tablet KitFloor" 	(gFyrePower)		{http=">[ON:GET:http://fyre-kitfloor.fritz.box:2323/?cmd=screenOn&password=cronos34] >[OFF:GET:http://fyre-kitfloor.fritz.box:2323/?cmd=screenOff&password=cronos34]"}
 Switch fyreFloorSleep 	"Tablet FloorSleep"	(gFyrePower)		{http=">[ON:GET:http://fyre-floorsleep.fritz.box:2323/?cmd=screenOn&password=cronos34] >[OFF:GET:http://fyre-floorsleep.fritz.box:2323/?cmd=screenOff&password=cronos34]"}
 Switch fyreSleepBath 	"Tablet SleepBath"	(gFyrePower)		{http=">[ON:GET:http://fyre-sleepbath.fritz.box:2323/?cmd=screenOn&password=cronos34] >[OFF:GET:http://fyre-sleepbath.fritz.box:2323/?cmd=screenOff&password=cronos34]"}
 
 Switch fyrePower 		"alle Tablets" ["Lighting"] 
+
+Switch lightRoof 		"Light Roof"							{channel = "homematic:HM-LC-Sw1PBU-FM:ccu2:LEQ0495187:1#STATE"}
+
+
+
 
 // vim: syntax=Xtend syntax=openhab
 

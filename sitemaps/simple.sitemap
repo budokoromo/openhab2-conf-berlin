@@ -16,7 +16,7 @@ sitemap simple label="Gärtner openHAB Installation" {
 	Switch item=shutEnt
 	Switch item=smokeEntranceAlarm
 	Group item=gMotion
-
+	Text item=lgtvLivAppLaunch
 }
 
 // vim: syntax=Xtend
