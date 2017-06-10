@@ -36,4 +36,7 @@ Bridge homematic:bridge:ccu2 [gatewayAddress="ccu2.fritz.box"]
 }
 */
 
+//Thing yamahareceiver:yamahaAV:livingroom [ HOST="192.168.178.46" ]
+Thing yamahareceiver:yamahaAV:living [ HOST="RX-A1010.fritz.box" ]
+
 // vim: syntax=Xtend syntax=openhab

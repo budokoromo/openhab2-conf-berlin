@@ -41,6 +41,8 @@ Group:Number:AVG gTempLiv "[%.1f °C]" (gTemp)
 //Switch guardMode	"Überwachung [MAP(de.map):%s]"
 Switch guardMode	"Überwachung"
 Switch alarmMode	"Alarm"
+Switch roofMode		"Dach"
+
 
 
 Switch warnJochen		"Alarm an Jochen"	(gWarn) 
@@ -60,6 +62,7 @@ Number user_heat
 Number schedule
 String event_type
 Switch remote_occupied
+
 
  
 
@@ -263,6 +266,7 @@ String lgtvState "LGTV Toast" { channel="connectsdk:WebOSTV:192_168_11_73:mediaS
 14:42:38.156 [DEBUG] [nnectsdk.handler.LauncherApplication] - AppInfo com.webos.app.webapphost - Web App
 14:42:38.157 [DEBUG] [nnectsdk.handler.LauncherApplication] - AppInfo de.2kit.castbrowserlg - TV Cast
  */
+ 
 
 Switch lgtvLivPower "LGTV Power" (gPowerSwitches) { channel="connectsdk:WebOSTV:192_168_11_73:power"}
 Switch lgtvLivMute "LGTV Mute" { channel="connectsdk:WebOSTV:192_168_11_73:mute"}
@@ -276,11 +280,14 @@ String lgtvLivHulu "LGTV Hulu" { channel="connectsdk:WebOSTV:192_168_11_73:huluL
 String lgtvLivYouTube "LGTV YouTube" { channel="connectsdk:WebOSTV:192_168_11_73:youtubeLauncher"} 
 String lgtvLivBrowser "LGTV Browser" { channel="connectsdk:WebOSTV:192_168_11_73:browserLauncher"}
 
+
+
 // Power on is not Supported, so we need to Wake on LAN with WOL Binding (See rule file)
 // 55"LGTV Switch lgtvWOL   "Power WOL"  { wol="192.168.11.255#3c:cd:93:7b:bb:9e" }
 Switch lgtvLivWOL   "Power WOL"  { wol="192.168.11.255#14:c9:13:ba:06:a5" }
 
 // Yamaha
+/* 
 Switch yamahaPower "Yamaha Power" (gPowerSwitches) {channel="yamahareceiver:yamahaAV:9ab0c000_f668_11de_9976_00a0de872741:power"}
 String yamahaInput "Yamaha Input" {channel="yamahareceiver:yamahaAV:9ab0c000_f668_11de_9976_00a0de872741:input"}
 String yamahaSurround "Yamaha Input" {channel="yamahareceiver:yamahaAV:9ab0c000_f668_11de_9976_00a0de872741:surroundProgram"}
@@ -288,6 +295,14 @@ Dimmer yamahaVolume "Yamaha Power" {channel="yamahareceiver:yamahaAV:9ab0c000_f6
 Number yamahaVolumeDB "Yamaha Power" {channel="yamahareceiver:yamahaAV:9ab0c000_f668_11de_9976_00a0de872741:volumeDB"} // Absolute DB from -80 to 12
 String yamahaMute "Yamaha Power" {channel="yamahareceiver:yamahaAV:9ab0c000_f668_11de_9976_00a0de872741:mute"}
 Number yamahaNetradiotune "Yamaha Power" {channel="yamahareceiver:yamahaAV:9ab0c000_f668_11de_9976_00a0de872741:netradiotune"}
+*/
+Switch yamahaPower "Yamaha Power" (gPowerSwitches) {channel="yamahareceiver:yamahaAV:living:power"}
+String yamahaInput "Yamaha Input" {channel="yamahareceiver:yamahaAV:living:input"}
+String yamahaSurround "Yamaha Input" {channel="yamahareceiver:yamahaAV:living:surroundProgram"}
+Dimmer yamahaVolume "Yamaha Power" {channel="yamahareceiver:yamahaAV:living:volume"} // Percentual DB
+Number yamahaVolumeDB "Yamaha Power" {channel="yamahareceiver:yamahaAV:living:volumeDB"} // Absolute DB from -80 to 12
+String yamahaMute "Yamaha Power" {channel="yamahareceiver:yamahaAV:living:mute"}
+Number yamahaNetradiotune "Yamaha Power" {channel="yamahareceiver:yamahaAV:living:netradiotune"}
 
 
 Switch TestScene

@@ -1,0 +1,9 @@
+val String filename = "enigma2.rules"
+
+rule "VuSolo4k Remote"
+when
+	Item vuSolo4kRemoteBlue received command ON or
+	Item vuSolo4kRemoteGreen received command ON
+then
+	
+end

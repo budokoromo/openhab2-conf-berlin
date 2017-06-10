@@ -13,13 +13,13 @@ Number motionRoofE_ILLUMINATION				"Lichtstärke MotionRoofE [%d]"											{ c
 Switch motionRoofE_RESET_MOTION				"RESET_MOTION MotionRoofE"												{ channel="homematic:HmIP-SMO:ccu2:000955699D410D:1#RESET_MOTION" }
 Switch motionRoofE_MOTION_DETECTION_ACTIVE	"MOTION_DETECTION_ACTIVE MotionRoofE"									{ channel="homematic:HmIP-SMO:ccu2:000955699D410D:1#MOTION_DETECTION_ACTIVE" }
 Switch motionRoofE_MOTION					"Bewegung MotionRoofE"					<motion>	(gMotion, gWhg)		{ channel="homematic:HmIP-SMO:ccu2:000955699D410D:1#MOTION" }
-Switch motionRoofEContact					"Bewegung MotionRoofE"					<motion>	(gMotion, gWhg)		{ channel="homematic:HmIP-SMO:ccu2:000955699D410D:1#MOTION" }
+//Contact motionRoofEContact					"Bewegung MotionRoofE"					<motion>	(gMotion, gWhg)		{ channel="homematic:HmIP-SMO:ccu2:000955699D410D:1#MOTION" }
 
 Number motionRoofW_ILLUMINATION				"Lichtstärke MotionRoofE [%d]"											{ channel="homematic:HmIP-SMO:ccu2:000955699D40D6:1#ILLUMINATION" }
 Switch motionRoofW_RESET_MOTION				"RESET_MOTION MotionRoofE"												{ channel="homematic:HmIP-SMO:ccu2:000955699D40D6:1#RESET_MOTION" }
 Switch motionRoofW_MOTION_DETECTION_ACTIVE	"MOTION_DETECTION_ACTIVE MotionRoofE"									{ channel="homematic:HmIP-SMO:ccu2:000955699D40D6:1#MOTION_DETECTION_ACTIVE" }
 Switch motionRoofW_MOTION					"Bewegung MotionRoofE"					<motion>	(gMotion, gWhg)		{ channel="homematic:HmIP-SMO:ccu2:000955699D40D6:1#MOTION" }
-Contact motionRoofWContact					"Bewegung MotionRoofE"					<motion>	(gMotion, gWhg)		{ channel="homematic:HmIP-SMO:ccu2:000955699D40D6:1#MOTION" }
+//Contact motionRoofWContact					"Bewegung MotionRoofE"					<motion>	(gMotion, gWhg)		{ channel="homematic:HmIP-SMO:ccu2:000955699D40D6:1#MOTION" }
 
 
 

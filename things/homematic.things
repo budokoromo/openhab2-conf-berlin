@@ -1,6 +1,5 @@
 Bridge homematic:bridge:ccu2 [gatewayAddress="ccu2.fritz.box"]
 {
-
   	Thing HM-CC-RT-DN    	MEQ0571893	// Heat Living East
   	Thing HM-CC-RT-DN    	MEQ0571874	// Heat Living West
   	Thing HM-CC-RT-DN    	MEQ0571847	// Heat Bedroom

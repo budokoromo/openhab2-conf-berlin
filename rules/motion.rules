@@ -1,3 +1,5 @@
+import java.util.Locale
+
 val String filename="motion.rules"
 
 rule "Motion detected"
@@ -9,7 +11,9 @@ then
 //		smokeEntranceAlarm.sendCommand(ON)
 //		hueMainToggle.sendCommand(ON)		
 //	}
+
 	if(guardMode.state == ON) {
+//	if(guardMode.state == ON || roofMode.state == ON) {
 		val StringBuilder sb = new StringBuilder
 		sb.append("👣 Bewegung auf dem Dach 👣")
 		gMotion.members.filter[i | i.state == ON].forEach[i | sb.append("\n" + transform("MAP", "motion_de.map", i.name))]
@@ -18,3 +22,4 @@ then
 		logInfo(filename, sb.toString)
 	}
 end
+

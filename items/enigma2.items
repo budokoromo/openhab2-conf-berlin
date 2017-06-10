@@ -1,0 +1,90 @@
+/*
+ * TODOs
+ * 
+ * Write Down all Datapoints from all Smoke Detectors
+ * 
+ */
+
+/*
+ * 
+116 Key "Power"	
+2   Key "1"	 
+3   Key "2"	
+4   Key "3"	
+5   Key "4"	
+6   Key "5"	
+7   Key "6"	
+8   Key "7"	
+9   Key "8"	
+10  Key "1"	
+11  Key "0"	
+412 Key "previous"	
+407 Key "next	
+115 Key "volume up"	
+113 Key "mute"	
+402 Key "bouquet up"	
+114 Key "volume down"	
+174 Key "lame"	
+403 Key "bouquet down"	
+358 Key "info"	
+103 Key "up"	
+139 Key "menu"	
+105 Key "left"	
+352 Key "OK"	
+106 Key "right"	
+392 Key "audio"	
+108 Key "down"	
+393 Key "video"	
+398 Key "red"	
+399 Key "green"	
+400 Key "yellow"	
+401 Key "blue"	
+377 Key "tv"	
+385 Key "radio"	
+388 Key "text"	
+138 Key "help"	 
+* 
+*/
+
+
+Switch  VuSolo4k_Power                          "Power: [%s]"          <switch>      { channel="enigma2:device:f1933d1e:power" }
+Dimmer  VuSolo4k_Volume                         "Volume: [%d %%]"      <volume>      { channel="enigma2:device:f1933d1e:volume" }
+//Number  VuSolo4k_Volume                         "Volume: [%d %%]"      <volume>      { channel="enigma2:device:f1933d1e:volume" }
+Switch  VuSolo4k_Mute                           "mute: [%s]"           <volume_mute> { channel="enigma2:device:f1933d1e:mute" }
+Switch  VuSolo4k_Downmix                        "downmix: [%s]"        <volume_mute> { channel="enigma2:device:f1933d1e:downmix" }
+//String  VuSolo4k_PlayerControl                  "Mode: [%s]"           <text>        { channel="enigma2:device:f1933d1e:playerControl" }
+Player  VuSolo4k_PlayerControl                  "Mode: [%s]"           <text>        { channel="enigma2:device:f1933d1e:playerControl" }
+String  VuSolo4k_Channel                        "Zone: [%s]"           <text>        { channel="enigma2:device:f1933d1e:channel" }
+String  VuSolo4k_RemoteKey                      "RemoteKey: [%s]"      <text>        { channel="enigma2:device:f1933d1e:remoteKey" }
+String  VuSolo4k_SendMessage                    "RemoteKey: [%s]"      <text>        { channel="enigma2:device:f1933d1e:sendMessage" }
+String  VuSolo4k_SendWarning                    "RemoteKey: [%s]"      <text>        { channel="enigma2:device:f1933d1e:sendWarning" }
+String  VuSolo4k_SendQuestion                   "RemoteKey: [%s]"      <text>        { channel="enigma2:device:f1933d1e:sendQuestion" }
+Switch  VuSolo4k_GetAnswer                      "RemoteKey: [%s]"      <switch>      { channel="enigma2:device:f1933d1e:getAnswer" }
+String  VuSolo4k_nowPlayingTitle                "Preset: [%s]"         <text>        { channel="enigma2:device:f1933d1e:nowPlayingTitle" }
+String  VuSolo4k_nowPlayingDescription          "Key Code: [%s]"       <text>        { channel="enigma2:device:f1933d1e:nowPlayingDescription" }
+String  VuSolo4k_nowPlayingDescriptionExtended  "Album: [%s]"          <text>        { channel="enigma2:device:f1933d1e:nowPlayingDescriptionExtended" }
+
+//Switch  vusolo4kRemoteGreen                     									{ channel="enigma2:device:f1933d1e:remoteKey" }
+
+Switch 	vusolo4kRemote1         		{http=">[ON:GET:http://openhab:habopen@vusolo4k.fritz.box:81/web/remotecontrol?command=2]", autoupdate="false"}
+Switch 	vusolo4kRemote2         		{http=">[ON:GET:http://openhab:habopen@vusolo4k.fritz.box:81/web/remotecontrol?command=3]", autoupdate="false"}
+Switch 	vusolo4kRemote3         		{http=">[ON:GET:http://openhab:habopen@vusolo4k.fritz.box:81/web/remotecontrol?command=4]", autoupdate="false"}
+Switch 	vusolo4kRemote4         		{http=">[ON:GET:http://openhab:habopen@vusolo4k.fritz.box:81/web/remotecontrol?command=5]", autoupdate="false"}
+Switch 	vusolo4kRemote5         		{http=">[ON:GET:http://openhab:habopen@vusolo4k.fritz.box:81/web/remotecontrol?command=6]", autoupdate="false"}
+Switch 	vusolo4kRemote6         		{http=">[ON:GET:http://openhab:habopen@vusolo4k.fritz.box:81/web/remotecontrol?command=7]", autoupdate="false"}
+Switch 	vusolo4kRemote7         		{http=">[ON:GET:http://openhab:habopen@vusolo4k.fritz.box:81/web/remotecontrol?command=8]", autoupdate="false"}
+Switch 	vusolo4kRemote8         		{http=">[ON:GET:http://openhab:habopen@vusolo4k.fritz.box:81/web/remotecontrol?command=9]", autoupdate="false"}
+Switch 	vusolo4kRemote9         		{http=">[ON:GET:http://openhab:habopen@vusolo4k.fritz.box:81/web/remotecontrol?command=10]", autoupdate="false"}
+Switch 	vusolo4kRemote0         		{http=">[ON:GET:http://openhab:habopen@vusolo4k.fritz.box:81/web/remotecontrol?command=11]", autoupdate="false"}
+Switch 	vusolo4kRemotePrevious         	{http=">[ON:GET:http://openhab:habopen@vusolo4k.fritz.box:81/web/remotecontrol?command=412]", autoupdate="false"}
+Switch 	vusolo4kRemoteNext         		{http=">[ON:GET:http://openhab:habopen@vusolo4k.fritz.box:81/web/remotecontrol?command=407]", autoupdate="false"}
+//Switch 	vusolo4kRemoteVolumeUp         	{http=">[ON:GET:http://openhab:habopen@vusolo4k.fritz.box:81/web/remotecontrol?command=115]", autoupdate="false"}
+//Switch 	vusolo4kRemoteMute         		{http=">[ON:GET:http://openhab:habopen@vusolo4k.fritz.box:81/web/remotecontrol?command=113]", autoupdate="false"}
+Switch 	vusolo4kRemoteBouquetUp         		{http=">[ON:GET:http://openhab:habopen@vusolo4k.fritz.box:81/web/remotecontrol?command=402]", autoupdate="false"}
+Switch 	vusolo4kRemoteVolumeDown         		{http=">[ON:GET:http://openhab:habopen@vusolo4k.fritz.box:81/web/remotecontrol?command=114]", autoupdate="false"}
+Switch 	vusolo4kRemoteLame         		{http=">[ON:GET:http://openhab:habopen@vusolo4k.fritz.box:81/web/remotecontrol?command=174]", autoupdate="false"}
+Switch 	vusolo4kRemoteBouquetDown         		{http=">[ON:GET:http://openhab:habopen@vusolo4k.fritz.box:81/web/remotecontrol?command=403]", autoupdate="false"}
+
+Switch 	vusolo4kRemoteBlue         		{http=">[ON:GET:http://openhab:habopen@vusolo4k.fritz.box:81/web/remotecontrol?command=401]", autoupdate="false"}
+
+

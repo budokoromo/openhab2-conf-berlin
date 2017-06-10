@@ -1,0 +1,58 @@
+import java.math.BigDecimal
+import java.util.Locale
+
+
+val String filename = "scene.rules"
+
+/* 
+var scenes = [
+  {
+    stateItem: "Scene_Living",
+    states: [
+      {
+        stateValue: "0", // OFF
+        targetValues: [
+          { item: "kitchenLights", value: "OFF" },
+          { item: "nookLight", value: "OFF" },
+          { item: "livingRoomLamp", value: "OFF" },
+          { item: "livingRoomTableLamp", value: "OFF" },
+          { item: "livingRoomCeilingLights", value: "OFF" }
+        ] 
+      },
+      {
+        stateValue: "1", // DIM
+        targetValues: [
+          { item: "kitchenLights", value: "setting_lr_dim_kitchenBrightness" },
+          { item: "nookLight", value: "setting_lr_dim_nookBrightness" },
+          { item: "livingRoomLamp", value: "setting_lr_dim_sofaLampBrightness" },
+          { item: "livingRoomTableLamp", value: "setting_lr_dim_tableLampBrightness" },
+          { item: "livingRoomCeilingLights", value: "setting_lr_dim_ceilingLightBrightness" }
+        ] 
+      },
+      {
+        stateValue: "2", // HALF
+        targetValues: [
+          { item: "kitchenLights", value: "setting_lr_med_kitchenBrightness" },
+          { item: "nookLight", value: "setting_lr_med_nookBrightness" },
+          { item: "livingRoomLamp", value: "setting_lr_med_sofaLampBrightness" },
+          { item: "livingRoomTableLamp", value: "setting_lr_med_tableLampBrightness" },
+          { item: "livingRoomCeilingLights", value: "setting_lr_med_ceilingLightBrightness" }
+        ] 
+      },
+      {
+        stateValue: "3", // FULL
+        targetValues: [
+          //{ item: "kitchenLights", value: "ON" },
+          { item: "kitchenLights", value: "ON" },
+          { item: "nookLight", value: "ON" },
+          { item: "livingRoomLamp", value: "ON" },
+          { item: "livingRoomTableLamp", value: "ON" },
+          { item: "livingRoomCeilingLights", value: "ON" }
+        ] 
+      }
+    ],
+    nonMatchValue: "4"
+  }
+];
+
+*/
