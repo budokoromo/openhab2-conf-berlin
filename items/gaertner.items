@@ -83,6 +83,11 @@ Dimmer  hueLivMainDimmer "Wohnzimmer Dimmer" ["Lighting"]
 Color	hueLivMainColor
 Dimmer	hueLivMainColorTemp
 
+Switch	hueLivTVToggle "Wohnzimmer Fernseherlicht" (gMainToggles) ["Lighting"] 
+Dimmer  hueLivTVDimmer "Wohnzimmer Dimmer" ["Lighting"]
+Color	hueLivTVColor
+Dimmer	hueLivTVColorTemp
+
 Switch	hueKitMainToggle "Küchen Licht" (gMainToggles) ["Lighting"]
 Dimmer  hueKitMainDimmer
 Color	hueKitMainColor
@@ -102,6 +107,7 @@ Switch	hueBathMainToggle 	"Badezimmer Licht" (gMainToggles) ["Lighting"]
 Dimmer  hueBathMainDimmer
 Color	hueBathMainColor
 Dimmer	hueBathMainColorTemp
+
 
 Switch	hueMainToggle	"Alle Lichter" ["Lighting"]
 

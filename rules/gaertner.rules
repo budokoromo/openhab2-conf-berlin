@@ -136,9 +136,13 @@ val String hueGrpLivID		= "living"
 val String hueGrpLivName 	= "Living Room"
 val String hueGrpLivGrp 	= "1"
 
+val String hueGrpLivTVID	= "livingTV"
+val String hueGrpLivTVName 	= "Living Room TV"
+val String hueGrpLivTVGrp 	= "3"
+
 val String hueGrpKitID		= "kitchen"
 val String hueGrpKitName 	= "Kitchen"
-val String hueGrpKitGrp 		= "2"
+val String hueGrpKitGrp 	= "2"
 
 val String hueGrpBathID		= "bath"
 val String hueGrpBathName 	= "Bath"
@@ -161,9 +165,10 @@ val List<String> yamahaSurrType = newArrayList(	"2ch Stereo", "7ch Stereo", "Hal
 												"Sports", "Action Game", "Roleplaying Game", "Music Video",  // Entertainment
 												"Surround Decoder" )
 
-val String yInputDUNE = 	"AV2"
+val String yInputMRCRUNCH = "AV2"
 val String yInputVUSOLO4K = "AV1"
 val String yInputPS4BLACK = "AV3"
+val String yInputVERA = 	"AV4"
 val String yInputPS4PRO = 	"AV6"
 val String yInputPS3 = 		"AV4"
 val String yInputCHROME = 	"AV5"
@@ -180,8 +185,8 @@ val String ySurr2CH ="2ch Stereo"
 
 // lgvt
 val String lgtvInputAMP = "HDMI_1"
-val String lgtvInputHDMI2 = "HDMI_2"
-val String lgtvInputHDMI3 = "HDMI_3"
+val String lgtvInputVERA = "HDMI_2"
+val String lgtvInputPS4 = "HDMI_3"
 
 
 // DUNE
@@ -335,6 +340,17 @@ end
 
 
 
+rule "Set RGB value LivingTV"
+when
+	Item hueLivTVColor received update
+then
+    var hsbValue = hueLivTVColor.state as HSBType
+    var roomID = hueGroupsMap.get(hueGrpLivTVID)
+	colorHueGroup.apply(roomID.get(hueKeyBase), roomID.get(hueKeyUID), roomID.get(hueKeyGID), hsbValue)	    
+end
+
+
+
 
 rule "Set RGB value Floor"
 when
@@ -369,6 +385,10 @@ then
     var roomID = hueGroupsMap.get(hueGrpBathID)
 	colorHueGroup.apply(roomID.get(hueKeyBase), roomID.get(hueKeyUID), roomID.get(hueKeyGID), hsbValue)	    
 end
+
+
+
+
 
 
 
@@ -561,11 +581,34 @@ rule "toggle Living Light"
 end
 
 
+rule "toggle Living TV Light"
+    when
+            Item hueLivTVToggle received command
+    then
+            
+	var key = hueGrpLivTVID
+
+    logInfo("switchHueGroup", "hueGroupsMap - key: " + key + ", " + 
+    			hueKeyName + ":" + hueGroupsMap.get(key).get(hueKeyName) + ", " +
+    			hueKeyBase + ":" + hueGroupsMap.get(key).get(hueKeyBase) + ", " +
+    			hueKeyUID + ":" + hueGroupsMap.get(key).get(hueKeyUID) + ", " +
+    			hueKeyGID + ":" + hueGroupsMap.get(key).get(hueKeyGID) + ", "
+    			)
+
+ //   toggleHueGroup.apply(hueGrpSleepID, hueSleepMainToggle.state.toString())	    
+//   	toggleHueGroup.apply(hueGrpSleepID, hueSleepMainToggle)	    
+	var roomID = hueGroupsMap.get(key)
+  	toggleHueGroup.apply(roomID.get(hueKeyBase), roomID.get(hueKeyUID), roomID.get(hueKeyGID), hueLivTVToggle)	    
+		
+end
+
+
 rule "toggle kitchen Light"
     when
             Item hueKitMainToggle received command
     then
             
+    
 	var key = hueGrpKitID
 
     logInfo("switchHueGroup", "hueGroupsMap - key: " + key + ", " + 
@@ -648,6 +691,14 @@ then
 	hueGroupData.put(hueKeyUID, hueBaseLivUser)
 	hueGroupData.put(hueKeyGID, hueGrpLivGrp)
 	hueGroupsMap.put(hueGrpLivID, new HashMap(hueGroupData))	
+
+
+	hueGroupData.clear()
+	hueGroupData.put(hueKeyName, hueGrpLivTVName)
+	hueGroupData.put(hueKeyBase, hueBaseUtilName)
+	hueGroupData.put(hueKeyUID, hueBaseUtilUser)
+	hueGroupData.put(hueKeyGID, hueGrpLivTVGrp)
+	hueGroupsMap.put(hueGrpLivTVID, new HashMap(hueGroupData))	
 
 
 	hueGroupData.clear()
@@ -754,33 +805,40 @@ rule "Switch Scene Movie"
 when
 	Item sceneMovie received command ON
 then
-	// switch to Movie Remote Panel
+	// Turn on TV
+	// First step, because LGTV needs to be activated via WOL
+	lgtvLivPower.sendCommand(ON)
+	
+		// switch to Movie Remote Panel
 //	activeHABPanel.sendCommand("Movie Remote")
 	// Turn on Dune
 //	sendHttpGetRequest(duneHTTP + duneCodeON)
 	
 	// Switch Lights
 	hueLivMainColor.send(hueColorTV)
+	hueLivTVColor.send(hueColorTV)
 	hueLivMainToggle.sendCommand(ON)
+	hueLivTVToggle.sendCommand(ON)
 //	hueLivMainToggle.postUpdate(ON)
  
-	// Turn on TV
-	lgtvLivPower.sendCommand(ON)
+
+	// Turn Amp On
+	yamahaPower.sendCommand(ON)
+	// Switch Amp Input to Dune
+	yamahaInput.sendCommand(yInputVERA)
+	// Switch Surround Programm to MOVIE ADVENTURE
+	yamahaSurround.sendCommand(ySurrMOVIEADV)
+
+
 	// Mute TV, Sound comes from AMP
 	lgtvLivMute.sendCommand(OFF)	// to get rid off the crappy Mute Logo
 	lgtvLivVolume.sendCommand(0)
 
 	// Set TV Input to HDMI2
-	lgtvLivInput.sendCommand(lgtvInputHDMI2)
+	lgtvLivInput.sendCommand(lgtvInputVERA)
 	// Say Hello
 	lgtvLivToast.sendCommand("Let's see some freaky Movies!")
 	
-	// Turn Amp On
-	yamahaPower.sendCommand(ON)
-	// Switch Amp Input to Dune
-	yamahaInput.sendCommand(yInputTV)
-	// Switch Surround Programm to MOVIE ADVENTURE
-	yamahaSurround.sendCommand(ySurrMOVIEADV)
 end
 
 
@@ -788,19 +846,9 @@ rule "Switch Scene Gaming"
 when
 	Item sceneGaming received command ON
 then
-	// Turn Off Dune
-	sendHttpGetRequest( duneHTTP + duneCodeOFF)
-	
 	// Turn on TV
-	lgtvLivPower.sendCommand(ON) 
-	// Mute TV, Sound comes from AMP
-	lgtvLivMute.sendCommand(OFF)	// to get rid off the crappy Mute Logo
-	lgtvLivVolume.sendCommand(0)
-
-	// Set TV Input to HDMI1
-	lgtvLivInput.sendCommand(lgtvInputAMP)
-	// Say Hello
-	lgtvLivToast.sendCommand("Let's play some funny Gamez!")
+	// First step, because LGTV needs to be activated via WOL
+	lgtvLivPower.sendCommand(ON)
 	
 	// Turn Amp On
 	yamahaPower.sendCommand(ON)
@@ -811,34 +859,50 @@ then
 
 	// switch to "Easy Remote" Panel
 	activeHABPanel.sendCommand("Easy Remote")
+
+	// Mute TV, Sound comes from AMP
+	lgtvLivMute.sendCommand(OFF)	// to get rid off the crappy Mute Logo
+	lgtvLivVolume.sendCommand(0)
+
+	// Set TV Input to HDMI1
+	lgtvLivInput.sendCommand(lgtvInputAMP)
+	// Say Hello
+	lgtvLivToast.sendCommand("Let's play some funny Gamez!")
+	
 end
 
 rule "Switch Scene Chill"
 when
 	Item sceneChill received command ON
 then
-			// set Light
-			hueLivMainColor.send(hueColorLIGHT)
+	// set Light
+	hueLivMainColor.send(hueColorLIGHT)
 
-			// Turn Off Dune
-			sendHttpGetRequest( duneHTTP + duneCodeOFF)
-			
-			// Turn off TV
-	    	lgtvLivPower.sendCommand(OFF)
+	// Turn off TV
+	lgtvLivPower.sendCommand(OFF)
 
-	    	// Turn Amp OFF
-	    	yamahaPower.sendCommand(OFF)
+	// Turn Amp OFF
+	yamahaPower.sendCommand(OFF)
 end
 
 rule "Switch Scene Music"
 when
 	Item sceneMusic received command ON
 then
-	// Turn Off Dune
-	sendHttpGetRequest( duneHTTP + duneCodeOFF)
-	
 	// Turn on TV
+	// First step, because LGTV needs to be activated via WOL
 	lgtvLivPower.sendCommand(ON)
+	
+	
+	// Turn Amp On
+	yamahaPower.sendCommand(ON)
+	// Switch Amp Input to google Chrome
+	yamahaInput.sendCommand(yInputCHROME)
+	// Switch Surround Programm to 2CH
+	yamahaSurround.sendCommand(ySurr2CH)
+
+	// switch to "Easy Remote" Panel
+	activeHABPanel.sendCommand("Easy Remote")
 	// Mute TV, Sound comes from AMP
 	lgtvLivMute.sendCommand(OFF)	// to get rid off the crappy Mute Logo
 	lgtvLivVolume.sendCommand(0)
@@ -846,31 +910,24 @@ then
 	lgtvLivInput.sendCommand(lgtvInputAMP)
 	// Say Hello
 	lgtvLivToast.sendCommand("Let's hear cool Musix!")
-	
-	// Turn Amp On
-	yamahaPower.sendCommand(ON)
-	// Switch Amp Input to Dune
-	yamahaInput.sendCommand(yInputCHROME)
-	// Switch Surround Programm to MOVIE ADVENTURE
-	yamahaSurround.sendCommand(ySurr2CH)
 
-	// switch to "Easy Remote" Panel
-	activeHABPanel.sendCommand("Easy Remote")
 end
 
 rule "Switch Scene Netflix"
 when
 	Item sceneNetflix received command ON
 then
-	// Turn Off Dune
-	sendHttpGetRequest( duneHTTP + duneCodeOFF)
-	
 	// Turn on TV
+	// First step, because LGTV needs to be activated via WOL
 	lgtvLivPower.sendCommand(ON)
-	// Mute TV, Sound comes from AMP
-	lgtvLivMute.sendCommand(OFF)
-	lgtvLivVolume.sendCommand(0)
-	
+
+	// Switch Lights
+	hueLivMainColor.send(hueColorTV)
+	hueLivTVColor.send(hueColorTV)
+	hueLivMainToggle.sendCommand(ON)
+	hueLivTVToggle.sendCommand(ON)
+
+
 	// Say Hello
 	lgtvLivToast.sendCommand("Let's play some funny Gamez!")
 	
@@ -881,41 +938,48 @@ then
 	// Switch Surround Programm to MOVIE ADVENTURE
 	yamahaSurround.sendCommand(ySurrMOVIEADV)
 
+	// switch to "Easy Remote" Panel
+	activeHABPanel.sendCommand("Easy Remote")
+
+
+	// Mute TV, Sound comes from AMP
+	lgtvLivMute.sendCommand(OFF)
+	lgtvLivVolume.sendCommand(0)
+	
 	// Start Netflix
 	lgtvLivAppLaunch.sendCommand("netflix")
 
-	// switch to "Easy Remote" Panel
-	activeHABPanel.sendCommand("Easy Remote")
 end
+
 
 
 rule "Switch Scene Computer"
 when
 	Item sceneComputer received command ON
 then
-	// Turn Off Dune
-	sendHttpGetRequest( duneHTTP + duneCodeOFF)
-	
 	// Turn on TV
+	// First step, because LGTV needs to be activated via WOL
 	lgtvLivPower.sendCommand(ON)
-	// Mute TV, Sound comes from AMP
-	lgtvLivMute.sendCommand(OFF)
-	lgtvLivVolume.sendCommand(0)
-	
-	// Set TV Input to HDMI1
-	lgtvLivInput.sendCommand(lgtvInputHDMI2)
-	// Say Hello
-	lgtvLivToast.sendCommand("Computer on HDMI 2")
-	
+
 	// Turn Amp On
 	yamahaPower.sendCommand(ON)
 	// Switch Amp Input to Dune
-	yamahaInput.sendCommand(yInputTV)
+	yamahaInput.sendCommand(yInputMRCRUNCH)
 	// Switch Surround Programm to MOVIE ADVENTURE
 	yamahaSurround.sendCommand(ySurrMOVIEADV)
 
 	// switch to "Easy Remote" Panel
 	activeHABPanel.sendCommand("Easy Remote")
+
+	// Mute TV, Sound comes from AMP
+	lgtvLivMute.sendCommand(OFF)
+	lgtvLivVolume.sendCommand(0)
+	
+	// Set TV Input to HDMI1
+	lgtvLivInput.sendCommand(lgtvInputAMP)
+	// Say Hello
+	lgtvLivToast.sendCommand("Computer on HDMI 2")
+	
 end
 
 
@@ -923,18 +987,10 @@ rule "Switch Scene VUSOLO4K"
 when
 	Item sceneTV received command ON
 then
-	// Turn Off Dune
-	sendHttpGetRequest( duneHTTP + duneCodeOFF)
-	
 	// Turn on TV
+	// First step, because LGTV needs to be activated via WOL
 	lgtvLivPower.sendCommand(ON)
-	// Mute TV, Sound comes from AMP
-	lgtvLivMute.sendCommand(OFF)
-	lgtvLivVolume.sendCommand(0)
-	// Set TV Input to HDMI1
-	lgtvLivInput.sendCommand(lgtvInputAMP)
-	// Say Hello
-	lgtvLivToast.sendCommand("VUSOLO4K on AV1")
+
 	
 	// Turn Amp On
 	yamahaPower.sendCommand(ON)
@@ -945,7 +1001,15 @@ then
 
 	// switch to "Easy Remote" Panel
 	activeHABPanel.sendCommand("Easy Remote")
-end
+
+	// Mute TV, Sound comes from AMP
+	lgtvLivMute.sendCommand(OFF)
+	lgtvLivVolume.sendCommand(0)
+	// Set TV Input to HDMI1
+	lgtvLivInput.sendCommand(lgtvInputAMP)
+	// Say Hello
+	lgtvLivToast.sendCommand("VUSOLO4K on AV1")
+	end
 
 
 rule "Switch Scene AllOff"
@@ -1014,6 +1078,7 @@ when
 	Item hueMainToggle received command
 then
     hueLivMainToggle.sendCommand(receivedCommand)	
+    hueLivTVToggle.sendCommand(receivedCommand)	
     hueKitMainToggle.sendCommand(receivedCommand)	
     hueFloorMainToggle.sendCommand(receivedCommand)	
     hueSleepMainToggle.sendCommand(receivedCommand)	
